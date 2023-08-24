@@ -1,43 +1,46 @@
-public class HostsManager.App : Gtk.Application
-{
-	private unowned MainWindow window;
+namespace HostsManager {
 
-	public App()
+	public class App : Gtk.Application
 	{
-		Object
-		(
-			application_id: Config.APP_ID,
-			resource_base_path: "/com/github/gyan000/hostsmanager",
-			flags: ApplicationFlags.FLAGS_NONE
-		);
-	}
+		private unowned MainWindow window;
 
-	public static int main(string[] args)
-	{
-		var app = new HostsManager.App();
-		return app.run(args);
-	}
-
-	protected override void activate()
-	{
-		var active_window = get_active_window();
-		if (active_window != null) {
-			active_window.present ();
-			return;
+		public App()
+		{
+			Object
+			(
+				application_id: Config.APP_ID,
+				resource_base_path: "/com/github/gyan000/hostsmanager",
+				flags: ApplicationFlags.FLAGS_NONE
+			);
 		}
 
-		create_window ();
-	}
+		public static int main(string[] args)
+		{
+			var app = new App();
+			return app.run(args);
+		}
 
-	private void create_window () {
+		protected override void activate()
+		{
+			var active_window = get_active_window();
+			if (active_window != null) {
+				active_window.present ();
+				return;
+			}
 
-		var win = new MainWindow (this);
-		win.close_request.connect_after ((win) => {
-			activate_action ("quit", null);
-			return false;
-		});
+			create_window ();
+		}
 
-		this.window = win;
-		win.present ();
+		private void create_window () {
+
+			var win = new MainWindow (this);
+			win.close_request.connect_after ((win) => {
+				activate_action ("quit", null);
+				return false;
+			});
+
+			this.window = win;
+			win.present ();
+		}
 	}
 }

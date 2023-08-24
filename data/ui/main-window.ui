@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Created with Cambalache 0.12.1 -->
 <interface>
-  <!-- interface-name main-window.ui -->
+  <!-- interface-name HostsManagerMainWindow -->
   <requires lib="gtk" version="4.10"/>
-  <template class="MainWindow" parent="GtkWindow">
+  <template class="HostsManagerMainWindow" parent="GtkWindow">
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
         <child type="end">

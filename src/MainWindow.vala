@@ -1,22 +1,25 @@
-[GtkTemplate (ui = "/com/github/gyan000/hostsmanager/ui/MainWindow.ui")]
-public class MainWindow : Gtk.Window {
+namespace HostsManager {
 
-	[GtkChild]
-	public unowned Gtk.ToggleButton search_toggle_button;
+	[GtkTemplate (ui = "/com/github/gyan000/hostsmanager/ui/main-window.ui")]
+	public class MainWindow : Gtk.Window {
 
-	construct {
-	}
+		[GtkChild]
+		public unowned Gtk.ToggleButton search_toggle_button;
 
-	public MainWindow (HostsManager.App app) {
-		Object (
-			application: app
-		);
-	}
+		construct {
+		}
+
+		public MainWindow (App app) {
+			Object (
+				application: app
+			);
+		}
 
 
-	[GtkCallback]
-	private void on_search_toggle_button_toggled () {
+		[GtkCallback]
+		private void on_search_toggle_button_toggled () {
 
-		info("on_search_toggle_button_toggled");
+			info("on_search_toggle_button_toggled");
+		}
 	}
 }

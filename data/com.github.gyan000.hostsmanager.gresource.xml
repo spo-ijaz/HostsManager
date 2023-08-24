@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/com/github/gyan000/hostsmanager">
-    <file compressed="true" preprocess="xml-stripblanks">ui/MainWindow.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">ui/main-window.ui</file>
   </gresource>
 </gresources>
