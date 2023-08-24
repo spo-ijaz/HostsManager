@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2018 Benjamin Buhler <hostsmanager.app@freiken-douhl.de> -->
 <component type="desktop">
-  <id>com.github.bbuhler.hostsmanager</id>
+  <id>com.github.gyan000.hostsmanager</id>
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
   <name>HostsManager</name>
@@ -35,20 +35,20 @@
     <content_attribute id="money-purchasing">none</content_attribute>
     <content_attribute id="money-gambling">none</content_attribute>
   </content_rating>
-  <developer_name>Benjamin Buhler</developer_name>
-  <update_contact>hostsmanager.app@freiken-douhl.de</update_contact>
+  <developer_name>gyan000</developer_name>
+  <update_contact>gyan000@ijaz.fr</update_contact>
   <description>
     <p>With HostsManager you can toggle and modify entries in your /etc/hosts file.</p>
   </description>
   <categories>
     <category>Development</category>
   </categories>
-  <url type="homepage">https://github.com/bbuhler/HostsManager</url>
-  <url type="bugtracker">https://github.com/bbuhler/HostsManager/issues</url>
-  <url type="help">https://github.com/bbuhler/HostsManager/issues</url>
+  <url type="homepage">https://github.com/gyan000/HostsManager</url>
+  <url type="bugtracker">https://github.com/gyan000/HostsManager/issues</url>
+  <url type="help">https://github.com/gyan000/HostsManager/issues</url>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/bbuhler/HostsManager/master/data/screenshots/main.png</image>
+      <image>https://raw.githubusercontent.com/gyan000/HostsManager/master/data/screenshots/main.png</image>
     </screenshot>
   </screenshots>
   <custom>
