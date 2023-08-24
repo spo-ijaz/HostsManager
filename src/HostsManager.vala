@@ -1,6 +1,5 @@
 public class HostsManager.App : Gtk.Application
 {
-
 	private unowned MainWindow window;
 
 	public App()
