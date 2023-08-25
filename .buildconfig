@@ -4,9 +4,9 @@ runtime=host
 toolchain=default
 config-opts=-Dprofile=development
 run-opts=
-prefix=/home/sebastienp_fedora/.cache/gnome-builder/install/HostsManager/host
+prefix=$HOME/.cache/gnome-builder/install/HostsManager/host
 app-id=com.github.gyan000.hostsmanager.Devel
 postbuild=
 prebuild=
-run-command=/home/sebastienp_fedora/.cache/gnome-builder/install/HostsManager/host/bin/com.github.gyan000.hostsmanager.app
+run-command=$HOME/.cache/gnome-builder/install/HostsManager/host/bin/com.github.gyan000.hostsmanager.app
 default=true

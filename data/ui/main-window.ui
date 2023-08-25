@@ -1,11 +1,24 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Created with Cambalache 0.12.1 -->
 <interface>
-  <!-- interface-name HostsManagerMainWindow -->
+  <!-- interface-name main-window.ui -->
+  <requires lib="gio" version="2.44"/>
   <requires lib="gtk" version="4.10"/>
   <template class="HostsManagerMainWindow" parent="GtkWindow">
+    <property name="default-height">600</property>
+    <property name="default-width">500</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
+        <child type="end">
+          <object class="GtkToggleButton" id="menu_bar_toggle_button">
+            <property name="icon-name">open-menu</property>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkPopoverMenuBar" id="menu_bar_popover_menu_bar">
+            <property name="accessible-role">menu-bar</property>
+          </object>
+        </child>
         <child type="end">
           <object class="GtkToggleButton" id="search_toggle_button">
             <property name="active">True</property>
@@ -30,7 +43,57 @@
           <object class="GtkScrolledWindow" id="hosts_scrolled_window">
             <property name="vexpand">True</property>
             <child>
-              <object class="GtkColumnView" id="hosts_column_view"/>
+              <object class="GtkColumnView" id="hosts_column_view">
+                <property name="enable-rubberband">True</property>
+                <property name="model">
+                  <object class="GtkNoSelection" id="hosts_no_selection">
+                    <property name="model">
+                      <object class="GtkFilterListModel" id="hosts_filter_list_model">
+                        <property name="model">
+                          <object class="GListStore" id="host_list_store">
+                            <property name="item-type">GObject</property>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
+                  </object>
+                </property>
+                <child>
+                  <object class="GtkColumnViewColumn" id="host_column_view_column">
+                    <property name="factory">
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="setup" handler="signal_host_setup_handler"/>
+                        <signal name="bind" handler="signal_host_bind_handler"/>
+                      </object>
+                    </property>
+                    <property name="resizable">True</property>
+                    <property name="title">Host</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkColumnViewColumn" id="enabled_column_view_column">
+                    <property name="factory">
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="bind" handler="signal_enabled_bind_handler"/>
+                        <signal name="setup" handler="signal_enabled_setup_handler"/>
+                      </object>
+                    </property>
+                    <property name="title">Enabled</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkColumnViewColumn" id="ipadress_column_view_column">
+                    <property name="factory">
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="setup" handler="signal_ip_address_setup_handler"/>
+                        <signal name="bind" handler="signal_ip_address_bind_handler"/>
+                      </object>
+                    </property>
+                    <property name="resizable">True</property>
+                    <property name="title">IP address</property>
+                  </object>
+                </child>
+              </object>
             </child>
           </object>
         </child>
