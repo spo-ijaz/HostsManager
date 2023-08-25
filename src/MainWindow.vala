@@ -3,7 +3,7 @@ using Gtk;
 
 namespace HostsManager {
 
-	[GtkTemplate (ui = "/com/github/gyan000/hostsmanager/ui/main-window.ui")]
+	[GtkTemplate (ui = "/com/github/spo-ijaz/hostsmanager/ui/main-window.ui")]
 	public class MainWindow : Window {
 
 		[GtkChild]

@@ -9,7 +9,7 @@ namespace HostsManager {
 			Object
 			(
 				application_id: Config.APP_ID,
-				resource_base_path: "/com/github/gyan000/hostsmanager",
+				resource_base_path: "/com/github/spo-ijaz/hostsmanager",
 				flags: ApplicationFlags.FLAGS_NONE
 			);
 		}

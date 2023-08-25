@@ -1,6 +1,6 @@
 # Project name and programming language
 project(
-	'com.github.gyan000.hostsmanager',
+	'com.github.spo-ijaz.hostsmanager',
 	['vala', 'c'],
 	version: '1.0.0',
 	license: 'MIT License',
@@ -18,9 +18,9 @@ add_project_arguments(
 
 # Application ID
 if get_option('profile') == 'development'
-	hostsmanager_app_id = 'com.github.gyan000.hostsmanager.Devel'
+	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager.Devel'
 else
-	hostsmanager_app_id = 'com.github.gyan000.hostsmanager'
+	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager'
 endif
 
 # Common variables

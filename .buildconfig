@@ -5,8 +5,8 @@ toolchain=default
 config-opts=-Dprofile=development
 run-opts=
 prefix=$HOME/.cache/gnome-builder/install/HostsManager/host
-app-id=com.github.gyan000.hostsmanager.Devel
+app-id=com.github.spo-ijaz.hostsmanager.Devel
 postbuild=
 prebuild=
-run-command=$HOME/.cache/gnome-builder/install/HostsManager/host/bin/com.github.gyan000.hostsmanager.app
+run-command=$HOME/.cache/gnome-builder/install/HostsManager/host/bin/com.github.spo-ijaz.hostsmanager.app
 default=true
