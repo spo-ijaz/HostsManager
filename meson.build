@@ -25,22 +25,22 @@ endif
 
 # Common variables
 valac = meson.get_compiler('vala')
-config_h_dir = include_directories('.')
+app_config_h_dir = include_directories('.')
 
 # Dependencies
 gtk4_dep = dependency('gtk4', version: '>= 4.10')
 
 # Configuration
-conf = configuration_data()
-conf.set_quoted('APP_ID', hostsmanager_app_id)
-conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-conf.set_quoted('G_LOG_DOMAIN', meson.project_name())
-conf.set_quoted('PACKAGE_NAME', meson.project_name())
-conf.set_quoted('PACKAGE_STRING', meson.project_name())
-conf.set_quoted('PACKAGE_VERSION', meson.project_version())
-conf.set_quoted('VERSION', meson.project_version())
-conf.set_quoted('PROFILE', get_option('profile'))
-configure_file(output: 'config.h', configuration: conf)
+app_conf = configuration_data()
+app_conf.set_quoted('APP_ID', hostsmanager_app_id)
+app_conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
+app_conf.set_quoted('G_LOG_DOMAIN', meson.project_name())
+app_conf.set_quoted('PACKAGE_NAME', meson.project_name())
+app_conf.set_quoted('PACKAGE_STRING', meson.project_name())
+app_conf.set_quoted('PACKAGE_VERSION', meson.project_version())
+app_conf.set_quoted('VERSION', meson.project_version())
+app_conf.set_quoted('PROFILE', get_option('profile'))
+configure_file(output: 'app-config.h', configuration: app_conf)
 
 # Set our translation domain
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')

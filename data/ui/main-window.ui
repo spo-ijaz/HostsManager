@@ -5,8 +5,8 @@
   <requires lib="gio" version="2.44"/>
   <requires lib="gtk" version="4.10"/>
   <template class="HostsManagerMainWindow" parent="GtkWindow">
-    <property name="default-height">600</property>
-    <property name="default-width">500</property>
+    <property name="default-height">800</property>
+    <property name="default-width">600</property>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
         <child type="end">
@@ -21,7 +21,6 @@
         </child>
         <child type="end">
           <object class="GtkToggleButton" id="search_toggle_button">
-            <property name="active">True</property>
             <property name="icon-name">preferences-system-search-symbolic</property>
             <signal name="toggled" handler="on_search_toggle_button_toggled"/>
           </object>
@@ -58,6 +57,18 @@
                     </property>
                   </object>
                 </property>
+                <property name="reorderable">False</property>
+                <child>
+                  <object class="GtkColumnViewColumn" id="enabled_column_view_column">
+                    <property name="factory">
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="bind" handler="signal_enabled_bind_handler"/>
+                        <signal name="setup" handler="signal_enabled_setup_handler"/>
+                      </object>
+                    </property>
+                    <property name="title">Enabled</property>
+                  </object>
+                </child>
                 <child>
                   <object class="GtkColumnViewColumn" id="host_column_view_column">
                     <property name="factory">
@@ -71,18 +82,8 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkColumnViewColumn" id="enabled_column_view_column">
-                    <property name="factory">
-                      <object class="GtkSignalListItemFactory">
-                        <signal name="bind" handler="signal_enabled_bind_handler"/>
-                        <signal name="setup" handler="signal_enabled_setup_handler"/>
-                      </object>
-                    </property>
-                    <property name="title">Enabled</property>
-                  </object>
-                </child>
-                <child>
                   <object class="GtkColumnViewColumn" id="ipadress_column_view_column">
+                    <property name="expand">True</property>
                     <property name="factory">
                       <object class="GtkSignalListItemFactory">
                         <signal name="setup" handler="signal_ip_address_setup_handler"/>

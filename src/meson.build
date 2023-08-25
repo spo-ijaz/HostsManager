@@ -3,11 +3,14 @@ hostsmanager_sources = [
 	'HostsManager.vala',
 	'MainWindow.vala',
 	'Models/HostRow.vala',
+	'Services/Config.vala',
+	'Services/HostsFile.vala',
+	'Services/HostsRegex.vala',
 	resources
 ]
 
 hostsmanager_vala_args = [
-  '--pkg', 'config',
+  '--pkg', 'app-config',
 ]
 
 executable(
@@ -20,7 +23,7 @@ executable(
 executable(
 	meson.project_name()+ '.app',
 	hostsmanager_sources,
-	include_directories: config_h_dir,
+	include_directories: app_config_h_dir,
 	vala_args: hostsmanager_vala_args,
 	dependencies: gtk4_dep,
 	install: true,

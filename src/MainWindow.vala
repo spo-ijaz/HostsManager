@@ -33,13 +33,28 @@ namespace HostsManager {
 		[GtkChild]
 		public unowned GLib.ListStore host_list_store;
 
+		private Services.HostsFile hosts_file;
+
 		construct {
 
-			host_list_store.append (new HostRow(false, "test", "test"));
-			host_list_store.append (new HostRow(true, "test2", "test2"));
-			host_list_store.append (new HostRow(false, "test3", "test3"));
+			hosts_file = new Services.HostsFile ();
 
-			this.debug ();
+			try {
+				for (MatchInfo match_info = hosts_file.getEntries(); match_info.matches(); match_info.next()) {
+
+					host_list_store.append (
+						new Models.HostRow (
+							true,
+							match_info.fetch_named("enabled") != "#",
+							match_info.fetch_named("ipaddress"),
+							match_info.fetch_named("hostname")
+					));
+			 	}
+			 }
+			 catch (Error e)  {
+
+				error("Regex failed: %s", e.message);
+			 }
 		}
 
 		public MainWindow (App app) {
@@ -48,31 +63,21 @@ namespace HostsManager {
 			);
 		}
 
-		private void debug () {
-
-			info ("Enabled column title                : %s", this.enabled_column_view_column.get_title ());
-			// info ("Enabled column UI resource file     : %s",(this.enabled_column_view_column.get_factory () as Gtk.BuilderListItemFactory).get_resource () );
-
-			info ("hosts_no_selection.get_n_items      : %u", this.hosts_no_selection.get_n_items () );
-			info ("host_list_store.n_items             : %u", this.host_list_store.n_items );
-		}
-
 		//
 		// Header bar
 		//
 		[GtkCallback]
 		private void on_search_toggle_button_toggled () {
 
-
 			info("on_search_toggle_button_toggled");
 		}
 
 
 		//
-		// Columns
+		// Columns's widgets initial render
 		//
 		[GtkCallback]
-		private void signal_enabled_setup_handler(SignalListItemFactory factory, ListItem list_item)
+		private void signal_enabled_setup_handler (SignalListItemFactory factory, ListItem list_item)
 		{
 			CheckButton check_button = new CheckButton();
 			check_button.active = false;
@@ -81,47 +86,80 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
-		private void signal_enabled_bind_handler(SignalListItemFactory factory, ListItem list_item)
+		private void signal_enabled_bind_handler (SignalListItemFactory factory, ListItem list_item)
 		{
 			CheckButton check_button = list_item.child as CheckButton;
-			HostRow? host_row = list_item.item as HostRow;
+			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
 			if (null != host_row) {
             check_button.active = host_row.enabled;
+ 				check_button.toggled.connect (() => {
+
+					Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
+      			this.hosts_file.setEnabled(regex, !check_button.active);
+      			host_row.enabled = check_button.active;
+				});
         }
 		}
 
 		[GtkCallback]
-		private void signal_host_setup_handler(SignalListItemFactory factory, ListItem list_item)
+		private void signal_ip_address_setup_handler (SignalListItemFactory factory, ListItem list_item)
 		{
-			list_item.child = new Label ("");
+			list_item.child = new EditableLabel ("");
 		}
 
 		[GtkCallback]
-		private void signal_host_bind_handler(SignalListItemFactory factory, ListItem list_item)
-		{
-			Label label = list_item.child as Label;
-			HostRow? host_row = list_item.item as HostRow;
+		private void signal_ip_address_bind_handler (SignalListItemFactory factory, ListItem list_item) {
+
+			EditableLabel editable_label = list_item.child as EditableLabel;
+			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
 			if (null != host_row) {
-            label.set_label (host_row.host);
+            editable_label.set_text (host_row.ip_address);
+ 				editable_label.changed.connect (() => {
+
+					try {
+
+						Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
+						this.hosts_file.setIpAddress(regex, editable_label.text);
+						host_row.ip_address = editable_label.text;
+					}
+					catch (InvalidArgument err) {
+
+						debug("InvalidArgument: %s", err.message);
+					}
+
+				});
         }
 		}
 
 		[GtkCallback]
-		private void signal_ip_address_setup_handler(SignalListItemFactory factory, ListItem list_item)
+		private void signal_host_setup_handler (SignalListItemFactory factory, ListItem list_item)
 		{
-			list_item.child = new Label ("");
+			list_item.child = new EditableLabel ("");
 		}
 
 		[GtkCallback]
-		private void signal_ip_address_bind_handler(SignalListItemFactory factory, ListItem list_item)
+		private void signal_host_bind_handler (SignalListItemFactory factory, ListItem list_item)
 		{
-			Label label = list_item.child as Label;
-			HostRow? host_row = list_item.item as HostRow;
+			EditableLabel editable_label = list_item.child as EditableLabel;
+			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
 			if (null != host_row) {
-            label.set_label (host_row.ip_address);
+            editable_label.set_text (host_row.hostname);
+ 				editable_label.changed.connect (() => {
+
+					try {
+
+						Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
+						this.hosts_file.setHostname (regex, editable_label.text);
+						host_row.hostname = editable_label.text;
+					}
+					catch (InvalidArgument err) {
+
+						debug("InvalidArgument: %s", err.message);
+					}
+				});
         }
 		}
 	}
