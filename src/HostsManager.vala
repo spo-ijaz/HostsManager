@@ -2,7 +2,7 @@ namespace HostsManager {
 
 	public class App : Gtk.Application
 	{
-		private unowned MainWindow window;
+		private unowned MainWindow main_window;
 
 		public App()
 		{
@@ -33,14 +33,15 @@ namespace HostsManager {
 
 		private void create_window () {
 
-			var win = new MainWindow (this);
-			win.close_request.connect_after ((win) => {
+			var main_window = new MainWindow (this);
+			main_window.close_request.connect_after ((main_window) => {
 				activate_action ("quit", null);
 				return false;
 			});
 
-			this.window = win;
-			win.present ();
+			this.main_window = main_window;
+			main_window.present ();
 		}
 	}
 }
+

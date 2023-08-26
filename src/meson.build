@@ -1,5 +1,5 @@
 hostsmanager_sources = [
-	'Filters/HostRowFilter.vala',
+	#'Filters/HostRowFilter.vala',
 	'HostsManager.vala',
 	'MainWindow.vala',
 	'Models/HostRow.vala',
