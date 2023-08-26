@@ -2,9 +2,18 @@ using Gtk;
 
 namespace HostsManager.Filters {
 
-	public class HostRowFilter : Filter {
+	public class HostRowFilter :  Filter {
 
-		public bool match (Object? item) {
+		public HostRowFilter() {
+      }
+
+		public override bool match (Object? object) {
+
+			Models.HostRow? host_row = object as Models.HostRow;
+			if (host_row != null) {
+
+				info ("test : %s", host_row.hostname );
+			}
 
 			return true;
 		}

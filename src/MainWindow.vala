@@ -19,35 +19,38 @@ namespace HostsManager {
 		[GtkChild]
 		public unowned SearchEntry search_entry;
 		[GtkChild]
-		public unowned StringFilter hosts_string_filter;
+		public unowned ColumnView hosts_column_view;
 		[GtkChild]
 		public unowned GLib.ListStore hosts_list_store;
 
 		private Services.HostsFile hosts_file;
+		private GLib.ListStore hosts_list_store_ref;
 
 		construct {
 
 			this.set_title (Services.Config.hostfile_path ());
 
-			//constant_expression.for_value ("hostname");
-			//hosts_string_filter.set_expression (constant_expression);
-
 			// Actions
     		this.add_action_entries (ACTION_ENTRIES, this);
 
+			// Gtk 4.12 only :/ 
+			//hosts_column_view.set_row_factory ();
+
 			// Populate column view
+			this.hosts_list_store_ref = new GLib.ListStore (typeof(Models.HostRow));
 			this.hosts_file = new Services.HostsFile ();
 
 			try {
 				for (MatchInfo match_info = this.hosts_file.getEntries(); match_info.matches(); match_info.next()) {
+					
+					Models.HostRow host_row = new Models.HostRow (
+						true,
+						match_info.fetch_named("enabled") != "#",
+						match_info.fetch_named("ipaddress"),
+						match_info.fetch_named("hostname"));
 
-					this.hosts_list_store.append (
-						new Models.HostRow (
-							true,
-							match_info.fetch_named("enabled") != "#",
-							match_info.fetch_named("ipaddress"),
-							match_info.fetch_named("hostname")
-					));
+					this.hosts_list_store.append (host_row);
+					this.hosts_list_store_ref.append (host_row);
 			 	}
 			 }
 			 catch (Error e)  {
@@ -80,13 +83,42 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_search_entry_search_changed_handler ( ) {
 
-			info (hosts_string_filter.get_expression ().get_value_type ().to_string ());
+			if(search_entry.text.length == 0) {
+					
+				hosts_list_store.remove_all ();
+				for (uint item_pos = 0; item_pos < hosts_list_store_ref.get_n_items (); item_pos++) {
+
+					Models.HostRow host_row = hosts_list_store_ref.get_item (item_pos) as Models.HostRow;
+					hosts_list_store.append (host_row);
+				}
+				
+				return;
+			}
+
+			try {
+
+				//  Array<uint> items_pos_to_remove = new Array<uint> ();
+
+				Regex hosts_filter_regex = new Regex (search_entry.text);
+				hosts_list_store.remove_all ();
 
 
-			//hosts_string_filter.set_expression (object_expression);
-			hosts_string_filter.set_search (search_entry.text);
+				for (uint item_pos = 0; item_pos < hosts_list_store_ref.get_n_items (); item_pos++) { 
+
+					Models.HostRow host_row = hosts_list_store_ref.get_item (item_pos) as Models.HostRow;
+					if(hosts_filter_regex.match (host_row.hostname) ) {
+
+						hosts_list_store.append (host_row);
+					}
+				}
+			}
+			catch (Error e) {
+
+				error("Regex failed: %s", e.message);
+			}
 		}
-			//
+
+		//
 		// Columns's widgets initial render
 		//
 		[GtkCallback]
@@ -105,8 +137,9 @@ namespace HostsManager {
 			CheckButton check_button = list_item.child as CheckButton;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (null != host_row) {
-            check_button.active = host_row.enabled;
+			if (host_row != null) {
+
+            	check_button.active = host_row.enabled;
  				check_button.toggled.connect (() => {
 
 					Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
@@ -115,6 +148,19 @@ namespace HostsManager {
 				});
         }
 		}
+
+		[GtkCallback]
+		private void signal_enabled_teardown_handler (SignalListItemFactory factory, ListItem list_item) {
+			
+			//  info ("signal_enabled_teardown_handler");
+		}
+
+		[GtkCallback]
+		private void signal_enabled_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
+			
+			list_item.child.destroy ();
+		}
+
 
 		[GtkCallback]
 		private void signal_ip_address_setup_handler (SignalListItemFactory factory, ListItem list_item) {
@@ -128,7 +174,7 @@ namespace HostsManager {
 			EditableLabel editable_label = list_item.child as EditableLabel;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (null != host_row) {
+			if (host_row != null) {
             editable_label.set_text (host_row.ip_address);
  				editable_label.changed.connect (() => {
 
@@ -148,6 +194,21 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
+		private void signal_ip_address_teardown_handler (SignalListItemFactory factory, ListItem list_item) {
+			
+			//  info ("signal_enabled_teardown_handler");
+		}
+
+		[GtkCallback]
+		private void signal_ip_address_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
+			
+			list_item.child.destroy ();
+		}
+
+
+
+
+		[GtkCallback]
 		private void signal_host_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
 			list_item.child = new EditableLabel ("");
@@ -159,7 +220,7 @@ namespace HostsManager {
 			EditableLabel editable_label = list_item.child as EditableLabel;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (null != host_row) {
+			if (host_row != null) {
             editable_label.set_text (host_row.hostname);
  				editable_label.changed.connect (() => {
 
@@ -175,6 +236,18 @@ namespace HostsManager {
 					}
 				});
         }
+		}
+
+		[GtkCallback]
+		private void signal_host_teardown_handler (SignalListItemFactory factory, ListItem list_item) {
+			
+			//  info ("signal_enabled_teardown_handler");
+		}
+
+		[GtkCallback]
+		private void signal_host_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
+
+			list_item.child.destroy ();
 		}
 	}
 }

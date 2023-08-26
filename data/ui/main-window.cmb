@@ -18,15 +18,13 @@
 	(1,15,"GtkToggleButton","menu_bar_toggle_button",2,None,"end",None,None,None),
 	(1,16,"GtkPopoverMenuBar","menu_bar_popover_menu_bar",2,None,"end",None,1,None),
 	(1,18,"GtkNoSelection","hosts_no_selection",7,None,None,None,None,None),
-	(1,19,"GtkFilterListModel","hosts_filter_list_model",18,None,None,None,None,None),
-	(1,21,"GListStore","hosts_list_store",19,None,None,None,None,None),
 	(1,22,"GtkSignalListItemFactory",None,10,None,None,None,None,None),
 	(1,23,"GtkSignalListItemFactory",None,12,None,None,None,None,None),
 	(1,24,"GtkSignalListItemFactory",None,13,None,None,None,None,None),
 	(1,25,"GtkSearchEntry","search_entry",4,None,None,None,None,None),
 	(1,26,"GtkShortcutController","shortcut_controller",1,None,None,None,None,None),
 	(1,27,"GtkShortcut",None,26,None,None,None,None,None),
-	(1,28,"GtkStringFilter","hosts_string_filter",19,None,None,None,None,None)
+	(1,28,"GListStore","hosts_list_store",18,None,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkAccessible","accessible-role","window",None,None,None,None,None,None,None,None,None),
@@ -42,7 +40,6 @@
 	(1,4,"GtkSearchBar","show-close-button","True",None,None,None,None,None,None,None,None,None),
 	(1,4,"GtkWidget","visible","False",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
-	(1,7,"GtkColumnView","enable-rubberband","True",None,None,None,None,None,None,None,None,None),
 	(1,7,"GtkColumnView","model",None,None,None,None,None,18,None,None,None,None),
 	(1,7,"GtkColumnView","reorderable","False",None,None,None,None,None,None,None,None,None),
 	(1,9,"GtkButton","icon-name","preferences-system-search-symbolic",None,None,None,None,None,None,None,None,None),
@@ -57,10 +54,7 @@
 	(1,13,"GtkColumnViewColumn","title","IP address",None,None,None,None,None,None,None,None,None),
 	(1,15,"GtkButton","icon-name","open-menu",None,None,None,None,None,None,None,None,None),
 	(1,16,"GtkAccessible","accessible-role","menu-bar",None,None,None,None,None,None,None,None,None),
-	(1,18,"GtkNoSelection","model",None,None,None,None,None,19,None,None,None,None),
-	(1,19,"GtkFilterListModel","filter",None,None,None,None,None,28,None,None,None,None),
-	(1,19,"GtkFilterListModel","model",None,None,None,None,None,21,None,None,None,None),
-	(1,21,"GListStore","item-type","GObject",None,None,None,None,None,None,None,None,None),
+	(1,18,"GtkNoSelection","model",None,None,None,None,None,28,None,None,None,None),
 	(1,25,"GtkSearchEntry","activates-default","True",None,None,None,None,None,None,None,None,None),
 	(1,25,"GtkWidget","focusable","True",None,None,None,None,None,None,None,None,None),
 	(1,26,"GtkShortcutController","scope","global",None,None,None,None,None,None,None,None,None),
@@ -75,6 +69,12 @@
 	(7,1,23,"GtkSignalListItemFactory","bind","signal_host_bind_handler",None,None,None,None,None),
 	(8,1,24,"GtkSignalListItemFactory","setup","signal_ip_address_setup_handler",None,None,None,None,None),
 	(9,1,24,"GtkSignalListItemFactory","bind","signal_ip_address_bind_handler",None,None,None,None,None),
-	(10,1,25,"GtkSearchEntry","search-changed","signal_search_entry_search_changed_handler",None,None,None,None,None)
+	(10,1,25,"GtkSearchEntry","search-changed","signal_search_entry_search_changed_handler",None,None,None,None,None),
+	(11,1,22,"GtkSignalListItemFactory","unbind","signal_enabled_unbind_handler",None,None,None,None,None),
+	(12,1,24,"GtkSignalListItemFactory","unbind","signal_ip_address_unbind_handler",None,None,None,None,None),
+	(13,1,23,"GtkSignalListItemFactory","unbind","signal_host_unbind_handler",None,None,None,None,None),
+	(14,1,23,"GtkSignalListItemFactory","teardown","signal_host_teardown_handler",None,None,None,None,None),
+	(15,1,24,"GtkSignalListItemFactory","teardown","signal_ip_address_teardown_handler",None,None,None,None,None),
+	(16,1,22,"GtkSignalListItemFactory","teardown","signal_enabled_teardown_handler",None,None,None,None,None)
   </object_signal>
 </cambalache-project>

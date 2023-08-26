@@ -65,20 +65,10 @@
             <property name="vexpand">True</property>
             <child>
               <object class="GtkColumnView" id="hosts_column_view">
-                <property name="enable-rubberband">True</property>
                 <property name="model">
                   <object class="GtkNoSelection" id="hosts_no_selection">
                     <property name="model">
-                      <object class="GtkFilterListModel" id="hosts_filter_list_model">
-                        <property name="filter">
-                          <object class="GtkStringFilter" id="hosts_string_filter"/>
-                        </property>
-                        <property name="model">
-                          <object class="GListStore" id="hosts_list_store">
-                            <property name="item-type">GObject</property>
-                          </object>
-                        </property>
-                      </object>
+                      <object class="GListStore" id="hosts_list_store"/>
                     </property>
                   </object>
                 </property>
@@ -89,6 +79,8 @@
                       <object class="GtkSignalListItemFactory">
                         <signal name="bind" handler="signal_enabled_bind_handler"/>
                         <signal name="setup" handler="signal_enabled_setup_handler"/>
+                        <signal name="unbind" handler="signal_enabled_unbind_handler"/>
+                        <signal name="teardown" handler="signal_enabled_teardown_handler"/>
                       </object>
                     </property>
                     <property name="title">Enabled</property>
@@ -100,6 +92,8 @@
                       <object class="GtkSignalListItemFactory">
                         <signal name="setup" handler="signal_host_setup_handler"/>
                         <signal name="bind" handler="signal_host_bind_handler"/>
+                        <signal name="unbind" handler="signal_host_unbind_handler"/>
+                        <signal name="teardown" handler="signal_host_teardown_handler"/>
                       </object>
                     </property>
                     <property name="resizable">True</property>
@@ -113,6 +107,8 @@
                       <object class="GtkSignalListItemFactory">
                         <signal name="setup" handler="signal_ip_address_setup_handler"/>
                         <signal name="bind" handler="signal_ip_address_bind_handler"/>
+                        <signal name="unbind" handler="signal_ip_address_unbind_handler"/>
+                        <signal name="teardown" handler="signal_ip_address_teardown_handler"/>
                       </object>
                     </property>
                     <property name="resizable">True</property>
