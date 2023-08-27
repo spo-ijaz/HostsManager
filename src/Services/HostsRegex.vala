@@ -12,7 +12,7 @@ namespace HostsManager.Services {
 		 try {
 
 		   string regexStr = """(?P<enabled>#?)\s?(?P<row>(?P<ipaddress>""" + ipaddress + """)(?P<divider>\s+)(?P<hostname>""" + hostname + "))";
-		   debug(regexStr);
+		   //debug (regexStr);
 		   base(regexStr);
 		 }
 		 catch (Error e) {

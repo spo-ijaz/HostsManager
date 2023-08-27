@@ -2,8 +2,5 @@
 <gresources>
   <gresource prefix="/com/github/spo-ijaz/hostsmanager">
     <file compressed="true" preprocess="xml-stripblanks">ui/main-window.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">ui/hosts_columns/enabled.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">ui/hosts_columns/ip-address.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">ui/hosts_columns/hostname.ui</file>
   </gresource>
 </gresources>

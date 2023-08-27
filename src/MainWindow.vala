@@ -35,13 +35,14 @@ namespace HostsManager {
 
 			this.set_title (Services.Config.hostfile_path ());
 
-			// Actions
+			// Actions.
     		this.add_action_entries (ACTION_ENTRIES, this);
 
+			// Filter for LibStore.
 			PropertyExpression property_expression = new PropertyExpression (typeof(Models.HostRow), null, "hostname");
 			hosts_string_filter.set_expression (property_expression);
 
-			// Populate column view
+			// Populate column view.
 			this.hosts_file = new Services.HostsFile ();
 
 			try {
@@ -99,64 +100,69 @@ namespace HostsManager {
 			check_button.active = false;
 			check_button.set_halign (Align.CENTER);
 
-			list_item.child = check_button;
+			list_item.set_child (check_button);
 		}
 
 		[GtkCallback]
 		private void signal_enabled_bind_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			CheckButton check_button = list_item.child as CheckButton;
+			if(list_item.child == null) {
+
+				this.signal_enabled_setup_handler (factory, list_item);
+			}
+
+			CheckButton? check_button = list_item.get_child () as CheckButton;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if(check_button == null)  {
-				
-				check_button = new CheckButton();
-				check_button.active = false;
-				check_button.set_halign (Align.CENTER);
-				list_item.child = check_button;
-			}
 
 			if (check_button != null && host_row != null) {
 				
-				check_button.visible = true;
+				check_button.active = host_row.enabled;
  				check_button.toggled.connect (() => {
+					
+					try {
 
-					Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
-      			this.hosts_file.setEnabled(regex, !check_button.active);
-      			host_row.enabled = check_button.active;
+						Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
+						this.hosts_file.setEnabled(regex, !check_button.active);
+						host_row.enabled = check_button.active;
+					}
+					catch (InvalidArgument err) {
+
+						debug("InvalidArgument: %s", err.message);
+					}
 				});
-        }
+        	}
 		}
 
 		[GtkCallback]
 		private void signal_enabled_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
 			
-			if ((list_item.child as CheckButton) != null) {
+			if(list_item.child != null) {
 
 				list_item.child = null;
 			}
 		}
 
 
+
+
+
 		[GtkCallback]
 		private void signal_ip_address_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			list_item.child = new EditableLabel ("");
+			list_item.set_child (new EditableLabel(""));
 		}
 
 		[GtkCallback]
 		private void signal_ip_address_bind_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			EditableLabel editable_label = list_item.child as EditableLabel;
-			Models.HostRow? host_row = list_item.item as Models.HostRow;
+			if(list_item.child == null) {
 
-			if(editable_label == null)  {
-				//  this.signal_ip_address_bind_handler(factory, list_item);
-				//  editable_label = list_item.child as EditableLabel;
-				
-				editable_label = new EditableLabel ("");
-				list_item.child = editable_label;
+				this.signal_ip_address_setup_handler (factory, list_item);
 			}
+
+			EditableLabel? editable_label = list_item.child as EditableLabel;
+			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
 			if (editable_label != null && host_row != null) {
 
@@ -164,7 +170,7 @@ namespace HostsManager {
  				editable_label.changed.connect (() => {
 
 					try {
-
+						
 						Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
 						this.hosts_file.setIpAddress(regex, editable_label.text);
 						host_row.ip_address = editable_label.text;
@@ -175,17 +181,18 @@ namespace HostsManager {
 					}
 
 				});
-        }
+        	}
 		}
 
 		[GtkCallback]
 		private void signal_ip_address_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
 			
-			if ((list_item.child as EditableLabel) != null) {
+			if(list_item.item != null) {
 
-				list_item.child = null;
+				list_item.set_child (null);
 			}
 		}
+
 
 
 
@@ -193,23 +200,20 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_host_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			list_item.child = new EditableLabel ("");
+			list_item.set_child (new EditableLabel(""));
 		}
 
 		[GtkCallback]
 		private void signal_host_bind_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			EditableLabel editable_label = list_item.child as EditableLabel;
-			Models.HostRow? host_row = list_item.item as Models.HostRow;
+			if(list_item.child == null) {
 
-			if(editable_label == null)  {
-				//  this.signal_host_setup_handler(factory, list_item);
-				//  editable_label = list_item.child as EditableLabel;
-
-				editable_label = new EditableLabel ("");
-				list_item.child = editable_label;
+				this.signal_host_setup_handler (factory, list_item);
 			}
 
+			EditableLabel? editable_label = list_item.child as EditableLabel;
+			Models.HostRow? host_row = list_item.item as Models.HostRow;
+			
 			if (editable_label != null && host_row != null) {
 
             	editable_label.set_text (host_row.hostname);
@@ -226,15 +230,15 @@ namespace HostsManager {
 						debug("InvalidArgument: %s", err.message);
 					}
 				});
-        }
+        	}
 		}
 
 		[GtkCallback]
 		private void signal_host_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			if ((list_item.child as EditableLabel) != null) {
+			if(list_item.item != null) {
 
-				list_item.child = null;
+				list_item.set_child (null);
 			}
 		}
 	}

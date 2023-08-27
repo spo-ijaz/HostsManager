@@ -83,8 +83,10 @@
                 <child>
                   <object class="GtkColumnViewColumn" id="enabled_column_view_column">
                     <property name="factory">
-                      <object class="GtkBuilderListItemFactory" id="enabled_list_item_factory">
-                        <property name="resource">/com/github/spo-ijaz/hostsmanager/ui/hosts_columns/enabled.ui</property>
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="bind" handler="signal_enabled_bind_handler"/>
+                        <signal name="setup" handler="signal_enabled_setup_handler"/>
+                        <signal name="unbind" handler="signal_enabled_unbind_handler"/>
                       </object>
                     </property>
                     <property name="title">Enabled</property>
@@ -93,8 +95,10 @@
                 <child>
                   <object class="GtkColumnViewColumn" id="host_column_view_column">
                     <property name="factory">
-                      <object class="GtkBuilderListItemFactory">
-                        <property name="resource">/com/github/spo-ijaz/hostsmanager/ui/hosts_columns/hostname.ui</property>
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="setup" handler="signal_host_setup_handler"/>
+                        <signal name="bind" handler="signal_host_bind_handler"/>
+                        <signal name="unbind" handler="signal_host_unbind_handler"/>
                       </object>
                     </property>
                     <property name="resizable">True</property>
@@ -105,8 +109,10 @@
                   <object class="GtkColumnViewColumn" id="ipadress_column_view_column">
                     <property name="expand">True</property>
                     <property name="factory">
-                      <object class="GtkBuilderListItemFactory">
-                        <property name="resource">/com/github/spo-ijaz/hostsmanager/ui/hosts_columns/ip-address.ui</property>
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="setup" handler="signal_ip_address_setup_handler"/>
+                        <signal name="bind" handler="signal_ip_address_bind_handler"/>
+                        <signal name="unbind" handler="signal_ip_address_unbind_handler"/>
                       </object>
                     </property>
                     <property name="resizable">True</property>
