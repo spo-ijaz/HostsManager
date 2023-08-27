@@ -31,7 +31,7 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="accelerator">Delete</property>
-                <property name="title">Deletes selected row</property>
+                <property name="title">Delete selected row</property>
                 <property name="visible">True</property>
               </object>
             </child>
