@@ -68,7 +68,14 @@
                 <property name="model">
                   <object class="GtkNoSelection" id="hosts_no_selection">
                     <property name="model">
-                      <object class="GListStore" id="hosts_list_store"/>
+                      <object class="GtkFilterListModel" id="hosts_filter_list_model">
+                        <property name="filter">
+                          <object class="GtkStringFilter" id="hosts_string_filter"/>
+                        </property>
+                        <property name="model">
+                          <object class="GListStore" id="hosts_list_store"/>
+                        </property>
+                      </object>
                     </property>
                   </object>
                 </property>

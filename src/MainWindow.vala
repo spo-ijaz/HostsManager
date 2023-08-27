@@ -21,10 +21,15 @@ namespace HostsManager {
 		[GtkChild]
 		public unowned ColumnView hosts_column_view;
 		[GtkChild]
+		public unowned NoSelection hosts_no_selection;
+		[GtkChild]
+		public unowned FilterListModel hosts_filter_list_model;
+		[GtkChild]
 		public unowned GLib.ListStore hosts_list_store;
+		[GtkChild]
+		public unowned StringFilter hosts_string_filter;
 
 		private Services.HostsFile hosts_file;
-		private GLib.ListStore hosts_list_store_ref;
 
 		construct {
 
@@ -33,11 +38,10 @@ namespace HostsManager {
 			// Actions
     		this.add_action_entries (ACTION_ENTRIES, this);
 
-			// Gtk 4.12 only :/ 
-			//hosts_column_view.set_row_factory ();
+			PropertyExpression property_expression = new PropertyExpression (typeof(Models.HostRow), null, "hostname");
+			hosts_string_filter.set_expression (property_expression);
 
 			// Populate column view
-			this.hosts_list_store_ref = new GLib.ListStore (typeof(Models.HostRow));
 			this.hosts_file = new Services.HostsFile ();
 
 			try {
@@ -50,7 +54,6 @@ namespace HostsManager {
 						match_info.fetch_named("hostname"));
 
 					this.hosts_list_store.append (host_row);
-					this.hosts_list_store_ref.append (host_row);
 			 	}
 			 }
 			 catch (Error e)  {
@@ -83,39 +86,7 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_search_entry_search_changed_handler ( ) {
 
-			if(search_entry.text.length == 0) {
-					
-				hosts_list_store.remove_all ();
-				for (uint item_pos = 0; item_pos < hosts_list_store_ref.get_n_items (); item_pos++) {
-
-					Models.HostRow host_row = hosts_list_store_ref.get_item (item_pos) as Models.HostRow;
-					hosts_list_store.append (host_row);
-				}
-				
-				return;
-			}
-
-			try {
-
-				//  Array<uint> items_pos_to_remove = new Array<uint> ();
-
-				Regex hosts_filter_regex = new Regex (search_entry.text);
-				hosts_list_store.remove_all ();
-
-
-				for (uint item_pos = 0; item_pos < hosts_list_store_ref.get_n_items (); item_pos++) { 
-
-					Models.HostRow host_row = hosts_list_store_ref.get_item (item_pos) as Models.HostRow;
-					if(hosts_filter_regex.match (host_row.hostname) ) {
-
-						hosts_list_store.append (host_row);
-					}
-				}
-			}
-			catch (Error e) {
-
-				error("Regex failed: %s", e.message);
-			}
+			hosts_string_filter.set_search (search_entry.text);
 		}
 
 		//
@@ -124,6 +95,7 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_enabled_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
+			info ("signal_enabled_setup_handler");
 			CheckButton check_button = new CheckButton();
 			check_button.active = false;
 			check_button.set_halign (Align.CENTER);
@@ -133,6 +105,8 @@ namespace HostsManager {
 
 		[GtkCallback]
 		private void signal_enabled_bind_handler (SignalListItemFactory factory, ListItem list_item) {
+
+			info ("signal_enabled_bind_handler");
 
 			CheckButton check_button = list_item.child as CheckButton;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
@@ -152,12 +126,13 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_enabled_teardown_handler (SignalListItemFactory factory, ListItem list_item) {
 			
-			//  info ("signal_enabled_teardown_handler");
+			info ("signal_enabled_teardown_handler");
 		}
 
 		[GtkCallback]
 		private void signal_enabled_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
 			
+			info ("signal_enabled_teardown_handler");
 			list_item.child.destroy ();
 		}
 
@@ -165,17 +140,21 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_ip_address_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
+			info ("signal_ip_address_setup_handler");
 			list_item.child = new EditableLabel ("");
 		}
 
 		[GtkCallback]
 		private void signal_ip_address_bind_handler (SignalListItemFactory factory, ListItem list_item) {
 
+			info ("signal_ip_address_bind_handler");
+
 			EditableLabel editable_label = list_item.child as EditableLabel;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
 			if (host_row != null) {
-            editable_label.set_text (host_row.ip_address);
+
+            	editable_label.set_text (host_row.ip_address);
  				editable_label.changed.connect (() => {
 
 					try {
@@ -196,12 +175,13 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_ip_address_teardown_handler (SignalListItemFactory factory, ListItem list_item) {
 			
-			//  info ("signal_enabled_teardown_handler");
+			info ("signal_enabled_teardown_handler");
 		}
 
 		[GtkCallback]
 		private void signal_ip_address_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
 			
+			info ("signal_ip_address_unbind_handler");
 			list_item.child.destroy ();
 		}
 
@@ -211,17 +191,21 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_host_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
+			info ("signal_host_setup_handler");
 			list_item.child = new EditableLabel ("");
 		}
 
 		[GtkCallback]
 		private void signal_host_bind_handler (SignalListItemFactory factory, ListItem list_item) {
 
+			info ("signal_host_bind_handler");
+
 			EditableLabel editable_label = list_item.child as EditableLabel;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
 			if (host_row != null) {
-            editable_label.set_text (host_row.hostname);
+
+            	editable_label.set_text (host_row.hostname);
  				editable_label.changed.connect (() => {
 
 					try {
@@ -241,12 +225,13 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_host_teardown_handler (SignalListItemFactory factory, ListItem list_item) {
 			
-			//  info ("signal_enabled_teardown_handler");
+			info ("signal_enabled_teardown_handler");
 		}
 
 		[GtkCallback]
 		private void signal_host_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
 
+			info ("signal_host_unbind_handler");
 			list_item.child.destroy ();
 		}
 	}

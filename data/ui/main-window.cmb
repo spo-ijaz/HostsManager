@@ -17,14 +17,16 @@
 	(1,13,"GtkColumnViewColumn","ipadress_column_view_column",7,None,None,None,2,None),
 	(1,15,"GtkToggleButton","menu_bar_toggle_button",2,None,"end",None,None,None),
 	(1,16,"GtkPopoverMenuBar","menu_bar_popover_menu_bar",2,None,"end",None,1,None),
-	(1,18,"GtkNoSelection","hosts_no_selection",7,None,None,None,None,None),
 	(1,22,"GtkSignalListItemFactory",None,10,None,None,None,None,None),
 	(1,23,"GtkSignalListItemFactory",None,12,None,None,None,None,None),
 	(1,24,"GtkSignalListItemFactory",None,13,None,None,None,None,None),
 	(1,25,"GtkSearchEntry","search_entry",4,None,None,None,None,None),
 	(1,26,"GtkShortcutController","shortcut_controller",1,None,None,None,None,None),
 	(1,27,"GtkShortcut",None,26,None,None,None,None,None),
-	(1,28,"GListStore","hosts_list_store",18,None,None,None,None,None)
+	(1,28,"GtkNoSelection","hosts_no_selection",7,None,None,None,None,None),
+	(1,29,"GtkFilterListModel","hosts_filter_list_model",28,None,None,None,None,None),
+	(1,30,"GtkStringFilter","hosts_string_filter",29,None,None,None,None,None),
+	(1,31,"GListStore","hosts_list_store",29,None,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkAccessible","accessible-role","window",None,None,None,None,None,None,None,None,None),
@@ -40,7 +42,7 @@
 	(1,4,"GtkSearchBar","show-close-button","True",None,None,None,None,None,None,None,None,None),
 	(1,4,"GtkWidget","visible","False",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
-	(1,7,"GtkColumnView","model",None,None,None,None,None,18,None,None,None,None),
+	(1,7,"GtkColumnView","model",None,None,None,None,None,28,None,None,None,None),
 	(1,7,"GtkColumnView","reorderable","False",None,None,None,None,None,None,None,None,None),
 	(1,9,"GtkButton","icon-name","preferences-system-search-symbolic",None,None,None,None,None,None,None,None,None),
 	(1,10,"GtkColumnViewColumn","factory",None,None,None,None,None,22,None,None,None,None),
@@ -54,12 +56,14 @@
 	(1,13,"GtkColumnViewColumn","title","IP address",None,None,None,None,None,None,None,None,None),
 	(1,15,"GtkButton","icon-name","open-menu",None,None,None,None,None,None,None,None,None),
 	(1,16,"GtkAccessible","accessible-role","menu-bar",None,None,None,None,None,None,None,None,None),
-	(1,18,"GtkNoSelection","model",None,None,None,None,None,28,None,None,None,None),
 	(1,25,"GtkSearchEntry","activates-default","True",None,None,None,None,None,None,None,None,None),
 	(1,25,"GtkWidget","focusable","True",None,None,None,None,None,None,None,None,None),
 	(1,26,"GtkShortcutController","scope","global",None,None,None,None,None,None,None,None,None),
 	(1,27,"GtkShortcut","action","action(main_window.focus-search-bar)",None,None,None,None,None,None,None,None,None),
-	(1,27,"GtkShortcut","trigger","&lt;Control&gt;f",None,None,None,None,None,None,None,None,None)
+	(1,27,"GtkShortcut","trigger","&lt;Control&gt;f",None,None,None,None,None,None,None,None,None),
+	(1,28,"GtkNoSelection","model",None,None,None,None,None,29,None,None,None,None),
+	(1,29,"GtkFilterListModel","filter",None,None,None,None,None,30,None,None,None,None),
+	(1,29,"GtkFilterListModel","model",None,None,None,None,None,31,None,None,None,None)
   </object_property>
   <object_signal>
 	(1,1,9,"GtkToggleButton","toggled","on_search_toggle_button_toggled",None,None,None,None,None),
