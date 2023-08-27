@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 0.12.1 -->
+<interface>
+  <!-- interface-name enabled.ui -->
+  <requires lib="gtk" version="4.10"/>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="GtkCheckButton" id="host_enabled_check_button">
+        <property name="accessible-role">checkbox</property>
+        <binding name="active">
+          <lookup name="enabled" type="HostsManagerModelsHostRow">
+            <lookup name="item">GtkListItem</lookup>
+          </lookup>
+        </binding>
+      </object>
+    </property>
+  </template>
+</interface>

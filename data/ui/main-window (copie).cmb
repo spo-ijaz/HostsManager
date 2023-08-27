@@ -17,16 +17,16 @@
 	(1,13,"GtkColumnViewColumn","ipadress_column_view_column",7,None,None,None,2,None),
 	(1,15,"GtkToggleButton","menu_bar_toggle_button",2,None,"end",None,None,None),
 	(1,16,"GtkPopoverMenuBar","menu_bar_popover_menu_bar",2,None,"end",None,1,None),
+	(1,22,"GtkSignalListItemFactory",None,10,None,None,None,None,None),
+	(1,23,"GtkSignalListItemFactory",None,12,None,None,None,None,None),
+	(1,24,"GtkSignalListItemFactory",None,13,None,None,None,None,None),
 	(1,25,"GtkSearchEntry","search_entry",4,None,None,None,None,None),
 	(1,26,"GtkShortcutController","shortcut_controller",1,None,None,None,None,None),
 	(1,27,"GtkShortcut",None,26,None,None,None,None,None),
 	(1,28,"GtkNoSelection","hosts_no_selection",7,None,None,None,None,None),
 	(1,29,"GtkFilterListModel","hosts_filter_list_model",28,None,None,None,None,None),
 	(1,30,"GtkStringFilter","hosts_string_filter",29,None,None,None,None,None),
-	(1,31,"GListStore","hosts_list_store",29,None,None,None,None,None),
-	(1,32,"GtkBuilderListItemFactory",None,12,None,None,None,None,None),
-	(1,33,"GtkBuilderListItemFactory",None,13,None,None,None,None,None),
-	(1,34,"GtkBuilderListItemFactory",None,10,None,None,None,None,None)
+	(1,31,"GListStore","hosts_list_store",29,None,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkAccessible","accessible-role","window",None,None,None,None,None,None,None,None,None),
@@ -45,13 +45,13 @@
 	(1,7,"GtkColumnView","model",None,None,None,None,None,28,None,None,None,None),
 	(1,7,"GtkColumnView","reorderable","False",None,None,None,None,None,None,None,None,None),
 	(1,9,"GtkButton","icon-name","preferences-system-search-symbolic",None,None,None,None,None,None,None,None,None),
-	(1,10,"GtkColumnViewColumn","factory",None,None,None,None,None,34,None,None,None,None),
+	(1,10,"GtkColumnViewColumn","factory",None,None,None,None,None,22,None,None,None,None),
 	(1,10,"GtkColumnViewColumn","title","Enabled",None,None,None,None,None,None,None,None,None),
-	(1,12,"GtkColumnViewColumn","factory",None,None,None,None,None,32,None,None,None,None),
+	(1,12,"GtkColumnViewColumn","factory",None,None,None,None,None,23,None,None,None,None),
 	(1,12,"GtkColumnViewColumn","resizable","True",None,None,None,None,None,None,None,None,None),
 	(1,12,"GtkColumnViewColumn","title","Host",None,None,None,None,None,None,None,None,None),
 	(1,13,"GtkColumnViewColumn","expand","True",None,None,None,None,None,None,None,None,None),
-	(1,13,"GtkColumnViewColumn","factory",None,None,None,None,None,33,None,None,None,None),
+	(1,13,"GtkColumnViewColumn","factory",None,None,None,None,None,24,None,None,None,None),
 	(1,13,"GtkColumnViewColumn","resizable","True",None,None,None,None,None,None,None,None,None),
 	(1,13,"GtkColumnViewColumn","title","IP address",None,None,None,None,None,None,None,None,None),
 	(1,15,"GtkButton","icon-name","open-menu",None,None,None,None,None,None,None,None,None),
@@ -63,13 +63,22 @@
 	(1,27,"GtkShortcut","trigger","&lt;Control&gt;f",None,None,None,None,None,None,None,None,None),
 	(1,28,"GtkNoSelection","model",None,None,None,None,None,29,None,None,None,None),
 	(1,29,"GtkFilterListModel","filter",None,None,None,None,None,30,None,None,None,None),
-	(1,29,"GtkFilterListModel","model",None,None,None,None,None,31,None,None,None,None),
-	(1,32,"GtkBuilderListItemFactory","resource","/com/github/spo-ijaz/hostsmanager/ui/hosts_columns/hostname.ui",None,None,None,None,None,None,None,None,None),
-	(1,33,"GtkBuilderListItemFactory","resource","/com/github/spo-ijaz/hostsmanager/ui/hosts_columns/ip-address.ui",None,None,None,None,None,None,None,None,None),
-	(1,34,"GtkBuilderListItemFactory","resource","/com/github/spo-ijaz/hostsmanager/ui/hosts_columns/enabled.ui",None,None,None,None,None,None,None,None,None)
+	(1,29,"GtkFilterListModel","model",None,None,None,None,None,31,None,None,None,None)
   </object_property>
   <object_signal>
 	(1,1,9,"GtkToggleButton","toggled","on_search_toggle_button_toggled",None,None,None,None,None),
-	(10,1,25,"GtkSearchEntry","search-changed","signal_search_entry_search_changed_handler",None,None,None,None,None)
+	(4,1,22,"GtkSignalListItemFactory","bind","signal_enabled_bind_handler",None,None,None,None,None),
+	(5,1,22,"GtkSignalListItemFactory","setup","signal_enabled_setup_handler",None,None,None,None,None),
+	(6,1,23,"GtkSignalListItemFactory","setup","signal_host_setup_handler",None,None,None,None,None),
+	(7,1,23,"GtkSignalListItemFactory","bind","signal_host_bind_handler",None,None,None,None,None),
+	(8,1,24,"GtkSignalListItemFactory","setup","signal_ip_address_setup_handler",None,None,None,None,None),
+	(9,1,24,"GtkSignalListItemFactory","bind","signal_ip_address_bind_handler",None,None,None,None,None),
+	(10,1,25,"GtkSearchEntry","search-changed","signal_search_entry_search_changed_handler",None,None,None,None,None),
+	(11,1,22,"GtkSignalListItemFactory","unbind","signal_enabled_unbind_handler",None,None,None,None,None),
+	(12,1,24,"GtkSignalListItemFactory","unbind","signal_ip_address_unbind_handler",None,None,None,None,None),
+	(13,1,23,"GtkSignalListItemFactory","unbind","signal_host_unbind_handler",None,None,None,None,None),
+	(14,1,23,"GtkSignalListItemFactory","teardown","signal_host_teardown_handler",None,None,None,None,None),
+	(15,1,24,"GtkSignalListItemFactory","teardown","signal_ip_address_teardown_handler",None,None,None,None,None),
+	(16,1,22,"GtkSignalListItemFactory","teardown","signal_enabled_teardown_handler",None,None,None,None,None)
   </object_signal>
 </cambalache-project>
