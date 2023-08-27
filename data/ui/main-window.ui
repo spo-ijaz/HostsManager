@@ -83,7 +83,7 @@
                 <child>
                   <object class="GtkColumnViewColumn" id="enabled_column_view_column">
                     <property name="factory">
-                      <object class="GtkBuilderListItemFactory">
+                      <object class="GtkBuilderListItemFactory" id="enabled_list_item_factory">
                         <property name="resource">/com/github/spo-ijaz/hostsmanager/ui/hosts_columns/enabled.ui</property>
                       </object>
                     </property>

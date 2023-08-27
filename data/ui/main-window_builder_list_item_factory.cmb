@@ -26,7 +26,7 @@
 	(1,31,"GListStore","hosts_list_store",29,None,None,None,None,None),
 	(1,32,"GtkBuilderListItemFactory",None,12,None,None,None,None,None),
 	(1,33,"GtkBuilderListItemFactory",None,13,None,None,None,None,None),
-	(1,34,"GtkBuilderListItemFactory",None,10,None,None,None,None,None)
+	(1,34,"GtkBuilderListItemFactory","enabled_list_item_factory",10,None,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkAccessible","accessible-role","window",None,None,None,None,None,None,None,None,None),

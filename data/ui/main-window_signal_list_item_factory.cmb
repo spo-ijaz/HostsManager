@@ -76,9 +76,6 @@
 	(10,1,25,"GtkSearchEntry","search-changed","signal_search_entry_search_changed_handler",None,None,None,None,None),
 	(11,1,22,"GtkSignalListItemFactory","unbind","signal_enabled_unbind_handler",None,None,None,None,None),
 	(12,1,24,"GtkSignalListItemFactory","unbind","signal_ip_address_unbind_handler",None,None,None,None,None),
-	(13,1,23,"GtkSignalListItemFactory","unbind","signal_host_unbind_handler",None,None,None,None,None),
-	(14,1,23,"GtkSignalListItemFactory","teardown","signal_host_teardown_handler",None,None,None,None,None),
-	(15,1,24,"GtkSignalListItemFactory","teardown","signal_ip_address_teardown_handler",None,None,None,None,None),
-	(16,1,22,"GtkSignalListItemFactory","teardown","signal_enabled_teardown_handler",None,None,None,None,None)
+	(13,1,23,"GtkSignalListItemFactory","unbind","signal_host_unbind_handler",None,None,None,None,None)
   </object_signal>
 </cambalache-project>

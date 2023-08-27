@@ -28,6 +28,8 @@ namespace HostsManager {
 		public unowned GLib.ListStore hosts_list_store;
 		[GtkChild]
 		public unowned StringFilter hosts_string_filter;
+		[GtkChild]
+		public unowned BuilderListItemFactory enabled_list_item_factory;
 
 		private Services.HostsFile hosts_file;
 
@@ -38,6 +40,7 @@ namespace HostsManager {
 			// Actions
     		this.add_action_entries (ACTION_ENTRIES, this);
 
+			// Model filter
 			PropertyExpression property_expression = new PropertyExpression (typeof(Models.HostRow), null, "hostname");
 			hosts_string_filter.set_expression (property_expression);
 
@@ -90,8 +93,27 @@ namespace HostsManager {
 		}
 
 		//
-		// Columns's widgets initial render
+		// Columns's widgets signals handlers
 		//
+		//  [GtkCallback]
+		//  private void signal_enabled_toggled_handler () {
+
+		//  	info ("signal_enabled_toggled_handler");
+
+		//  //  	CheckButton check_button = list_item.child as CheckButton;
+		//  //  	Models.HostRow? host_row = list_item.item as Models.HostRow;
+
+		//  //  	if (host_row != null) {
+
+        //  //      	check_button.active = host_row.enabled;
+ 		//  //  		check_button.toggled.connect (() => {
+
+		//  //  			Services.HostsRegex regex = new Services.HostsRegex(host_row.ip_address, host_row.hostname);
+      	//  //  		this.hosts_file.setEnabled(regex, !check_button.active);
+      	//  //  		host_row.enabled = check_button.active;
+		//  //  		});
+        //  //  }
+		//  }
 		
 	}
 }

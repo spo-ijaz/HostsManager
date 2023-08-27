@@ -12,4 +12,7 @@
 	(1,1,"GtkListItem","child",None,None,None,None,None,2,None,None,None,None),
 	(1,2,"GtkAccessible","accessible-role","checkbox",None,None,None,None,None,None,None,None,None)
   </object_property>
+  <object_signal>
+	(1,1,2,"GtkCheckButton","toggled","signal_enabled_toggled_handler",None,None,None,None,None)
+  </object_signal>
 </cambalache-project>

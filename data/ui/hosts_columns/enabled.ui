@@ -7,6 +7,7 @@
     <property name="child">
       <object class="GtkCheckButton" id="host_enabled_check_button">
         <property name="accessible-role">checkbox</property>
+        <!-- <signal name="toggled" handler="signal_enabled_toggled_handler"/> -->
         <binding name="active">
           <lookup name="enabled" type="HostsManagerModelsHostRow">
             <lookup name="item">GtkListItem</lookup>
