@@ -15,27 +15,66 @@
         <property name="scope">global</property>
         <child>
           <object class="GtkShortcut">
-            <property name="action">action(main_window.focus-search-bar)</property>
+            <property name="action">action(win.focus-search-bar)</property>
             <property name="trigger">&lt;Control&gt;f</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcut">
+            <property name="action">action(win.show-help-overlay)</property>
+            <property name="trigger">&lt;Control&gt;h</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcut">
+            <property name="action">action(win.host-row-delete)</property>
+            <property name="trigger">Delete</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcut">
+            <property name="action">action(win.app-quit)</property>
+            <property name="trigger">&lt;Control&gt;q</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkShortcut">
+            <property name="action">action(win.host-row-add)</property>
+            <property name="trigger">&lt;Control&gt;n</property>
           </object>
         </child>
       </object>
     </child>
     <child type="titlebar">
       <object class="GtkHeaderBar" id="header_bar">
+        <property name="accessible-role">heading</property>
         <child type="end">
-          <object class="GtkToggleButton" id="menu_bar_toggle_button">
+          <object class="GtkMenuButton" id="menu_button">
+            <property name="accessible-role">button</property>
             <property name="icon-name">open-menu</property>
-          </object>
-        </child>
-        <child type="end">
-          <object class="GtkPopoverMenuBar" id="menu_bar_popover_menu_bar">
-            <property name="accessible-role">menu-bar</property>
+            <property name="popover">
+              <object class="GtkPopoverMenu" id="popover_menu">
+                <property name="accessible-role">menu</property>
+                <property name="cascade-popdown">True</property>
+              </object>
+            </property>
+            <property name="primary">True</property>
           </object>
         </child>
         <child type="end">
           <object class="GtkToggleButton" id="search_toggle_button">
+            <property name="accessible-role">toggle-button</property>
             <property name="icon-name">preferences-system-search-symbolic</property>
+            <property name="tooltip-text">Find by hostname</property>
+            <signal name="toggled" handler="on_search_toggle_button_toggled"/>
+          </object>
+        </child>
+        <child type="end">
+          <object class="GtkToggleButton" id="add_host_row_toggle_button">
+            <property name="accessible-role">button</property>
+            <property name="action-name">win.host-row-add</property>
+            <property name="icon-name">list-add-symbolic</property>
+            <property name="tooltip-text">Add a new row</property>
             <signal name="toggled" handler="on_search_toggle_button_toggled"/>
           </object>
         </child>
@@ -66,7 +105,8 @@
             <child>
               <object class="GtkColumnView" id="hosts_column_view">
                 <property name="model">
-                  <object class="GtkNoSelection" id="hosts_no_selection">
+                  <object class="GtkSingleSelection" id="hosts_single_selection">
+                    <property name="autoselect">False</property>
                     <property name="model">
                       <object class="GtkFilterListModel" id="hosts_filter_list_model">
                         <property name="filter">
@@ -93,21 +133,7 @@
                   </object>
                 </child>
                 <child>
-                  <object class="GtkColumnViewColumn" id="host_column_view_column">
-                    <property name="factory">
-                      <object class="GtkSignalListItemFactory">
-                        <signal name="setup" handler="signal_host_setup_handler"/>
-                        <signal name="bind" handler="signal_host_bind_handler"/>
-                        <signal name="unbind" handler="signal_host_unbind_handler"/>
-                      </object>
-                    </property>
-                    <property name="resizable">True</property>
-                    <property name="title">Host</property>
-                  </object>
-                </child>
-                <child>
                   <object class="GtkColumnViewColumn" id="ipadress_column_view_column">
-                    <property name="expand">True</property>
                     <property name="factory">
                       <object class="GtkSignalListItemFactory">
                         <signal name="setup" handler="signal_ip_address_setup_handler"/>
@@ -117,6 +143,20 @@
                     </property>
                     <property name="resizable">True</property>
                     <property name="title">IP address</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkColumnViewColumn" id="host_column_view_column">
+                    <property name="expand">True</property>
+                    <property name="factory">
+                      <object class="GtkSignalListItemFactory">
+                        <signal name="setup" handler="signal_host_setup_handler"/>
+                        <signal name="bind" handler="signal_host_bind_handler"/>
+                        <signal name="unbind" handler="signal_host_unbind_handler"/>
+                      </object>
+                    </property>
+                    <property name="resizable">True</property>
+                    <property name="title">Host</property>
                   </object>
                 </child>
               </object>

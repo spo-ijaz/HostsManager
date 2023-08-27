@@ -1,9 +1,6 @@
 # HostsManager App
 
 
-/!\ WIP - currently broken, updating code from GTK 3.x to GTK 4.x
-
-
 Managing your `/etc/hosts` file.
 
 <p align="center">

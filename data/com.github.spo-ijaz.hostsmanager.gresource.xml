@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/com/github/spo-ijaz/hostsmanager">
     <file compressed="true" preprocess="xml-stripblanks">ui/main-window.ui</file>
+	 <file compressed="true" preprocess="xml-stripblanks">ui/app-shortcuts-window.ui</file>
   </gresource>
 </gresources>

@@ -1,11 +1,11 @@
 public static int main (string[] args) {
 
-	// Create the variables for the process execution
-	string[] spawnArguments = {"pkexec", "/usr/bin/com.github.spo-ijaz.hostsmanager.app"};
-	string[] spawnEnvironment = Environ.get ();
-	string spawnStdOut;
-	string spawnStdError;
-	int spawnExitStatus;
+  // Create the variables for the process execution
+  string[] spawnArguments = { "pkexec", "/usr/bin/com.github.spo-ijaz.hostsmanager.app" };
+  string[] spawnEnvironment = Environ.get ();
+  string spawnStdOut;
+  string spawnStdError;
+  int spawnExitStatus;
 
   try {
     // Spawn the process synchronizedly
@@ -25,4 +25,3 @@ public static int main (string[] args) {
 
   return 0;
 }
-

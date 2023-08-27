@@ -7,7 +7,7 @@ namespace HostsManager.Models {
 		public string hostname { get; set; }
 		public string ip_address { get; set; }
 
-		public HostRow(bool complete, bool enabled, string ip_address, string hostname) {
+		public HostRow (bool complete, bool enabled, string ip_address, string hostname) {
 
 			this.complete = complete;
 			this.enabled = enabled;

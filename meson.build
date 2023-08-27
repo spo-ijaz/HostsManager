@@ -20,7 +20,7 @@ add_project_arguments(
 if get_option('profile') == 'development'
 	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager.Devel'
 else
-	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager'
+	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager.app'
 endif
 
 # Common variables
