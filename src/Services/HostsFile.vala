@@ -145,7 +145,7 @@ namespace HostsManager.Services {
 
 				FileUtils.set_contents (Config.hostfile_path (), this.hosts_file_contents, this.hosts_file_contents.length);
 
-				this.main_window.toast.set_title ("Host file updated ");
+				this.main_window.toast.set_title (_("Host file updated."));
 				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 			} catch (Error e) {
 
