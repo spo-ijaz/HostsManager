@@ -1,2 +1,5 @@
+data/ui/main-window.ui
+data/ui/app-shortcuts-window.ui
 src/HostsManager.vala
-src/Widgets/TreeView.vala
+src/MainWindow.vala
+src/Services/HostsFile.vala

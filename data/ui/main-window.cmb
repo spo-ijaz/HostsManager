@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<cambalache-project version="0.12.0" target_tk="gtk-4.0">
+<cambalache-project version="0.13.1" target_tk="gtk-4.0">
   <ui>
-	(1,1,"main-window.ui","main-window.ui",None,None,None,None,None,None,None)
+	(1,1,"main-window.ui","main-window.ui",None,None,None,None,"com.github.spo-ijaz.hostsmanager",None,None)
   </ui>
   <object>
 	(1,1,"AdwApplicationWindow","HostsManagerMainWindow",None,None,None,None,None,None),
@@ -28,7 +28,7 @@
 	(1,108,"GtkSignalListItemFactory",None,107,None,None,None,None,None),
 	(1,109,"GtkColumnViewColumn","ipadress_column_view_column",102,None,None,None,1,None),
 	(1,110,"GtkSignalListItemFactory",None,109,None,None,None,None,None),
-	(1,111,"GtkColumnViewColumn","host_column_view_column",102,None,None,None,2,None),
+	(1,111,"GtkColumnViewColumn","host_column_view_column",102,None,None,None,2,""),
 	(1,112,"GtkSignalListItemFactory",None,111,None,None,None,None,None),
 	(1,113,"GtkSearchBar","search_bar",81,None,None,None,1,None),
 	(1,114,"GtkSearchEntry","search_entry",113,None,None,None,None,None),
@@ -62,10 +62,11 @@
 	(1,87,"GtkWidget","vexpand","True",None,None,None,None,None,None,None,None,None),
 	(1,99,"GtkAccessible","accessible-role","toggle-button",None,None,None,None,None,None,None,None,None),
 	(1,99,"GtkButton","icon-name","preferences-system-search-symbolic",None,None,None,None,None,None,None,None,None),
-	(1,99,"GtkWidget","tooltip-text","Add a new row",None,None,None,None,None,None,None,None,None),
+	(1,99,"GtkWidget","tooltip-text","Add a new entry",1,None,None,None,None,None,None,None,None),
 	(1,100,"GtkAccessible","accessible-role","toggle-button",None,None,None,None,None,None,None,None,None),
 	(1,100,"GtkActionable","action-name","win.host-row-add",None,None,None,None,None,None,None,None,None),
 	(1,100,"GtkButton","icon-name","list-add-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,100,"GtkWidget","tooltip-text","Search by hostname",1,None,None,None,None,None,None,None,None),
 	(1,102,"GtkColumnView","enable-rubberband","True",None,None,None,None,None,None,None,None,None),
 	(1,102,"GtkColumnView","model",None,None,None,None,None,103,None,None,None,None),
 	(1,103,"GtkSingleSelection","model",None,None,None,None,None,104,None,None,None,None),

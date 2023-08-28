@@ -117,8 +117,13 @@ namespace HostsManager.Services {
 				debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_parse_name ());
 				host_file_bkp.copy (host_file, FileCopyFlags.OVERWRITE);
 				this.read_file ();
+
+				this.main_window.toast.set_title (_("Host file restored."));
+				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 			} catch (Error e) {
 
+				this.main_window.toast.set_title (_("Unable to restore from backup file: ") + host_file_bkp.get_parse_name ());
+				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 				error ("Error: %s", e.message);
 			}
 		}

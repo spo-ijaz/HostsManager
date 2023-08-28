@@ -1,42 +1,91 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the com.github.bbuhler.hostsmanager package.
+# This file is distributed under the same license as the com.github.spo-ijaz.hostsmanager package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.bbuhler.hostsmanager\n"
+"Project-Id-Version: com.github.spo-ijaz.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-14 14:52+0200\n"
+"POT-Creation-Date: 2023-08-28 22:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/HostsManager.vala:136
-msgid "Add new entry"
+#: data/ui/main-window.ui:76
+msgid "Add a new entry"
 msgstr ""
 
-#: src/HostsManager.vala:150
-msgid "Remove entry"
+#: data/ui/main-window.ui:85 data/ui/app-shortcuts-window.ui:34
+#: src/MainWindow.vala:71
+msgid "Search by hostname"
 msgstr ""
 
-#: src/HostsManager.vala:160
-msgid "Do you want to delete the selected entry?"
+#: data/ui/main-window.ui:132
+msgid "Enabled"
 msgstr ""
 
-#: src/Widgets/TreeView.vala:41
-msgid "Active"
+#: data/ui/main-window.ui:145
+msgid "IP address"
 msgstr ""
 
-#: src/Widgets/TreeView.vala:42
-msgid "IP Address"
-msgstr ""
-
-#: src/Widgets/TreeView.vala:43
+#: data/ui/main-window.ui:158
 msgid "Hostname"
+msgstr ""
+
+#: data/ui/app-shortcuts-window.ui:14
+msgid "Overview"
+msgstr ""
+
+#: data/ui/app-shortcuts-window.ui:20
+msgid "Add a new host"
+msgstr ""
+
+#: data/ui/app-shortcuts-window.ui:27
+msgid "Delete selected entry"
+msgstr ""
+
+#: data/ui/app-shortcuts-window.ui:41
+msgid "Shortcut list"
+msgstr ""
+
+#: data/ui/app-shortcuts-window.ui:48
+msgid "Quit this application"
+msgstr ""
+
+#: src/MainWindow.vala:72
+msgid "Restore from backup file"
+msgstr ""
+
+#: src/MainWindow.vala:73
+msgid "Shorcuts"
+msgstr ""
+
+#: src/MainWindow.vala:74
+msgid "About"
+msgstr ""
+
+#: src/MainWindow.vala:118
+msgid "Sébastien PORQUET"
+msgstr ""
+
+#: src/MainWindow.vala:123
+msgid "© 2018 Benjamin BUHLER"
+msgstr ""
+
+#: src/Services/HostsFile.vala:33
+msgid "Host file backup here: "
+msgstr ""
+
+#: src/Services/HostsFile.vala:121
+msgid "Host file restored."
+msgstr ""
+
+#: src/Services/HostsFile.vala:125
+msgid "Unable to restore from backup file: "
 msgstr ""

@@ -68,10 +68,10 @@ namespace HostsManager {
 			this.add_action_entries (ACTION_ENTRIES, this);
 
 			Menu menu = new Menu ();
-			menu.append ("Search by hostname", "win.focus-search-bar");
-			menu.append ("Restore from backup file", "win.restore-fron-backup");
-			menu.append ("Shorcuts", "win.show-help-overlay");
-			menu.append ("About", "win.show-about");
+			menu.append (_("Search by hostname"), "win.focus-search-bar");
+			menu.append (_("Restore from backup file"), "win.restore-fron-backup");
+			menu.append (_("Shorcuts"), "win.show-help-overlay");
+			menu.append (_("About"), "win.show-about");
 			menu.append ("Quit", "win.app-quit");
 
 			this.popover_menu.set_menu_model (menu);
@@ -189,11 +189,10 @@ namespace HostsManager {
 
 			// We wait a little the time for the new row widgets to be displayed and
 			// so hosts_scrolled_window.kvadjustment is updated accordingly.
-			Timeout.add (50, () => {
+			Timeout.add_once (50, () => {
 
 				Adjustment adjustment = this.hosts_scrolled_window.vadjustment;
 				adjustment.set_value (adjustment.get_upper ());
-				return true;
 			});
 		}
 

@@ -16,7 +16,6 @@ foreach i : icon_sizes
     )
 endforeach
 
-
 # Translate and install our .desktop file
 i18n.merge_file(
     input: meson.project_name() + '.desktop.in',

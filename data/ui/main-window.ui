@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.12.1 -->
-<interface>
+<!-- Created with Cambalache 0.13.1 -->
+<interface domain="com.github.spo-ijaz.hostsmanager">
   <!-- interface-name main-window.ui -->
   <requires lib="gio" version="2.44"/>
   <requires lib="gtk" version="4.10"/>
@@ -73,7 +73,7 @@
                   <object class="GtkToggleButton" id="search_toggle_button">
                     <property name="accessible-role">toggle-button</property>
                     <property name="icon-name">preferences-system-search-symbolic</property>
-                    <property name="tooltip-text">Add a new row</property>
+                    <property name="tooltip-text" translatable="yes">Add a new entry</property>
                     <signal name="toggled" handler="on_search_toggle_button_toggled"/>
                   </object>
                 </child>
@@ -82,6 +82,7 @@
                     <property name="accessible-role">toggle-button</property>
                     <property name="action-name">win.host-row-add</property>
                     <property name="icon-name">list-add-symbolic</property>
+                    <property name="tooltip-text" translatable="yes">Search by hostname</property>
                   </object>
                 </child>
               </object>
@@ -128,7 +129,7 @@
                             <signal name="unbind" handler="signal_enabled_unbind_handler"/>
                           </object>
                         </property>
-                        <property name="title">Enabled</property>
+                        <property name="title" translatable="yes">Enabled</property>
                       </object>
                     </child>
                     <child>
@@ -141,7 +142,7 @@
                           </object>
                         </property>
                         <property name="resizable">True</property>
-                        <property name="title">IP address</property>
+                        <property name="title" translatable="yes">IP address</property>
                       </object>
                     </child>
                     <child>
@@ -154,7 +155,8 @@
                             <signal name="unbind" handler="signal_host_unbind_handler"/>
                           </object>
                         </property>
-                        <property name="title">Hostname</property>
+                        <property name="title" translatable="yes">Hostname</property>
+                        <!-- Custom fragments -->
                       </object>
                     </child>
                   </object>

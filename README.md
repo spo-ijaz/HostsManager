@@ -30,6 +30,24 @@ sudo ninja install
 
 Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and start the application directly with the development profile.
 
+
+```sh
+meson build --prefix=/testbuild -Dprofile=development
+cd build
+ninja
+sudo ninja install
+
 ## Todo
 - [ ] Put back translations.
 - [ ] Be able to undo a delete (using toastoverlay )
+- [ ] Handle IPv6 ?
+
+
+## Update translation
+
+```bash
+meson build --prefix=/build -Dprofile=development
+cd build
+meson compile com.github.spo-ijaz.hostsmanager-pot
+meson compile com.github.spo-ijaz.hostsmanager-update-po
+```
