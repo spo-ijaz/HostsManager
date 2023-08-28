@@ -1,3 +1,4 @@
+using Adw;
 using GLib;
 
 public errordomain InvalidArgument {
@@ -7,13 +8,18 @@ public errordomain InvalidArgument {
 
 namespace HostsManager.Services {
 
-	class HostsFile {
+	class HostsFile : Object {
 
-		private string hostsFileContent;
+		public MainWindow main_window { get; construct; }
+		private string hosts_file_contents;
 		private File host_file;
 		private File host_file_bkp;
 
-		public HostsFile () {
+		public HostsFile (HostsManager.MainWindow main_window) {
+
+			Object (
+			        main_window: main_window
+			);
 
 			string host_file_path = Config.hostfile_path ();
 			this.host_file = File.new_for_path (host_file_path);
@@ -23,6 +29,9 @@ namespace HostsManager.Services {
 
 				debug ("Backup of \"%s\" -> \"%s\" ", host_file.get_path (), host_file_bkp.get_parse_name ());
 				host_file.copy (host_file_bkp, FileCopyFlags.OVERWRITE);
+
+				this.main_window.toast.set_title (_("Host file backup here: ") + host_file_bkp.get_parse_name ());
+				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 			} catch (Error e) {
 
 				error ("Error: %s", e.message);
@@ -35,7 +44,7 @@ namespace HostsManager.Services {
 
 			MatchInfo entries;
 			HostsRegex regex = new HostsRegex ();
-			regex.match (this.hostsFileContent, 0, out entries);
+			regex.match (this.hosts_file_contents, 0, out entries);
 
 			return entries;
 		}
@@ -44,11 +53,11 @@ namespace HostsManager.Services {
 
 			try {
 
-				this.hostsFileContent = modRegex.replace (this.hostsFileContent, -1, 0, active ? """\n#\g<row>""" : """\g<row>""");
+				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, active ? """\n#\g<row>""" : """\g<row>""");
 				this.save_file ();
-			} catch (RegexError e) {
+			} catch (RegexError regex_error) {
 
-				error ("Regex failed: %s", e.message);
+				error ("Regex failed: %s", regex_error.message);
 			}
 		}
 
@@ -58,11 +67,11 @@ namespace HostsManager.Services {
 
 			try {
 
-				this.hostsFileContent = modRegex.replace (this.hostsFileContent, -1, 0, """\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
+				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
 				this.save_file ();
-			} catch (RegexError e) {
+			} catch (RegexError regex_error) {
 
-				GLib.error ("Regex failed: %s", e.message);
+				GLib.error ("InvalidArgument failed: %s", regex_error.message);
 			}
 		}
 
@@ -72,11 +81,11 @@ namespace HostsManager.Services {
 
 			try {
 
-				this.hostsFileContent = modRegex.replace (this.hostsFileContent, -1, 0, """\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
+				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
 				this.save_file ();
-			} catch (RegexError e) {
+			} catch (RegexError regex_error) {
 
-				GLib.error ("Regex failed: %s", e.message);
+				GLib.error ("Regex failed: %s", regex_error.message);
 			}
 		}
 
@@ -85,7 +94,7 @@ namespace HostsManager.Services {
 			this.valide_ip_address (ipaddress);
 			this.validate_host_name (hostname);
 
-			this.hostsFileContent = this.hostsFileContent + "\n" + ipaddress + " " + hostname;
+			this.hosts_file_contents = this.hosts_file_contents + "\n" + ipaddress + " " + hostname;
 			this.save_file ();
 		}
 
@@ -93,11 +102,11 @@ namespace HostsManager.Services {
 
 			try {
 
-				this.hostsFileContent = modRegex.replace (this.hostsFileContent, -1, 0, "");
+				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, "");
 				this.save_file ();
-			} catch (RegexError e) {
+			} catch (RegexError regex_error) {
 
-				error ("Regex failed: %s", e.message);
+				error ("Regex failed: %s", regex_error.message);
 			}
 		}
 
@@ -118,7 +127,7 @@ namespace HostsManager.Services {
 
 			try {
 
-				FileUtils.get_contents (Config.hostfile_path (), out this.hostsFileContent, null);
+				FileUtils.get_contents (Config.hostfile_path (), out this.hosts_file_contents, null);
 			} catch (Error e) {
 
 				error ("Error: %s", e.message);
@@ -129,7 +138,10 @@ namespace HostsManager.Services {
 
 			try {
 
-				FileUtils.set_contents (Config.hostfile_path (), this.hostsFileContent, this.hostsFileContent.length);
+				FileUtils.set_contents (Config.hostfile_path (), this.hosts_file_contents, this.hosts_file_contents.length);
+
+				this.main_window.toast.set_title ("Host file updated ");
+				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 			} catch (Error e) {
 
 				error ("Unable to save file: %s", e.message);

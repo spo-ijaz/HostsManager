@@ -17,7 +17,7 @@ foreach i : icon_sizes
 endforeach
 
 
-#Translate and install our .desktop file
+# Translate and install our .desktop file
 i18n.merge_file(
     input: meson.project_name() + '.desktop.in',
     output: meson.project_name() + '.desktop',
@@ -27,7 +27,7 @@ i18n.merge_file(
     install_dir: join_paths(get_option('datadir'), 'applications')
 )
 
-#Translate and install our .appdata file
+# Translate and install our .appdata file
 i18n.merge_file(
     input: meson.project_name() + '.appdata.xml.in',
     output: meson.project_name() + '.appdata.xml',
@@ -36,7 +36,7 @@ i18n.merge_file(
     install_dir: join_paths(get_option('datadir'), 'metainfo')
 )
 
-#Translate and install polkit action file
+# Translate and install polkit action file
 i18n.merge_file(
     input: meson.project_name() + '.pkexec.policy.in',
     output: meson.project_name() + '.pkexec.policy',

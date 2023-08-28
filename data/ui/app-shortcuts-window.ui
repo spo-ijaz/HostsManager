@@ -11,16 +11,9 @@
         <property name="visible">True</property>
         <child>
           <object class="GtkShortcutsGroup">
-            <property name="title">Available shortcuts</property>
+            <property name="title">Overview</property>
             <property name="view">shortcuts</property>
             <property name="visible">True</property>
-            <child>
-              <object class="GtkShortcutsShortcut">
-                <property name="accelerator">&lt;Control&gt;f</property>
-                <property name="title">Search by hostname</property>
-                <property name="visible">True</property>
-              </object>
-            </child>
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="accelerator">&lt;Control&gt;n</property>
@@ -32,6 +25,20 @@
               <object class="GtkShortcutsShortcut">
                 <property name="accelerator">Delete</property>
                 <property name="title">Delete selected row</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="accelerator">&lt;Control&gt;f</property>
+                <property name="title">Search by hostname</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="action-name">win.show-help-overlay</property>
+                <property name="title">Shortcut list</property>
                 <property name="visible">True</property>
               </object>
             </child>

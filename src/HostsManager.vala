@@ -1,6 +1,9 @@
+using Adw;
+using Gtk;
+
 namespace HostsManager {
 
-	public class App : Gtk.Application {
+	public class App : Adw.Application {
 
 		private unowned MainWindow main_window;
 

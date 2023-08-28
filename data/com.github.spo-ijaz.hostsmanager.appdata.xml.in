@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2018 Benjamin Buhler <hostsmanager.app@freiken-douhl.de> -->
+<!-- Copyright 2018 Benjamin BUHLER <hostsmanager.app@freiken-douhl.de> -->
 <component type="desktop">
   <id>com.github.spo-ijaz.hostsmanager</id>
   <metadata_license>MIT</metadata_license>
@@ -45,7 +45,7 @@
   </categories>
   <url type="homepage">https://github.com/spo-ijaz/HostsManager</url>
   <url type="bugtracker">https://github.com/spo-ijaz/HostsManager/issues</url>
-  <url type="help">https://github.com/spo-ijaz/HostsManager/issues</url>
+  <url type="help">https://github.com/spo-ijaz/HostsManager/wiki</url>
   <screenshots>
     <screenshot type="default">
       <image>https://raw.githubusercontent.com/spo-ijaz/HostsManager/master/data/screenshots/main.png</image>
@@ -57,6 +57,11 @@
     <value key="x-appcenter-suggested-price">0</value>
   </custom>
   <releases>
+    <release version="3.0.0" date="2023-28-28">
+      <description>
+        <p>Ported to GTK 4</p>
+      </description>
+    </release>
     <release version="2.0.6" date="2020-08-25">
       <description>
         <p>Dutch translation</p>

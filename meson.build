@@ -2,7 +2,7 @@
 project(
 	'com.github.spo-ijaz.hostsmanager',
 	['vala', 'c'],
-	version: '1.0.0',
+	version: '3.0.0',
 	license: 'MIT License',
 	meson_version: '>= 1.0.0',
 )
@@ -20,7 +20,7 @@ add_project_arguments(
 if get_option('profile') == 'development'
 	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager.Devel'
 else
-	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager.app'
+	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager'
 endif
 
 # Common variables
@@ -28,6 +28,7 @@ valac = meson.get_compiler('vala')
 app_config_h_dir = include_directories('.')
 
 # Dependencies
+adw_dep = dependency('libadwaita-1', version: '>= 1.3')
 gtk4_dep = dependency('gtk4', version: '>= 4.10')
 
 # Configuration

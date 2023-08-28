@@ -15,7 +15,7 @@ hostsmanager_vala_args = [
 executable(
 	 meson.project_name(),
 	 'HostsManager-pkexec.vala',
-	 dependencies: gtk4_dep,
+	 dependencies: [adw_dep, gtk4_dep],
 	 install: true
 )
 
@@ -24,6 +24,6 @@ executable(
 	hostsmanager_sources,
 	include_directories: app_config_h_dir,
 	vala_args: hostsmanager_vala_args,
-	dependencies: gtk4_dep,
+	dependencies: [adw_dep, gtk4_dep],
 	install: true,
 )

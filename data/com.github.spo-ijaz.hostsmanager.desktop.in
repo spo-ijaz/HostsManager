@@ -1,11 +1,12 @@
 [Desktop Entry]
 Name=HostsManager
-GenericName=HostsManager App
+GenericName=HostsManager
 Comment=Manage your /etc/hosts file
+Comment[fr]=Gérer votre fichier /etc/hosts
 Categories=Development;Utility;GNOME;GTK;
-Exec=com.spo-ijaz.bbuhler.hostsmanager
-Icon=com.spo-ijaz.bbuhler.hostsmanager
+Exec=com.github.spo-ijaz.hostsmanager
+Icon=com.github.spo-ijaz.hostsmanager
 Terminal=false
 Type=Application
-X-GNOME-Gettext-Domain=com.spo-ijaz.bbuhler.hostsmanager
+X-GNOME-Gettext-Domain=com.github.spo-ijaz.hostsmanager
 Keywords=etc;hosts;dns;

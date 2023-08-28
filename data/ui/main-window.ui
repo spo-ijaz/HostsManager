@@ -4,11 +4,12 @@
   <!-- interface-name main-window.ui -->
   <requires lib="gio" version="2.44"/>
   <requires lib="gtk" version="4.10"/>
-  <template class="HostsManagerMainWindow" parent="GtkApplicationWindow">
+  <requires lib="libadwaita" version="1.3"/>
+  <template class="HostsManagerMainWindow" parent="AdwApplicationWindow">
     <property name="accessible-role">window</property>
     <property name="default-height">800</property>
     <property name="default-width">600</property>
-    <property name="icon-name">com.github.bbuhler.hostsmanager</property>
+    <property name="icon-name">com.github.spo-ijaz.hostsmanager</property>
     <property name="show-menubar">True</property>
     <child>
       <object class="GtkShortcutController" id="shortcut_controller">
@@ -22,7 +23,6 @@
         <child>
           <object class="GtkShortcut">
             <property name="action">action(win.show-help-overlay)</property>
-            <property name="trigger">&lt;Control&gt;h</property>
           </object>
         </child>
         <child>
@@ -45,118 +45,118 @@
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <object class="GtkHeaderBar" id="header_bar">
-        <property name="accessible-role">heading</property>
-        <child type="end">
-          <object class="GtkMenuButton" id="menu_button">
-            <property name="accessible-role">button</property>
-            <property name="icon-name">open-menu</property>
-            <property name="popover">
-              <object class="GtkPopoverMenu" id="popover_menu">
-                <property name="accessible-role">menu</property>
-                <property name="cascade-popdown">True</property>
-              </object>
-            </property>
-            <property name="primary">True</property>
-          </object>
-        </child>
-        <child type="end">
-          <object class="GtkToggleButton" id="search_toggle_button">
-            <property name="accessible-role">toggle-button</property>
-            <property name="icon-name">preferences-system-search-symbolic</property>
-            <property name="tooltip-text">Find by hostname</property>
-            <signal name="toggled" handler="on_search_toggle_button_toggled"/>
-          </object>
-        </child>
-        <child type="end">
-          <object class="GtkToggleButton" id="add_host_row_toggle_button">
-            <property name="accessible-role">button</property>
-            <property name="action-name">win.host-row-add</property>
-            <property name="icon-name">list-add-symbolic</property>
-            <property name="tooltip-text">Add a new row</property>
-            <signal name="toggled" handler="on_search_toggle_button_toggled"/>
-          </object>
-        </child>
-      </object>
-    </child>
     <child>
-      <object class="GtkBox" id="box">
-        <property name="orientation">vertical</property>
-        <property name="vexpand">True</property>
+      <object class="AdwToastOverlay" id="toast_overlay">
         <child>
-          <object class="GtkSearchBar" id="search_bar">
-            <property name="accessible-role">search</property>
-            <property name="child">
-              <object class="GtkSearchEntry" id="search_entry">
-                <property name="activates-default">True</property>
-                <property name="focusable">True</property>
-                <signal name="search-changed" handler="signal_search_entry_search_changed_handler"/>
-              </object>
-            </property>
-            <property name="search-mode-enabled">True</property>
-            <property name="show-close-button">True</property>
-            <property name="visible">False</property>
-          </object>
-        </child>
-        <child>
-          <object class="GtkScrolledWindow" id="hosts_scrolled_window">
-            <property name="vexpand">True</property>
+          <object class="GtkBox" id="box">
+            <property name="orientation">vertical</property>
             <child>
-              <object class="GtkColumnView" id="hosts_column_view">
-                <property name="model">
-                  <object class="GtkSingleSelection" id="hosts_single_selection">
-                    <property name="autoselect">False</property>
-                    <property name="model">
-                      <object class="GtkFilterListModel" id="hosts_filter_list_model">
-                        <property name="filter">
-                          <object class="GtkStringFilter" id="hosts_string_filter"/>
-                        </property>
-                        <property name="model">
-                          <object class="GListStore" id="hosts_list_store"/>
-                        </property>
-                      </object>
-                    </property>
+              <object class="AdwHeaderBar" id="header_bar">
+                <property name="title-widget">
+                  <object class="AdwWindowTitle" id="window_title">
+                    <property name="title">HostsManager</property>
                   </object>
                 </property>
-                <property name="reorderable">False</property>
-                <child>
-                  <object class="GtkColumnViewColumn" id="enabled_column_view_column">
-                    <property name="factory">
-                      <object class="GtkSignalListItemFactory">
-                        <signal name="bind" handler="signal_enabled_bind_handler"/>
-                        <signal name="setup" handler="signal_enabled_setup_handler"/>
-                        <signal name="unbind" handler="signal_enabled_unbind_handler"/>
+                <child type="end">
+                  <object class="GtkMenuButton" id="menu_button">
+                    <property name="accessible-role">button</property>
+                    <property name="icon-name">open-menu</property>
+                    <property name="popover">
+                      <object class="GtkPopoverMenu" id="popover_menu">
+                        <property name="cascade-popdown">True</property>
                       </object>
                     </property>
-                    <property name="title">Enabled</property>
+                    <property name="primary">True</property>
+                  </object>
+                </child>
+                <child type="end">
+                  <object class="GtkToggleButton" id="search_toggle_button">
+                    <property name="accessible-role">toggle-button</property>
+                    <property name="icon-name">preferences-system-search-symbolic</property>
+                    <property name="tooltip-text">Add a new row</property>
+                    <signal name="toggled" handler="on_search_toggle_button_toggled"/>
                   </object>
                 </child>
                 <child>
-                  <object class="GtkColumnViewColumn" id="ipadress_column_view_column">
-                    <property name="factory">
-                      <object class="GtkSignalListItemFactory">
-                        <signal name="setup" handler="signal_ip_address_setup_handler"/>
-                        <signal name="bind" handler="signal_ip_address_bind_handler"/>
-                        <signal name="unbind" handler="signal_ip_address_unbind_handler"/>
-                      </object>
-                    </property>
-                    <property name="resizable">True</property>
-                    <property name="title">IP address</property>
+                  <object class="GtkToggleButton" id="add_host_row_toggle_button">
+                    <property name="accessible-role">toggle-button</property>
+                    <property name="action-name">win.host-row-add</property>
+                    <property name="icon-name">list-add-symbolic</property>
                   </object>
                 </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkSearchBar" id="search_bar">
+                <property name="child">
+                  <object class="GtkSearchEntry" id="search_entry">
+                    <property name="activates-default">True</property>
+                    <signal name="search-changed" handler="signal_search_entry_search_changed_handler"/>
+                  </object>
+                </property>
+                <property name="search-mode-enabled">True</property>
+                <property name="show-close-button">True</property>
+                <property name="visible">False</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="hosts_scrolled_window">
+                <property name="vexpand">True</property>
                 <child>
-                  <object class="GtkColumnViewColumn" id="host_column_view_column">
-                    <property name="expand">True</property>
-                    <property name="factory">
-                      <object class="GtkSignalListItemFactory">
-                        <signal name="setup" handler="signal_host_setup_handler"/>
-                        <signal name="bind" handler="signal_host_bind_handler"/>
-                        <signal name="unbind" handler="signal_host_unbind_handler"/>
+                  <object class="GtkColumnView" id="hosts_column_view">
+                    <property name="enable-rubberband">True</property>
+                    <property name="model">
+                      <object class="GtkSingleSelection" id="hosts_single_selection">
+                        <property name="model">
+                          <object class="GtkFilterListModel" id="hosts_filter_list_model">
+                            <property name="filter">
+                              <object class="GtkStringFilter" id="hosts_string_filter"/>
+                            </property>
+                            <property name="model">
+                              <object class="GListStore" id="hosts_list_store"/>
+                            </property>
+                          </object>
+                        </property>
                       </object>
                     </property>
-                    <property name="resizable">True</property>
-                    <property name="title">Host</property>
+                    <child>
+                      <object class="GtkColumnViewColumn" id="enabled_column_view_column">
+                        <property name="factory">
+                          <object class="GtkSignalListItemFactory">
+                            <signal name="bind" handler="signal_enabled_bind_handler"/>
+                            <signal name="setup" handler="signal_enabled_setup_handler"/>
+                            <signal name="unbind" handler="signal_enabled_unbind_handler"/>
+                          </object>
+                        </property>
+                        <property name="title">Enabled</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn" id="ipadress_column_view_column">
+                        <property name="factory">
+                          <object class="GtkSignalListItemFactory">
+                            <signal name="setup" handler="signal_ip_address_setup_handler"/>
+                            <signal name="bind" handler="signal_ip_address_bind_handler"/>
+                            <signal name="unbind" handler="signal_ip_address_unbind_handler"/>
+                          </object>
+                        </property>
+                        <property name="resizable">True</property>
+                        <property name="title">IP address</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkColumnViewColumn" id="host_column_view_column">
+                        <property name="expand">True</property>
+                        <property name="factory">
+                          <object class="GtkSignalListItemFactory">
+                            <signal name="bind" handler="signal_host_bind_handler"/>
+                            <signal name="setup" handler="signal_host_setup_handler"/>
+                            <signal name="unbind" handler="signal_host_unbind_handler"/>
+                          </object>
+                        </property>
+                        <property name="title">Hostname</property>
+                      </object>
+                    </child>
                   </object>
                 </child>
               </object>
@@ -166,4 +166,8 @@
       </object>
     </child>
   </template>
+  <object class="AdwToast" id="toast">
+    <property name="timeout">1</property>
+  </object>
+  <object class="GtkCssProvider" id="css_provider"/>
 </interface>

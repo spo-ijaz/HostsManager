@@ -8,6 +8,15 @@ Managing your `/etc/hosts` file.
 </p>
 
 
+# Features
+* Adding / Deleting a row. (`Delete` key, to remove a row)
+* Checks on IP address and hostname.
+* Search through hostnames.
+* Shorcuts.
+* Restore from an automatic backup of your `/etc/hosts` file, made each time the application is started.
+
+
+
 # Compilation & installation
 
 ```sh
@@ -20,3 +29,7 @@ sudo ninja install
 # Development 
 
 Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and start the application directly with the development profile.
+
+## Todo
+- [ ] Put back translations.
+- [ ] Be able to undo a delete (using toastoverlay )

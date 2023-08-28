@@ -1,23 +1,31 @@
+using Adw;
 using GLib;
 using Gtk;
 
 namespace HostsManager {
 
 	[GtkTemplate (ui = "/com/github/spo-ijaz/hostsmanager/ui/main-window.ui")]
-	public class MainWindow : ApplicationWindow {
+	public class MainWindow : Adw.ApplicationWindow {
 
 		private const ActionEntry[] ACTION_ENTRIES = {
 			{ "focus-search-bar", focus_search_bar },
 			{ "host-row-add", host_row_add },
 			{ "host-row-delete", host_row_delete },
 			{ "restore-fron-backup", restore_from_backup },
+			{ "show-about", show_about },
 			{ "app-quit", app_quit },
 		};
 
 		[GtkChild]
+		public unowned CssProvider css_provider;
+		[GtkChild]
+		public unowned ToastOverlay toast_overlay;
+		[GtkChild]
+		public unowned Toast toast;
+		[GtkChild]
 		public unowned ShortcutController shortcut_controller;
 		[GtkChild]
-		public unowned HeaderBar header_bar;
+		public unowned Adw.HeaderBar header_bar;
 		[GtkChild]
 		public unowned PopoverMenu popover_menu;
 		[GtkChild]
@@ -43,22 +51,34 @@ namespace HostsManager {
 
 		construct {
 
-			this.set_title (Services.Config.hostfile_path ());
+			Adw.WindowTitle window_title = this.header_bar.title_widget as Adw.WindowTitle;
+			if (window_title != null) {
+
+				window_title.subtitle = Services.Config.hostfile_path ();
+			}
+
+			// Custom CSS
+			this.css_provider.load_from_resource ("/com/github/spo-ijaz/hostsmanager/ui/hosts-manager.css");
+			StyleContext.add_provider_for_display (
+			                                       this.get_display (),
+			                                       this.css_provider,
+			                                       STYLE_PROVIDER_PRIORITY_USER);
 
 			// Action, menu, shortcuts...
 			this.add_action_entries (ACTION_ENTRIES, this);
 
 			Menu menu = new Menu ();
-			menu.append ("search by hostname", "win.focus-search-bar");
-			menu.append ("restore from backup file", "win.restore-fron-backup");
-			menu.append ("help", "win.show-help-overlay");
-			menu.append ("about", null);
-			menu.append ("quit", "win.app-quit");
+			menu.append ("Search by hostname", "win.focus-search-bar");
+			menu.append ("Restore from backup file", "win.restore-fron-backup");
+			menu.append ("Shorcuts", "win.show-help-overlay");
+			menu.append ("About", "win.show-about");
+			menu.append ("Quit", "win.app-quit");
 
 			this.popover_menu.set_menu_model (menu);
 			this.popover_menu.activate ();
 
 			this.add_controller (shortcut_controller);
+
 
 			// Help overlay
 			Builder help_builder = new Builder.from_resource ("/com/github/spo-ijaz/hostsmanager/ui/app-shortcuts-window.ui");
@@ -69,7 +89,7 @@ namespace HostsManager {
 			this.hosts_string_filter.set_expression (property_expression);
 
 			// Intiailize the list store
-			this.hosts_file_service = new Services.HostsFile ();
+			this.hosts_file_service = new Services.HostsFile (this);
 			this.append_hots_rows_to_list_store ();
 		}
 
@@ -82,6 +102,29 @@ namespace HostsManager {
 		private void app_quit () {
 
 			this.application.quit ();
+		}
+
+		public void show_about () {
+
+			string[] developers = {
+				"Sébastien PORQUET <sebastien.porquet@ijaz.fr>",
+				"Benjamin BUHLER <elementary.hostsmanager@freiken-douhl.de>",
+			};
+
+			var about = new Adw.AboutWindow () {
+				transient_for = this,
+				application_name = "HostsManager",
+				application_icon = AppConfig.APP_ID,
+				developer_name = _("Sébastien PORQUET"),
+				version = AppConfig.PACKAGE_VERSION,
+				website = "https://github.com/spo-ijaz/HostsManager",
+				issue_url = "https://github.com/spo-ijaz/HostsManager/issues",
+				developers = developers,
+				copyright = _("© 2018 Benjamin BUHLER"),
+				license_type = Gtk.License.GPL_3_0
+			};
+
+			about.present ();
 		}
 
 		//
@@ -139,9 +182,9 @@ namespace HostsManager {
 			try {
 
 				this.hosts_file_service.add ("127.0.0.1", "new.localhost");
-			} catch (InvalidArgument err) {
+			} catch (InvalidArgument invalid_argument) {
 
-				debug ("InvalidArgument: %s", err.message);
+				debug ("InvalidArgument: %s", invalid_argument.message);
 			}
 
 			// We wait a little the time for the new row widgets to be displayed and
@@ -224,7 +267,7 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_ip_address_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			list_item.set_child (new EditableLabel (""));
+			list_item.set_child (new Text ());
 		}
 
 		[GtkCallback]
@@ -235,24 +278,28 @@ namespace HostsManager {
 				this.signal_ip_address_setup_handler (factory, list_item);
 			}
 
-			EditableLabel? editable_label = list_item.child as EditableLabel;
+			Text? text = list_item.child as Text;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (editable_label != null && host_row != null) {
+			if (text != null && host_row != null) {
 
-				editable_label.set_text (host_row.ip_address);
-				editable_label.changed.connect (() => {
+				text.set_text (host_row.ip_address);
+
+				text.activate.connect (() => {
 
 					string previous_ip_address = host_row.ip_address;
+
 					try {
 
 						Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-						this.hosts_file_service.set_ip_address (regex, editable_label.text);
-						host_row.ip_address = editable_label.text;
-					} catch (InvalidArgument err) {
+						this.hosts_file_service.set_ip_address (regex, text.text);
+						host_row.ip_address = text.text;
+						text.remove_css_class ("wrong_input");
+					} catch (InvalidArgument invalid_argument) {
 
-						debug ("InvalidArgument: %s", err.message);
+						debug ("InvalidArgument: %s", invalid_argument.message);
 						host_row.ip_address = previous_ip_address;
+						text.add_css_class ("wrong_input");
 					}
 				});
 			}
@@ -270,7 +317,7 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_host_setup_handler (SignalListItemFactory factory, ListItem list_item) {
 
-			list_item.set_child (new EditableLabel (""));
+			list_item.set_child (new Text ());
 		}
 
 		[GtkCallback]
@@ -281,24 +328,26 @@ namespace HostsManager {
 				this.signal_host_setup_handler (factory, list_item);
 			}
 
-			EditableLabel? editable_label = list_item.child as EditableLabel;
+			Text? text = list_item.child as Text;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (editable_label != null && host_row != null) {
+			if (text != null && host_row != null) {
 
-				editable_label.set_text (host_row.hostname);
-				editable_label.changed.connect (() => {
+				text.set_text (host_row.hostname);
+				text.activate.connect (() => {
 
 					string previous_hostname = host_row.hostname;
 					try {
 
 						Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-						this.hosts_file_service.set_hostname (regex, editable_label.text);
-						host_row.hostname = editable_label.text;
-					} catch (InvalidArgument err) {
+						this.hosts_file_service.set_hostname (regex, text.text);
+						host_row.hostname = text.text;
+						text.remove_css_class ("wrong_input");
+					} catch (InvalidArgument invalid_argument) {
 
-						debug ("InvalidArgument: %s", err.message);
+						debug ("InvalidArgument: %s", invalid_argument.message);
 						host_row.hostname = previous_hostname;
+						text.add_css_class ("wrong_input");
 					}
 				});
 			}
