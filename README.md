@@ -1,18 +1,18 @@
 # HostsManager App
 
 
-Managing your `/etc/hosts` file.
+<p align="center">Manage your `/etc/hosts` file.</p>
 
 <p align="center">
-  <img alt="Screenshot" src="./data/screenshots/main.png">
+  <img width="300" alt="Screenshot" src="./data/screenshots/main.png">
 </p>
 
 
 # Features
-* Adding / Deleting a row. (`Delete` key, to remove a row)
+* Adding / Deleting a row.
 * Checks on IP address and hostname.
 * Search through hostnames.
-* Shorcuts.
+* Shortcuts.
 * Restore from an automatic backup of your `/etc/hosts` file, made each time the application is started.
 
 
