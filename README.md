@@ -4,7 +4,7 @@
 <p align="center">Manage your `/etc/hosts` file.</p>
 
 <p align="center">
-  <img width="300" alt="Screenshot" src="./data/screenshots/main.png">
+  <img alt="Screenshot" src="./data/screenshots/main.png">
 </p>
 
 
