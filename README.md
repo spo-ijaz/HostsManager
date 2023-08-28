@@ -1,4 +1,4 @@
-# HostsManager App
+# HostsManager
 
 
 <p align="center">Manage your `/etc/hosts` file.</p>
