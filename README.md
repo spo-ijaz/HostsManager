@@ -36,6 +36,7 @@ meson build --prefix=/testbuild -Dprofile=development
 cd build
 ninja
 sudo ninja install
+```
 
 ## Todo
 - [x] Put back translations.
