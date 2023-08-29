@@ -105,7 +105,7 @@
                 <property name="vexpand">True</property>
                 <child>
                   <object class="GtkColumnView" id="hosts_column_view">
-                    <property name="enable-rubberband">True</property>
+                    <property name="enable-rubberband">False</property>
                     <property name="model">
                       <object class="GtkSingleSelection" id="hosts_single_selection">
                         <property name="model">

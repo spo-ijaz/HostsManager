@@ -72,7 +72,7 @@ namespace HostsManager {
 			menu.append (_("Restore from backup file"), "win.restore-fron-backup");
 			menu.append (_("Shorcuts"), "win.show-help-overlay");
 			menu.append (_("About"), "win.show-about");
-			menu.append ("Quit", "win.app-quit");
+			menu.append (_("Quit"), "win.app-quit");
 
 			this.popover_menu.set_menu_model (menu);
 			this.popover_menu.activate ();
@@ -91,6 +91,10 @@ namespace HostsManager {
 			// Intiailize the list store
 			this.hosts_file_service = new Services.HostsFile (this);
 			this.append_hots_rows_to_list_store ();
+
+			// To automatically select the current row
+			// Works but give this error : Gtk-CRITICAL ** gtk_widget_compute_point: assertion 'GTK_IS_WIDGET (widget)' failed
+			//this.hosts_column_view.set_single_click_activate (true);
 		}
 
 		public MainWindow (App app) {
@@ -218,21 +222,23 @@ namespace HostsManager {
 		}
 
 		//
-		// Columns's widgets initial render
+		// ColumnsViewColumn's widgets signals handler
 		//
 		[GtkCallback]
-		private void signal_enabled_setup_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_enabled_setup_handler (SignalListItemFactory factory, Object object) {
 
 			CheckButton check_button = new CheckButton ();
 			check_button.active = false;
 			check_button.set_halign (Align.CENTER);
 
+			ListItem list_item = object as ListItem;
 			list_item.set_child (check_button);
 		}
 
 		[GtkCallback]
-		private void signal_enabled_bind_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_enabled_bind_handler (SignalListItemFactory factory, Object object) {
 
+			ListItem list_item = object as ListItem;
 			if (list_item.child == null) {
 
 				this.signal_enabled_setup_handler (factory, list_item);
@@ -255,8 +261,9 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
-		private void signal_enabled_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_enabled_unbind_handler (SignalListItemFactory factory, Object object) {
 
+			ListItem list_item = object as ListItem;
 			if (list_item.child != null) {
 
 				list_item.child = null;
@@ -264,14 +271,16 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
-		private void signal_ip_address_setup_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
+			ListItem list_item = object as ListItem;
 			list_item.set_child (new Text ());
 		}
 
 		[GtkCallback]
-		private void signal_ip_address_bind_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_ip_address_bind_handler (SignalListItemFactory factory, Object object) {
 
+			ListItem list_item = object as ListItem;
 			if (list_item.child == null) {
 
 				this.signal_ip_address_setup_handler (factory, list_item);
@@ -305,8 +314,9 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
-		private void signal_ip_address_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_ip_address_unbind_handler (SignalListItemFactory factory, Object object) {
 
+			ListItem list_item = object as ListItem;
 			if (list_item.item != null) {
 
 				list_item.set_child (null);
@@ -314,14 +324,16 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
-		private void signal_host_setup_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_host_setup_handler (SignalListItemFactory factory, Object object) {
 
+			ListItem list_item = object as ListItem;
 			list_item.set_child (new Text ());
 		}
 
 		[GtkCallback]
-		private void signal_host_bind_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_host_bind_handler (SignalListItemFactory factory, Object object) {
 
+			ListItem list_item = object as ListItem;
 			if (list_item.child == null) {
 
 				this.signal_host_setup_handler (factory, list_item);
@@ -353,9 +365,10 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
-		private void signal_host_unbind_handler (SignalListItemFactory factory, ListItem list_item) {
+		private void signal_host_unbind_handler (SignalListItemFactory factory, Object object) {
 
-			if (list_item.item != null) {
+			ListItem list_item = object as ListItem;
+			if (list_item.item  != null) {
 
 				list_item.set_child (null);
 			}

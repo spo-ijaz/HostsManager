@@ -67,7 +67,7 @@
 	(1,100,"GtkActionable","action-name","win.host-row-add",None,None,None,None,None,None,None,None,None),
 	(1,100,"GtkButton","icon-name","list-add-symbolic",None,None,None,None,None,None,None,None,None),
 	(1,100,"GtkWidget","tooltip-text","Search by hostname",1,None,None,None,None,None,None,None,None),
-	(1,102,"GtkColumnView","enable-rubberband","True",None,None,None,None,None,None,None,None,None),
+	(1,102,"GtkColumnView","enable-rubberband","False",None,None,None,None,None,None,None,None,None),
 	(1,102,"GtkColumnView","model",None,None,None,None,None,103,None,None,None,None),
 	(1,103,"GtkSingleSelection","model",None,None,None,None,None,104,None,None,None,None),
 	(1,104,"GtkFilterListModel","filter",None,None,None,None,None,105,None,None,None,None),
