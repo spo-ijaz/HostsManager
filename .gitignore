@@ -4,3 +4,8 @@ build/
 .vscode
 .flatpak
 .flatpak-builder
+fedora/results_hosts-manager/
+fedora/x86_64/
+fedora/.*
+fedora/*.rpm
+fedora/*.tar.gz
