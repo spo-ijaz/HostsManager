@@ -5,7 +5,7 @@ Version:  3.0.5
 Release:  %autorelease
 Summary:  Manage your `/etc/hosts` file
 License:  GPL-3.0-or-later
-URL:      https://github.com/spo-ijaz/HostsManager
+URL:      https://github.com/spo-ijaz/HostsManager/archive/refs/tags/%{version}.tar.gz
 
 
 BuildRequires:  libappstream-glib
@@ -14,7 +14,6 @@ BuildRequires:  gcc
 BuildRequires:  gettext
 BuildRequires:  meson
 BuildRequires:  vala
-BuildRequires:  tree
 BuildRequires:  pkgconfig(gtk4) >= %{gtk4_version}
 BuildRequires:  pkgconfig(libadwaita-1)
 
@@ -22,7 +21,7 @@ Requires:       gtk4%{?_isa} >= %{gtk4_version}
 Requires:       hicolor-icon-theme
 
 %description
-Easily add, remove, update entries in your /etc/hosts files. 
+Easily add, remove, update entries in your /etc/hosts files.
 
 %prep
 %autosetup -n HostsManager-%{version}
@@ -36,7 +35,7 @@ export VALAFLAGS="-g"
 %meson_install
 
 %check
-	
+
 appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/com.github.spo-ijaz.hostsmanager.appdata.xml
 desktop-file-validate %{buildroot}/%{_datadir}/applications/com.github.spo-ijaz.hostsmanager.desktop
 
