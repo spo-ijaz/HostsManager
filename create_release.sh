@@ -10,6 +10,9 @@ declare release_dir=../hosts-manager
 declare release_archive_name
 declare github_repo="spo-ijaz/HostsManager"
 
+declare fedora_spec=./fedora/hostsmanager.spec
+declare meson_build=./meson.build
+
 function usage () {
 
     echo
@@ -33,13 +36,35 @@ release_note=$2
 release_archive_name="hosts-manager-${release}.src.tar.gz"
 
 echo
+echo "Update Fedora spec file..."
+echo
+
+sed -i "s/\(Version:.*\)[0-9]\.[0-9]\.[0-9]/\1${release_tag}/g" "${fedora_spec}"
+
+echo
+echo "Update meson.build..."
+echo
+
+sed -i "s/\(version:.*\)'[0-9]\.[0-9]\.[0-9]'/\1'${release_tag}'/g" "${meson_build}"
+
+echo
+echo "Commit & push changes..."
+echo
+
+git add "${fedora_spec}" "${meson_build}"
+git commit -m "Version bump to ${release_tag}"
+git push origin master
+
+
+echo
 echo "Create tag & push it..."
 echo
 
-# declare commit_id
-# commit_id=$(git log --format="%H" -n 1)
-# git tag -f "${release_tag}" "$commit_id"
-# git push origin "${release_tag}" --force
+declare commit_id
+commit_id=$(git log --format="%H" -n 1)
+git tag -f "${release_tag}" "$commit_id"
+git push origin "${release_tag}" --force
+
 
 
 echo
@@ -70,7 +95,6 @@ echo
 
 # For pre-release
 #gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
-
 gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
 
 
