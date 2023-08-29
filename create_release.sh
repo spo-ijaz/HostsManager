@@ -4,7 +4,7 @@
 #
 
 
-declare release
+declare release_tag
 declare release_note
 declare release_dir=../hosts-manager
 declare release_archive_name
@@ -12,8 +12,9 @@ declare github_repo="spo-ijaz/HostsManager"
 
 function usage () {
 
+    echo
     echo "Usage: "
-    echo " .$0 <release_version> \"<release note>\""
+    echo " .$0 <release_tag> \"<release note>\""
     exit 0  
 }
 
@@ -27,7 +28,7 @@ if [[ -z $2  ]]; then
     usage
 fi
 
-release=$1
+release_tag=$1
 release_note=$2
 release_archive_name="hosts-manager-${release}.src.tar.gz"
 
@@ -35,17 +36,17 @@ echo
 echo "Create tag & push it..."
 echo
 
-# declare commit_id
-# commit_id=$(git log --format="%H" -n 1)
-# git tag -f "${release}" "$3"
-# git push origin "${release}" --force
+declare commit_id
+commit_id=$(git log --format="%H" -n 1)
+git tag -f "${release_tag}" "$commit_id"
+git push origin "${release_tag}" --force
 
 
 echo
-echo "Fetch code from github ( tag: ${release} )..."
+echo "Fetch code from github ( tag: ${release_tag} )..."
 echo
 
-# git clone --depth 1 --branch ${release} --single-branch https://github.com/spo-ijaz/HostsManager.git ${release_dir}
+git clone --depth 1 --branch ${release_tag} --single-branch https://github.com/spo-ijaz/HostsManager.git ${release_dir}
 
 
 
@@ -66,9 +67,20 @@ tar -czvf ../${release_archive_name} \
 echo
 echo "Create a new release..."
 echo
-gh release create -p -t "HostsManager - v${release}" --latest --repo ${github_repo} -n "${release_note}" ${release}
+
+gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
+
 
 echo
 echo "Attach build asset..."
 echo 
-gh release upload --repo ${github_repo} ${version} ../${release_archive_name}
+
+gh release upload --repo ${github_repo} ${release_tag} ../${release_archive_name}
+
+
+echo 
+echo "Cleanup..."
+echo
+
+rm -f ../${release_archive_name}
+rm -f ../${release_dir}}
