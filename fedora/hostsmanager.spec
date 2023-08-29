@@ -5,7 +5,8 @@ Version:  3.0.5
 Release:  %autorelease
 Summary:  Manage your `/etc/hosts` file
 License:  GPL-3.0-or-later
-URL:      https://github.com/spo-ijaz/HostsManager/archive/refs/tags/%{version}.tar.gz
+URL:      https://github.com/spo-ijaz/HostsManager
+Source0:  https://github.com/spo-ijaz/HostsManager/archive/refs/tags/%{version}.tar.gz
 
 
 BuildRequires:  libappstream-glib
