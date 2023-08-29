@@ -42,7 +42,7 @@ sudo ninja install
 ## Todo
 - [x] Put back translations.
 - [ ] Be able to undo a delete (using toastoverlay )
-- [ ] Add in this tray.
+- [ ] Add in systray.
 - [ ] Handle IPv6 ?
 
 
