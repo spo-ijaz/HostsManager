@@ -36,10 +36,10 @@ echo
 echo "Create tag & push it..."
 echo
 
-declare commit_id
-commit_id=$(git log --format="%H" -n 1)
-git tag -f "${release_tag}" "$commit_id"
-git push origin "${release_tag}" --force
+# declare commit_id
+# commit_id=$(git log --format="%H" -n 1)
+# git tag -f "${release_tag}" "$commit_id"
+# git push origin "${release_tag}" --force
 
 
 echo
@@ -68,7 +68,10 @@ echo
 echo "Create a new release..."
 echo
 
-gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
+# For pre-release
+#gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
+
+gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
 
 
 echo
