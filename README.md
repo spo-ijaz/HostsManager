@@ -38,6 +38,7 @@ ninja
 sudo ninja install
 ```
 
+
 ## Todo
 - [x] Put back translations.
 - [ ] Be able to undo a delete (using toastoverlay )
