@@ -2,14 +2,12 @@
 
 
 Name:     hosts-manager
-Version:  3.0.4
+Version:  3.0.5
 Release:  %autorelease
 Summary:  Manage your `/etc/hosts` file
 License:  GPL-3.0-or-later
 URL:      https://github.com/spo-ijaz/HostsManager
-Source:   https://github.com/spo-ijaz/HostsManager.git
-TYPE:     SCM
-#Source:   hosts-manager-3.0.4.tar.gz
+Source:   https://github.com/spo-ijaz/archive/refs/tags/hosts-manager-%{version}.src.tar.gz
 
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
