@@ -1,13 +1,13 @@
 %global gtk4_version 4.10
 
-
 Name:     hosts-manager
 Version:  3.0.5
 Release:  %autorelease
 Summary:  Manage your `/etc/hosts` file
 License:  GPL-3.0-or-later
 URL:      https://github.com/spo-ijaz/HostsManager
-Source:   https://github.com/spo-ijaz/archive/refs/tags/hosts-manager-%{version}.src.tar.gz
+Source0:  https://github.com/spo-ijaz/HostsManager/archive/refs/tags/%{version}.tar.gz
+
 
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
@@ -33,7 +33,6 @@ export VALAFLAGS="-g"
 %meson_build
 
 %install
-# %find_lang %{name}
 %meson_install
 
 %check
@@ -42,7 +41,6 @@ appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/com.gith
 desktop-file-validate %{buildroot}/%{_datadir}/applications/com.github.spo-ijaz.hostsmanager.desktop
 
 %files
-# %files -f %{name}.lang
 %doc AUTHORS README.md
 %license COPYING
 %{_bindir}/com.github.spo-ijaz.hostsmanager
@@ -50,7 +48,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/com.github.spo-ijaz.
 %{_datadir}/applications/com.github.spo-ijaz.hostsmanager.desktop
 %{_datadir}/metainfo/com.github.spo-ijaz.hostsmanager.appdata.xml
 %{_datadir}/polkit-1/actions/com.github.spo-ijaz.hostsmanager.pkexec.policy
-# %{_datadir}/locale/*/LC_MESSAGES/com.github.spo-ijaz.hostsmanager.mo
+%{_datadir}/locale/*/LC_MESSAGES/com.github.spo-ijaz.hostsmanager.mo
 %{_datadir}/icons/hicolor/*/apps/com.github.spo-ijaz.hostsmanager*.png
 %{_datadir}/icons/hicolor/*/apps/com.github.spo-ijaz.hostsmanager*.svg
 
