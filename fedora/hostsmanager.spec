@@ -25,7 +25,7 @@ Requires:       hicolor-icon-theme
 Easily add, remove, update entries in your /etc/hosts files. 
 
 %prep
-%autosetup -c
+%autosetup -p1 -n %{version}
 
 %build
 export VALAFLAGS="-g"
