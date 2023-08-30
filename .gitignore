@@ -10,3 +10,4 @@ fedora/x86_64/
 fedora/.*
 fedora/*.rpm
 fedora/*.tar.gz
+tempchanglog

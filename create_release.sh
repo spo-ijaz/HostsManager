@@ -5,7 +5,7 @@
 
 
 declare release_tag
-declare release_note
+declare release_note_file
 declare release_dir=../hosts-manager
 declare release_archive_name
 declare github_repo="spo-ijaz/HostsManager"
@@ -17,8 +17,8 @@ function usage () {
 
     echo
     echo "Usage: "
-    echo " .$0 <release_tag> \"<release note>\""
-    exit 0  
+    echo " .$0 <release_tag> \"<path to release note file>\""
+    exit 0
 }
 
 if [[ -z $1  ]]; then
@@ -26,13 +26,13 @@ if [[ -z $1  ]]; then
     usage
 fi
 
-if [[ -z $2  ]]; then
-    echo "Missing release note."
+if [[ ! -f $2  ]]; then
+    echo "Missing release note file."
     usage
 fi
 
 release_tag=$1
-release_note=$2
+release_note_file=$2
 release_archive_name="hosts-manager-${release}.src.tar.gz"
 
 echo
@@ -86,7 +86,7 @@ tar -czvf ../${release_archive_name} \
     --exclude="**/settings-json" \
     --exclude="**/.idea" \
     --exclude="**/.vscode"  \
-    . 
+    .
 
 
 echo
@@ -95,17 +95,17 @@ echo
 
 # For pre-release
 #gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
-gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
+gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -F "${release_note_file}" ${release_tag}
 
 
 echo
 echo "Attach build asset..."
-echo 
+echo
 
 gh release upload --repo ${github_repo} ${release_tag} ../${release_archive_name}
 
 
-echo 
+echo
 echo "Cleanup..."
 echo
 
