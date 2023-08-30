@@ -46,7 +46,10 @@ Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and
 
 - [x] Put back translations.
 - [x] Be able to undo a delete (using toastoverlay )
-- [ ] Ask root password only when changes are made on the file.
+- [ ] ~~Ask root password only when changes are made on the file.~~
+	- Not possible easily, or we should spawn a `pkexec` process each time we want to modify the file, and use shell commands instead of Glib ones.
+ 	- Or maybe there's another mechanism...
+- [ ] Be able to re-order on the fly the rows.
 - [ ] Handle IPv6 ?
 
 ## Update translations
