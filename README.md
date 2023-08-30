@@ -46,7 +46,7 @@ Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and
 
 - [x] Put back translations.
 - [x] Be able to undo a delete (using toastoverlay )
-- [ ] Ask root password only when update are made on the file.
+- [ ] Ask root password only when changes are made on the file.
 - [ ] Handle IPv6 ?
 
 ## Update translations
