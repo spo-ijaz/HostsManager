@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.bbuhler.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-29 08:59+0200\n"
+"POT-Creation-Date: 2023-08-30 09:44+0200\n"
 "PO-Revision-Date: 2018-08-13 13:50+0200\n"
 "Last-Translator: Benjamin Buhler\n"
 "Language-Team: none\n"
@@ -17,37 +17,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/ui/main-window.ui:76
+#: data/ui/main-window.ui:82 data/ui/app-shortcuts-window.ui:34
+#: src/MainWindow.vala:75
+msgid "Search by hostname"
+msgstr ""
+
+#: data/ui/main-window.ui:91 data/ui/app-shortcuts-window.ui:20
 #, fuzzy
 msgid "Add a new entry"
 msgstr "Eintrag hinzufügen"
 
-#: data/ui/main-window.ui:85 data/ui/app-shortcuts-window.ui:34
-#: src/MainWindow.vala:71
-msgid "Search by hostname"
-msgstr ""
-
-#: data/ui/main-window.ui:132
+#: data/ui/main-window.ui:138
 msgid "Enabled"
 msgstr ""
 
-#: data/ui/main-window.ui:145
+#: data/ui/main-window.ui:151
 #, fuzzy
 msgid "IP address"
 msgstr "IP Adresse"
 
-#: data/ui/main-window.ui:158
+#: data/ui/main-window.ui:164
 msgid "Hostname"
+msgstr ""
+
+#: data/ui/main-window.ui:182
+msgid "Entry removed."
+msgstr ""
+
+#: data/ui/main-window.ui:183
+msgid "Undo"
 msgstr ""
 
 #: data/ui/app-shortcuts-window.ui:14
 msgid "Overview"
 msgstr ""
-
-#: data/ui/app-shortcuts-window.ui:20
-#, fuzzy
-msgid "Add a new host"
-msgstr "Eintrag hinzufügen"
 
 #: data/ui/app-shortcuts-window.ui:27
 #, fuzzy
@@ -59,31 +62,39 @@ msgid "Shortcut list"
 msgstr ""
 
 #: data/ui/app-shortcuts-window.ui:48
+msgid "Undo deleted entries"
+msgstr ""
+
+#: data/ui/app-shortcuts-window.ui:55
 msgid "Quit this application"
 msgstr ""
 
-#: src/MainWindow.vala:72
+#: src/MainWindow.vala:76
 msgid "Restore from backup file"
 msgstr ""
 
-#: src/MainWindow.vala:73
+#: src/MainWindow.vala:77
 msgid "Shorcuts"
 msgstr ""
 
-#: src/MainWindow.vala:74
+#: src/MainWindow.vala:78
 msgid "About"
 msgstr ""
 
-#: src/MainWindow.vala:75
+#: src/MainWindow.vala:79
 msgid "Quit"
 msgstr ""
 
-#: src/MainWindow.vala:118
+#: src/MainWindow.vala:127
 msgid "Sébastien PORQUET"
 msgstr ""
 
-#: src/MainWindow.vala:123
+#: src/MainWindow.vala:132
 msgid "© 2018 Benjamin BUHLER"
+msgstr ""
+
+#: src/MainWindow.vala:244
+msgid "No deleted entry to restore."
 msgstr ""
 
 #: src/Services/HostsFile.vala:33
@@ -101,6 +112,10 @@ msgstr ""
 #: src/Services/HostsFile.vala:148
 msgid "Host file updated."
 msgstr ""
+
+#, fuzzy
+#~ msgid "Add a new host"
+#~ msgstr "Eintrag hinzufügen"
 
 #~ msgid "Remove entry"
 #~ msgstr "Eintrag entfernen"

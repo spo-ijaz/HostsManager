@@ -57,6 +57,12 @@
     <value key="x-appcenter-suggested-price">0</value>
   </custom>
   <releases>
+   <release version="3.0.6" date="2023-28-28">
+        <description>
+          <p>Move add entry button to the right.</p>
+          <p>Undo deleted entries, with Ctrl+z shortcut.</p>
+        </description>
+      </release>
     <release version="3.0.0" date="2023-28-28">
       <description>
         <p>Ported to GTK 4</p>

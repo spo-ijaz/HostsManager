@@ -10,9 +10,10 @@
 	(1,3,"GtkShortcutsGroup",None,2,None,None,None,None,None),
 	(1,4,"GtkShortcutsShortcut",None,3,None,None,None,None,None),
 	(1,5,"GtkShortcutsShortcut",None,3,None,None,None,1,None),
-	(1,6,"GtkShortcutsShortcut",None,3,None,None,None,4,None),
+	(1,6,"GtkShortcutsShortcut",None,3,None,None,None,5,None),
 	(1,7,"GtkShortcutsShortcut",None,3,None,None,None,2,None),
-	(1,8,"GtkShortcutsShortcut",None,3,None,None,None,3,None)
+	(1,8,"GtkShortcutsShortcut",None,3,None,None,None,3,None),
+	(1,9,"GtkShortcutsShortcut",None,3,None,None,None,4,None)
   </object>
   <object_property>
 	(1,1,"GtkShortcutsWindow","section-name","shortcuts",None,None,None,None,None,None,None,None,None),
@@ -22,7 +23,7 @@
 	(1,3,"GtkShortcutsGroup","view","shortcuts",None,None,None,None,None,None,None,None,None),
 	(1,3,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
 	(1,4,"GtkShortcutsShortcut","accelerator","&lt;Control&gt;n",None,None,None,None,None,None,None,None,None),
-	(1,4,"GtkShortcutsShortcut","title","Add a new host",1,None,None,None,None,None,None,None,None),
+	(1,4,"GtkShortcutsShortcut","title","Add a new entry",1,None,None,None,None,None,None,None,None),
 	(1,4,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkShortcutsShortcut","accelerator","Delete",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkShortcutsShortcut","title","Delete selected entry",1,None,None,None,None,None,None,None,None),
@@ -35,6 +36,9 @@
 	(1,7,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
 	(1,8,"GtkShortcutsShortcut","action-name","win.show-help-overlay",None,None,None,None,None,None,None,None,None),
 	(1,8,"GtkShortcutsShortcut","title","Shortcut list",1,None,None,None,None,None,None,None,None),
-	(1,8,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None)
+	(1,8,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkShortcutsShortcut","accelerator","&lt;Control&gt;z",None,None,None,None,None,None,None,None,None),
+	(1,9,"GtkShortcutsShortcut","title","Undo deleted entries",1,None,None,None,None,None,None,None,None),
+	(1,9,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None)
   </object_property>
 </cambalache-project>

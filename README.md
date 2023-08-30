@@ -45,8 +45,8 @@ Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and
 ## Todo
 
 - [x] Put back translations.
-- [ ] Be able to undo a delete (using toastoverlay )
-- [ ] Add in systray.
+- [x] Be able to undo a delete (using toastoverlay )
+- [ ] Ask root password only when update are made on the file.
 - [ ] Handle IPv6 ?
 
 ## Update translations

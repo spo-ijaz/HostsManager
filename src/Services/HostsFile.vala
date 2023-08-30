@@ -27,10 +27,10 @@ namespace HostsManager.Services {
 
 			try {
 
-				debug ("Backup of \"%s\" -> \"%s\" ", host_file.get_path (), host_file_bkp.get_parse_name ());
+				debug ("Backup of \"%s\" -> \"%s\" ", host_file.get_path (), host_file_bkp.get_path ());
 				host_file.copy (host_file_bkp, FileCopyFlags.OVERWRITE);
 
-				this.main_window.toast.set_title (_("Host file backup here: ") + host_file_bkp.get_parse_name ());
+				this.main_window.toast.set_title (_("Host file backup here: ") + host_file_bkp.get_path ());
 				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 			} catch (Error e) {
 
@@ -114,7 +114,7 @@ namespace HostsManager.Services {
 
 			try {
 
-				debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_parse_name ());
+				debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_path ());
 				host_file_bkp.copy (host_file, FileCopyFlags.OVERWRITE);
 				this.read_file ();
 
@@ -122,7 +122,7 @@ namespace HostsManager.Services {
 				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 			} catch (Error e) {
 
-				this.main_window.toast.set_title (_("Unable to restore from backup file: ") + host_file_bkp.get_parse_name ());
+				this.main_window.toast.set_title (_("Unable to restore from backup file: ") + host_file_bkp.get_path ());
 				this.main_window.toast_overlay.add_toast (this.main_window.toast);
 				error ("Error: %s", e.message);
 			}

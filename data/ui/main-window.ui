@@ -43,6 +43,12 @@
             <property name="trigger">&lt;Control&gt;n</property>
           </object>
         </child>
+        <child>
+          <object class="GtkShortcut">
+            <property name="action">action(win.host-row-undo)</property>
+            <property name="trigger">&lt;Control&gt;z</property>
+          </object>
+        </child>
       </object>
     </child>
     <child>
@@ -73,16 +79,16 @@
                   <object class="GtkToggleButton" id="search_toggle_button">
                     <property name="accessible-role">toggle-button</property>
                     <property name="icon-name">preferences-system-search-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Add a new entry</property>
+                    <property name="tooltip-text" translatable="yes">Search by hostname</property>
                     <signal name="toggled" handler="on_search_toggle_button_toggled"/>
                   </object>
                 </child>
-                <child>
+                <child type="end">
                   <object class="GtkToggleButton" id="add_host_row_toggle_button">
                     <property name="accessible-role">toggle-button</property>
                     <property name="action-name">win.host-row-add</property>
                     <property name="icon-name">list-add-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Search by hostname</property>
+                    <property name="tooltip-text" translatable="yes">Add a new entry</property>
                   </object>
                 </child>
               </object>
@@ -170,6 +176,12 @@
   </template>
   <object class="AdwToast" id="toast">
     <property name="timeout">1</property>
+  </object>
+  <object class="AdwToast" id="toast_undo">
+    <property name="timeout">5</property>
+    <property name="title" translatable="yes">Entry removed.</property>
+    <property name="button_label" translatable="yes">Undo</property>
+    <signal name="button_clicked" handler="signal_toast_undo_button_clicked_handler"/>
   </object>
   <object class="GtkCssProvider" id="css_provider"/>
 </interface>

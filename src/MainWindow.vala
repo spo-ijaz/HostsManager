@@ -11,6 +11,7 @@ namespace HostsManager {
 			{ "focus-search-bar", focus_search_bar },
 			{ "host-row-add", host_row_add },
 			{ "host-row-delete", host_row_delete },
+			{ "host-row-undo", signal_toast_undo_button_clicked_handler },
 			{ "restore-fron-backup", restore_from_backup },
 			{ "show-about", show_about },
 			{ "app-quit", app_quit },
@@ -22,6 +23,8 @@ namespace HostsManager {
 		public unowned ToastOverlay toast_overlay;
 		[GtkChild]
 		public unowned Toast toast;
+		[GtkChild]
+		public unowned Toast toast_undo;
 		[GtkChild]
 		public unowned ShortcutController shortcut_controller;
 		[GtkChild]
@@ -48,6 +51,7 @@ namespace HostsManager {
 		public unowned StringFilter hosts_string_filter;
 
 		private Services.HostsFile hosts_file_service;
+		private GLib.ListStore hosts_list_undo_store;
 
 		construct {
 
@@ -89,12 +93,13 @@ namespace HostsManager {
 			this.hosts_string_filter.set_expression (property_expression);
 
 			// Intiailize the list store
+			this.hosts_list_undo_store = new GLib.ListStore (typeof (Models.HostRow));
 			this.hosts_file_service = new Services.HostsFile (this);
 			this.append_hots_rows_to_list_store ();
 
 			// To automatically select the current row
 			// Works but give this error : Gtk-CRITICAL ** gtk_widget_compute_point: assertion 'GTK_IS_WIDGET (widget)' failed
-			//this.hosts_column_view.set_single_click_activate (true);
+			//  this.hosts_column_view.set_single_click_activate (true);
 		}
 
 		public MainWindow (App app) {
@@ -175,17 +180,11 @@ namespace HostsManager {
 		//
 		// Host row creation / deletion / restoration
 		//
-		private void host_row_add () {
-
-			this.hosts_list_store.append (new Models.HostRow (
-			                                                  true,
-			                                                  true,
-			                                                  "127.0.0.1",
-			                                                  "new.localhost"));
+		private void host_row_add_into_file (Models.HostRow host_row) {
 
 			try {
 
-				this.hosts_file_service.add ("127.0.0.1", "new.localhost");
+				this.hosts_file_service.add (host_row.ip_address, host_row.hostname);
 			} catch (InvalidArgument invalid_argument) {
 
 				debug ("InvalidArgument: %s", invalid_argument.message);
@@ -200,6 +199,17 @@ namespace HostsManager {
 			});
 		}
 
+		private void host_row_add () {
+
+			Models.HostRow host_row = new Models.HostRow (
+			                                              true,
+			                                              true,
+			                                              "127.0.0.1",
+			                                              "new.localhost");
+			this.hosts_list_store.append (host_row);
+			this.host_row_add_into_file (host_row);
+		}
+
 		private void host_row_delete () {
 
 			Models.HostRow host_row = hosts_single_selection.selected_item as Models.HostRow;
@@ -208,10 +218,32 @@ namespace HostsManager {
 			}
 
 			debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
+			this.hosts_list_undo_store.append (host_row);
 			Services.HostsRegex modRegex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
 			this.hosts_file_service.remove (modRegex);
 
 			this.hosts_list_store.remove (hosts_single_selection.get_selected ());
+			this.toast_overlay.add_toast (this.toast_undo);
+		}
+
+		[GtkCallback]
+		private void signal_toast_undo_button_clicked_handler () {
+
+			uint position_latest_entry = this.hosts_list_undo_store.get_n_items ();
+			debug ("Number of delete entries stored: %u", position_latest_entry);
+
+			Models.HostRow host_row = this.hosts_list_undo_store.get_item (--position_latest_entry) as Models.HostRow;
+			if (host_row != null) {
+
+				debug ("Restoring host \"%s\", IP address \"%s\"", host_row.hostname, host_row.ip_address);
+				this.hosts_list_undo_store.remove (position_latest_entry);
+				this.hosts_list_store.append (host_row);
+				this.host_row_add_into_file (host_row);
+			} else {
+				
+				this.toast.title = _("No deleted entry to restore.");
+				this.toast_overlay.add_toast (this.toast);
+			}
 		}
 
 		private void restore_from_backup () {
@@ -368,7 +400,7 @@ namespace HostsManager {
 		private void signal_host_unbind_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			if (list_item.item  != null) {
+			if (list_item.item != null) {
 
 				list_item.set_child (null);
 			}

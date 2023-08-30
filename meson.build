@@ -2,7 +2,7 @@
 project(
 	'com.github.spo-ijaz.hostsmanager',
 	['vala', 'c'],
-	version: '3.0.5',
+	version: '3.0.6',
 	license: 'MIT License',
 	meson_version: '>= 0.63',
 )
@@ -17,11 +17,8 @@ add_project_arguments(
 )
 
 # Application ID
-if get_option('profile') == 'development'
-	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager.Devel'
-else
-	hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager'
-endif
+hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager'
+
 
 # Common variables
 valac = meson.get_compiler('vala')
