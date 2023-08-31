@@ -44,8 +44,6 @@ Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and
 
 ## Todo
 
-- [x] Put back translations.
-- [x] Be able to undo a delete (using toastoverlay )
 - [ ] ~~Ask root password only when changes are made on the file.~~
 	- Not possible easily, or we should spawn a `pkexec` process each time we want to modify the file, and use shell commands instead of Glib ones.
  	- Or maybe there's another mechanism...
@@ -60,3 +58,4 @@ cd build
 meson compile com.github.spo-ijaz.hostsmanager-pot
 meson compile com.github.spo-ijaz.hostsmanager-update-po
 ```
+

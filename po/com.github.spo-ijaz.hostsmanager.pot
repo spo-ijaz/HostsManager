@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.spo-ijaz.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-30 09:44+0200\n"
+"POT-Creation-Date: 2023-08-31 23:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: data/ui/main-window.ui:82 data/ui/app-shortcuts-window.ui:34
-#: src/MainWindow.vala:75
 msgid "Search by hostname"
 msgstr ""
 
@@ -26,24 +25,8 @@ msgstr ""
 msgid "Add a new entry"
 msgstr ""
 
-#: data/ui/main-window.ui:138
-msgid "Enabled"
-msgstr ""
-
-#: data/ui/main-window.ui:151
-msgid "IP address"
-msgstr ""
-
-#: data/ui/main-window.ui:164
-msgid "Hostname"
-msgstr ""
-
-#: data/ui/main-window.ui:182
-msgid "Entry removed."
-msgstr ""
-
-#: data/ui/main-window.ui:183
-msgid "Undo"
+#: data/ui/main-window.ui:184
+msgid "Entries removed."
 msgstr ""
 
 #: data/ui/app-shortcuts-window.ui:14
@@ -51,7 +34,7 @@ msgid "Overview"
 msgstr ""
 
 #: data/ui/app-shortcuts-window.ui:27
-msgid "Delete selected entry"
+msgid "Delete selected entries"
 msgstr ""
 
 #: data/ui/app-shortcuts-window.ui:41
@@ -66,46 +49,46 @@ msgstr ""
 msgid "Quit this application"
 msgstr ""
 
-#: src/MainWindow.vala:76
+#: src/MainWindow.vala:77
 msgid "Restore from backup file"
 msgstr ""
 
-#: src/MainWindow.vala:77
+#: src/MainWindow.vala:78
 msgid "Shorcuts"
 msgstr ""
 
-#: src/MainWindow.vala:78
+#: src/MainWindow.vala:79
 msgid "About"
 msgstr ""
 
-#: src/MainWindow.vala:79
+#: src/MainWindow.vala:80
 msgid "Quit"
 msgstr ""
 
-#: src/MainWindow.vala:127
+#: src/MainWindow.vala:128
 msgid "Sébastien PORQUET"
 msgstr ""
 
-#: src/MainWindow.vala:132
+#: src/MainWindow.vala:133
 msgid "© 2018 Benjamin BUHLER"
 msgstr ""
 
-#: src/MainWindow.vala:244
-msgid "No deleted entry to restore."
+#: src/MainWindow.vala:270
+msgid "No deleted entries to restore."
 msgstr ""
 
 #: src/Services/HostsFile.vala:33
 msgid "Host file backup here: "
 msgstr ""
 
-#: src/Services/HostsFile.vala:121
+#: src/Services/HostsFile.vala:128
 msgid "Host file restored."
 msgstr ""
 
-#: src/Services/HostsFile.vala:125
+#: src/Services/HostsFile.vala:132
 msgid "Unable to restore from backup file: "
 msgstr ""
 
-#: src/Services/HostsFile.vala:148
+#: src/Services/HostsFile.vala:155
 msgid "Host file updated."
 msgstr ""

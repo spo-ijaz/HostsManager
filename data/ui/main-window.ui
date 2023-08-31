@@ -113,7 +113,7 @@
                   <object class="GtkColumnView" id="hosts_column_view">
                     <property name="enable-rubberband">False</property>
                     <property name="model">
-                      <object class="GtkSingleSelection" id="hosts_single_selection">
+                      <object class="GtkMultiSelection" id="hosts_multi_selection">
                         <property name="model">
                           <object class="GtkFilterListModel" id="hosts_filter_list_model">
                             <property name="filter">
@@ -135,7 +135,7 @@
                             <signal name="unbind" handler="signal_enabled_unbind_handler"/>
                           </object>
                         </property>
-                        <property name="title" translatable="yes">Enabled</property>
+                        <property name="title">Enabled</property>
                       </object>
                     </child>
                     <child>
@@ -148,7 +148,7 @@
                           </object>
                         </property>
                         <property name="resizable">True</property>
-                        <property name="title" translatable="yes">IP address</property>
+                        <property name="title">IP address</property>
                       </object>
                     </child>
                     <child>
@@ -161,7 +161,7 @@
                             <signal name="unbind" handler="signal_host_unbind_handler"/>
                           </object>
                         </property>
-                        <property name="title" translatable="yes">Hostname</property>
+                        <property name="title">Hostname</property>
                         <!-- Custom fragments -->
                       </object>
                     </child>
@@ -177,11 +177,11 @@
   <object class="AdwToast" id="toast">
     <property name="timeout">1</property>
   </object>
-  <object class="AdwToast" id="toast_undo">
-    <property name="timeout">5</property>
-    <property name="title" translatable="yes">Entry removed.</property>
-    <property name="button_label" translatable="yes">Undo</property>
-    <signal name="button_clicked" handler="signal_toast_undo_button_clicked_handler"/>
-  </object>
   <object class="GtkCssProvider" id="css_provider"/>
+  <object class="AdwToast" id="toast_undo">
+    <property name="button-label">Undo</property>
+    <property name="timeout">5</property>
+    <property name="title" translatable="yes">Entries removed.</property>
+    <signal name="button-clicked" handler="signal_toast_undo_button_clicked_handler"/>
+  </object>
 </interface>

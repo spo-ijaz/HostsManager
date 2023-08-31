@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Created with Cambalache 0.13.1 -->
-<interface>
+<interface domain="com.github.spo-ijaz.hostsmanager">
   <!-- interface-name app-shortcuts-window.ui -->
   <requires lib="gtk" version="4.10"/>
   <object class="GtkShortcutsWindow" id="app-shortcuts-window">
@@ -24,7 +24,7 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="accelerator">Delete</property>
-                <property name="title" translatable="yes">Delete selected entry</property>
+                <property name="title" translatable="yes">Delete selected entries</property>
                 <property name="visible">True</property>
               </object>
             </child>

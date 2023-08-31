@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.spo-ijaz.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-30 09:44+0200\n"
+"POT-Creation-Date: 2023-08-31 23:30+0200\n"
 "PO-Revision-Date: 2019-01-16 21:45+0100\n"
 "Last-Translator: Sébastien PORQUET\n"
 "Language-Team: Français\n"
@@ -18,7 +18,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/ui/main-window.ui:82 data/ui/app-shortcuts-window.ui:34
-#: src/MainWindow.vala:75
 msgid "Search by hostname"
 msgstr "Chercher une entrée par un nom d'hôte"
 
@@ -26,87 +25,83 @@ msgstr "Chercher une entrée par un nom d'hôte"
 msgid "Add a new entry"
 msgstr "Ajouter une nouvelle entrée"
 
-#: data/ui/main-window.ui:138
-msgid "Enabled"
-msgstr "Activé"
-
-#: data/ui/main-window.ui:151
-msgid "IP address"
-msgstr "Adresse IP"
-
-#: data/ui/main-window.ui:164
-msgid "Hostname"
-msgstr "Nom d'hôte"
-
-#: data/ui/main-window.ui:182
-msgid "Entry removed."
-msgstr "Entrée supprimée."
-
-#: data/ui/main-window.ui:183
-msgid "Undo"
-msgstr "Annuler"
+#: data/ui/main-window.ui:184
+msgid "Entries removed."
+msgstr "Entrées supprimées."
 
 #: data/ui/app-shortcuts-window.ui:14
 msgid "Overview"
 msgstr "Aperçu"
 
 #: data/ui/app-shortcuts-window.ui:27
-msgid "Delete selected entry"
+msgid "Delete selected entries"
 msgstr "Supprimer l'entrée sélectionnée"
 
 #: data/ui/app-shortcuts-window.ui:41
 msgid "Shortcut list"
-msgstr "List des raccourcis clavier"
+msgstr "Liste des raccourcis clavier"
 
 #: data/ui/app-shortcuts-window.ui:48
 msgid "Undo deleted entries"
-msgstr "Restaurer des entrées supprimées"
+msgstr "Restaurer les entrées supprimées"
 
 #: data/ui/app-shortcuts-window.ui:55
 msgid "Quit this application"
 msgstr "Quitter cette application"
 
-#: src/MainWindow.vala:76
+#: src/MainWindow.vala:77
 msgid "Restore from backup file"
 msgstr "Restaurer depuis la sauvegarde"
 
-#: src/MainWindow.vala:77
+#: src/MainWindow.vala:78
 msgid "Shorcuts"
 msgstr "Raccourcis"
 
-#: src/MainWindow.vala:78
+#: src/MainWindow.vala:79
 msgid "About"
 msgstr "À propos"
 
-#: src/MainWindow.vala:79
+#: src/MainWindow.vala:80
 msgid "Quit"
 msgstr "Quitter"
 
-#: src/MainWindow.vala:127
+#: src/MainWindow.vala:128
 msgid "Sébastien PORQUET"
 msgstr ""
 
-#: src/MainWindow.vala:132
+#: src/MainWindow.vala:133
 msgid "© 2018 Benjamin BUHLER"
 msgstr ""
 
-#: src/MainWindow.vala:244
+#: src/MainWindow.vala:270
 #, fuzzy
-msgid "No deleted entry to restore."
-msgstr "Plus d'entrées à restaurer."
+msgid "No deleted entries to restore."
+msgstr "Plus d'entrée à restaurer."
 
 #: src/Services/HostsFile.vala:33
 msgid "Host file backup here: "
 msgstr "Fichier de sauvegarde:"
 
-#: src/Services/HostsFile.vala:121
+#: src/Services/HostsFile.vala:128
 msgid "Host file restored."
 msgstr "Fichier hosts restauré."
 
-#: src/Services/HostsFile.vala:125
+#: src/Services/HostsFile.vala:132
 msgid "Unable to restore from backup file: "
 msgstr "Impossible de restaurer depuis la sauvegarde."
 
-#: src/Services/HostsFile.vala:148
+#: src/Services/HostsFile.vala:155
 msgid "Host file updated."
 msgstr "Fichier hosts mis à jour."
+
+#~ msgid "Enabled"
+#~ msgstr "Activé"
+
+#~ msgid "IP address"
+#~ msgstr "Adresse IP"
+
+#~ msgid "Hostname"
+#~ msgstr "Nom d'hôte"
+
+#~ msgid "Undo"
+#~ msgstr "Annuler"

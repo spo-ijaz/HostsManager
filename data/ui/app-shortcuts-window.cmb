@@ -26,7 +26,7 @@
 	(1,4,"GtkShortcutsShortcut","title","Add a new entry",1,None,None,None,None,None,None,None,None),
 	(1,4,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
 	(1,5,"GtkShortcutsShortcut","accelerator","Delete",None,None,None,None,None,None,None,None,None),
-	(1,5,"GtkShortcutsShortcut","title","Delete selected entry",1,None,None,None,None,None,None,None,None),
+	(1,5,"GtkShortcutsShortcut","title","Delete selected entries",1,None,None,None,None,None,None,None,None),
 	(1,5,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
 	(1,6,"GtkShortcutsShortcut","accelerator","&lt;Control&gt;q",None,None,None,None,None,None,None,None,None),
 	(1,6,"GtkShortcutsShortcut","title","Quit this application",1,None,None,None,None,None,None,None,None),

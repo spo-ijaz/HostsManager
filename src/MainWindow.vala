@@ -1,4 +1,5 @@
 using Adw;
+using Gdk;
 using GLib;
 using Gtk;
 
@@ -42,13 +43,14 @@ namespace HostsManager {
 		[GtkChild]
 		public unowned ColumnView hosts_column_view;
 		[GtkChild]
-		public unowned SingleSelection hosts_single_selection;
+		public unowned MultiSelection hosts_multi_selection;
 		[GtkChild]
 		public unowned FilterListModel hosts_filter_list_model;
 		[GtkChild]
 		public unowned GLib.ListStore hosts_list_store;
 		[GtkChild]
 		public unowned StringFilter hosts_string_filter;
+
 
 		private Services.HostsFile hosts_file_service;
 		private GLib.ListStore hosts_list_undo_store;
@@ -72,7 +74,6 @@ namespace HostsManager {
 			this.add_action_entries (ACTION_ENTRIES, this);
 
 			Menu menu = new Menu ();
-			menu.append (_("Search by hostname"), "win.focus-search-bar");
 			menu.append (_("Restore from backup file"), "win.restore-fron-backup");
 			menu.append (_("Shorcuts"), "win.show-help-overlay");
 			menu.append (_("About"), "win.show-about");
@@ -99,7 +100,7 @@ namespace HostsManager {
 
 			// To automatically select the current row
 			// Works but give this error : Gtk-CRITICAL ** gtk_widget_compute_point: assertion 'GTK_IS_WIDGET (widget)' failed
-			//  this.hosts_column_view.set_single_click_activate (true);
+			// this.hosts_column_view.set_single_click_activate (true);
 		}
 
 		public MainWindow (App app) {
@@ -162,12 +163,13 @@ namespace HostsManager {
 		[GtkCallback]
 		private void on_search_toggle_button_toggled () {
 
-			this.search_bar.visible = !this.search_bar.visible;
+			this.search_bar.set_visible (this.search_toggle_button.get_active ());
 			this.search_entry.grab_focus ();
 		}
 
 		private void focus_search_bar (SimpleAction action, GLib.Variant? parameter) {
 
+			this.search_toggle_button.set_active (!this.search_toggle_button.get_active ());
 			this.on_search_toggle_button_toggled ();
 		}
 
@@ -180,11 +182,11 @@ namespace HostsManager {
 		//
 		// Host row creation / deletion / restoration
 		//
-		private void host_row_add_into_file (Models.HostRow host_row) {
+		private void host_row_add_into_file (Models.HostRow host_row, bool save = true) {
 
 			try {
 
-				this.hosts_file_service.add (host_row.ip_address, host_row.hostname);
+				this.hosts_file_service.add (host_row.ip_address, host_row.hostname, save);
 			} catch (InvalidArgument invalid_argument) {
 
 				debug ("InvalidArgument: %s", invalid_argument.message);
@@ -212,36 +214,60 @@ namespace HostsManager {
 
 		private void host_row_delete () {
 
-			Models.HostRow host_row = hosts_single_selection.selected_item as Models.HostRow;
-			if (host_row == null) {
+			var iter = Gtk.BitsetIter ();
+			uint position;
+			uint initial_position = 0;
+			uint num_items_to_delete = 0;
+
+			if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
 				return;
 			}
 
-			debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
-			this.hosts_list_undo_store.append (host_row);
-			Services.HostsRegex modRegex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-			this.hosts_file_service.remove (modRegex);
+			do {
 
-			this.hosts_list_store.remove (hosts_single_selection.get_selected ());
+				Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
+				if (host_row != null) {
+
+					if(initial_position == 0) {
+
+						initial_position = position;
+					}
+
+					debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
+					num_items_to_delete++;
+					this.hosts_list_undo_store.append (host_row);
+
+					Services.HostsRegex modRegex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
+					this.hosts_file_service.remove (modRegex, false);
+				}
+			} while (iter.next (out position));
+
+			this.hosts_list_store.splice (initial_position, num_items_to_delete, {});
+			this.hosts_file_service.save_file ();
 			this.toast_overlay.add_toast (this.toast_undo);
 		}
 
 		[GtkCallback]
 		private void signal_toast_undo_button_clicked_handler () {
 
-			uint position_latest_entry = this.hosts_list_undo_store.get_n_items ();
-			debug ("Number of delete entries stored: %u", position_latest_entry);
+			if(this.hosts_list_undo_store.get_n_items () > 0) {
 
-			Models.HostRow host_row = this.hosts_list_undo_store.get_item (--position_latest_entry) as Models.HostRow;
-			if (host_row != null) {
+				for (int position = 0; position <= this.hosts_list_undo_store.n_items; position++) {
 
-				debug ("Restoring host \"%s\", IP address \"%s\"", host_row.hostname, host_row.ip_address);
-				this.hosts_list_undo_store.remove (position_latest_entry);
-				this.hosts_list_store.append (host_row);
-				this.host_row_add_into_file (host_row);
+					Models.HostRow host_row = this.hosts_list_undo_store.get_item (position) as Models.HostRow;
+					if (host_row != null) {
+
+						debug ("Restoring host \"%s\", IP address \"%s\"", host_row.hostname, host_row.ip_address);
+						this.hosts_list_store.append (host_row);
+						this.host_row_add_into_file (host_row, false);
+					}
+				}
+
+				this.hosts_list_undo_store.remove_all ();
+				this.hosts_file_service.save_file ();
 			} else {
-				
-				this.toast.title = _("No deleted entry to restore.");
+
+				this.toast.title = _("No deleted entries to restore.");
 				this.toast_overlay.add_toast (this.toast);
 			}
 		}
@@ -279,7 +305,6 @@ namespace HostsManager {
 			CheckButton? check_button = list_item.get_child () as CheckButton;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-
 			if (check_button != null && host_row != null) {
 
 				check_button.active = host_row.enabled;
@@ -306,42 +331,50 @@ namespace HostsManager {
 		private void signal_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			list_item.set_child (new Text ());
+			list_item.set_child (new EditableLabel (""));
 		}
 
 		[GtkCallback]
 		private void signal_ip_address_bind_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
+
 			if (list_item.child == null) {
 
 				this.signal_ip_address_setup_handler (factory, list_item);
 			}
 
-			Text? text = list_item.child as Text;
+			EditableLabel? editable_label = list_item.child as EditableLabel;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (text != null && host_row != null) {
+			if (editable_label != null && host_row != null) {
 
-				text.set_text (host_row.ip_address);
+				editable_label.set_text (host_row.ip_address);
+				EventControllerKey event_controller_key = new EventControllerKey ();
+				event_controller_key.key_released.connect (
+					(keyval, keycode, state) => {
 
-				text.activate.connect (() => {
+					// Enter
+					if (keycode != 36) {
+						return;
+					}
 
 					string previous_ip_address = host_row.ip_address;
-
 					try {
 
 						Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-						this.hosts_file_service.set_ip_address (regex, text.text);
-						host_row.ip_address = text.text;
-						text.remove_css_class ("wrong_input");
+						this.hosts_file_service.set_ip_address (regex, editable_label.text);
+						host_row.ip_address = editable_label.text;
+						editable_label.remove_css_class ("wrong_input");
 					} catch (InvalidArgument invalid_argument) {
 
 						debug ("InvalidArgument: %s", invalid_argument.message);
 						host_row.ip_address = previous_ip_address;
-						text.add_css_class ("wrong_input");
+						editable_label.add_css_class ("wrong_input");
 					}
 				});
+
+				editable_label.add_controller (event_controller_key);
 			}
 		}
 
@@ -359,40 +392,78 @@ namespace HostsManager {
 		private void signal_host_setup_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			list_item.set_child (new Text ());
+			list_item.set_child (new EditableLabel (""));
 		}
 
 		[GtkCallback]
 		private void signal_host_bind_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
+
 			if (list_item.child == null) {
 
 				this.signal_host_setup_handler (factory, list_item);
 			}
 
-			Text? text = list_item.child as Text;
+			EditableLabel? editable_label = list_item.child as EditableLabel;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (text != null && host_row != null) {
+			if (editable_label != null && host_row != null) {
 
-				text.set_text (host_row.hostname);
-				text.activate.connect (() => {
+				//Drag & drop support
+				// Widget column_view_cell = list_item.child.get_parent ();
 
-					string previous_hostname = host_row.hostname;
-					try {
+				// DragSource hostname_drag_source = new DragSource ();
 
-						Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-						this.hosts_file_service.set_hostname (regex, text.text);
-						host_row.hostname = text.text;
-						text.remove_css_class ("wrong_input");
-					} catch (InvalidArgument invalid_argument) {
+				// Value the_value = Value (Type.UINT);
+				// the_value.set_uint (list_item.position);
 
-						debug ("InvalidArgument: %s", invalid_argument.message);
-						host_row.hostname = previous_hostname;
-						text.add_css_class ("wrong_input");
-					}
+				// ContentProvider content_provider = new ContentProvider.for_value (the_value);
+				// hostname_drag_source.drag_begin.connect (() => {
+
+					//For drag & drop support. Without that, DropTarget content can be garraychar, because label contains chars..
+				// 	editable_label.set_can_target (false);
+				// });
+				// hostname_drag_source.set_content (content_provider);
+				// column_view_cell.add_controller (hostname_drag_source);
+
+				// DropTarget hostname_drop_target = new DropTarget (Type.UINT, DragAction.COPY);
+				// hostname_drop_target.drop.connect ((value, x, y) => {
+
+				// 	this.handle_drop (value.get_uint (), list_item.position);
+				// 	return true;
+				// });
+
+				// column_view_cell.add_controller (hostname_drop_target);
+
+				editable_label.set_text (host_row.hostname);
+				EventControllerKey event_controller_key = new EventControllerKey ();
+				event_controller_key.key_released.connect (
+					(keyval, keycode, state) => {
+
+						// Enter
+						if (keycode != 36) {
+							return;
+						}
+
+						string previous_hostname = host_row.hostname;
+						try {
+
+							Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
+							this.hosts_file_service.set_hostname (regex, editable_label.text);
+							host_row.hostname = editable_label.text;
+							editable_label.remove_css_class ("wrong_input");
+						} catch (InvalidArgument invalid_argument) {
+
+							debug ("InvalidArgument: %s", invalid_argument.message);
+							host_row.hostname = previous_hostname;
+							editable_label.add_css_class ("wrong_input");
+						}
+
+						return ;
 				});
+
+				editable_label.add_controller (event_controller_key);
 			}
 		}
 
@@ -405,5 +476,38 @@ namespace HostsManager {
 				list_item.set_child (null);
 			}
 		}
+
+		// private void handle_drop (uint drag_item_position, uint drop_item_position) {
+
+		// 	var iter = Gtk.BitsetIter ();
+		// 	uint position;
+		// 	uint initial_position = 0;
+		// 	uint num_items_to_delete = 0;
+
+		// 	debug ("drag_item_position: %u | drop_item_position: %u", drag_item_position, drop_item_position);
+		// 	if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
+		// 		return;
+		// 	}
+
+		// 	do {
+
+		// 		Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
+
+		// 		if (host_row != null) {
+
+		// 			if(initial_position == 0) {
+
+		// 				initial_position = position;
+		// 			}
+
+		// 			debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
+		// 			num_items_to_delete++;
+		// 		}
+		// 	} while (iter.next (out position));
+
+		// 	this.hosts_list_store.splice (initial_position, num_items_to_delete, {});
+		// 	this.hosts_file_service.save_file ();
+		// }
 	}
 }
+

@@ -57,10 +57,21 @@
     <value key="x-appcenter-suggested-price">0</value>
   </custom>
   <releases>
-   <release version="3.0.6" date="2023-28-28">
+  		<release version="3.0.7" date="2023-28-28">
+            <description>
+              <p>We can now selected multiple entries to delete.</p>
+              <p>And Ctrl+z shortcuts will undo all the deleted entries at once.</p>
+            </description>
+          </release>
+   	<release version="3.0.6" date="2023-28-28">
         <description>
-          <p>Move add entry button to the right.</p>
-          <p>Undo deleted entries, with Ctrl+z shortcut.</p>
+          <p>
+				Release v3.0.7
+				* Move add entry button to the right.
+				* Undo deleted entries, with Ctrl+z shortcut.
+				* Re-use Gtk.Label for IP address and hostname edit, but validate, update file only when enter is pressed.
+				* Fix Gtk.SearchBar not correctly toggled, with shortcuts or button.
+			 </p>
         </description>
       </release>
     <release version="3.0.0" date="2023-28-28">

@@ -71,13 +71,13 @@ namespace HostsManager.Services {
 				this.save_file ();
 			} catch (RegexError regex_error) {
 
-				GLib.error ("InvalidArgument failed: %s", regex_error.message);
+				GLib.error ("Regex failed: %s", regex_error.message);
 			}
 		}
 
 		public void set_hostname (HostsRegex modRegex, string hostname) throws InvalidArgument {
 
-			this; validate_host_name (hostname);
+			this.validate_host_name (hostname);
 
 			try {
 
@@ -89,21 +89,28 @@ namespace HostsManager.Services {
 			}
 		}
 
-		public void add (string ipaddress, string hostname) throws InvalidArgument {
+		public void add (string ipaddress, string hostname, bool save = true) throws InvalidArgument {
 
 			this.valide_ip_address (ipaddress);
 			this.validate_host_name (hostname);
 
 			this.hosts_file_contents = this.hosts_file_contents + "\n" + ipaddress + " " + hostname;
-			this.save_file ();
+
+			if (save == true) {
+
+				this.save_file ();
+			}
 		}
 
-		public void remove (HostsRegex modRegex) {
+		public void remove (HostsRegex modRegex, bool save) {
 
 			try {
 
 				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, "");
-				this.save_file ();
+				if (save == true) {
+
+					this.save_file ();
+				}
 			} catch (RegexError regex_error) {
 
 				error ("Regex failed: %s", regex_error.message);
@@ -139,7 +146,7 @@ namespace HostsManager.Services {
 			}
 		}
 
-		private void save_file () {
+		public void save_file () {
 
 			try {
 
