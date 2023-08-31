@@ -8,7 +8,7 @@
 
 
 <br/>
-<p align="center">Manage your `/etc/hosts` file.</p>
+<p align="center">Manage your `/etc/hosts` file with this simple GTK application for GNU/Linux.</p>
 
 <p align="center">
   <img width="500" alt="Screenshot" src="./data/screenshots/main.png">
@@ -16,7 +16,9 @@
 
 # Features
 
-* Adding / Deleting a row.
+* Adding entry.
+* Delete multiple entries at once.
+* Restore deleted entries if you made mistake.
 * Checks on IP address and hostname.
 * Search through hostnames.
 * Shortcuts.
