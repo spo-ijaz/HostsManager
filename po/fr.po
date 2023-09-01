@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.spo-ijaz.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 10:40+0200\n"
+"POT-Creation-Date: 2023-09-01 19:58+0200\n"
 "PO-Revision-Date: 2019-01-16 21:45+0100\n"
 "Last-Translator: Sébastien PORQUET\n"
 "Language-Team: Français\n"
@@ -77,31 +77,35 @@ msgstr "À propos"
 msgid "Quit"
 msgstr "Quitter"
 
-#: src/MainWindow.vala:128
+#: src/MainWindow.vala:118
+msgid "Host file has changed. Reloaded."
+msgstr "Le fichier hosts a changé. Rechargé."
+
+#: src/MainWindow.vala:138
 msgid "Sébastien PORQUET"
 msgstr ""
 
-#: src/MainWindow.vala:133
+#: src/MainWindow.vala:143
 msgid "© 2018 Benjamin BUHLER"
 msgstr ""
 
-#: src/MainWindow.vala:270
+#: src/MainWindow.vala:280
 msgid "No deleted entries to restore."
 msgstr "Plus d'entrée à restaurer."
 
-#: src/Services/HostsFile.vala:33
+#: src/Services/HostsFile.vala:45
 msgid "Host file backup here: "
 msgstr "Fichier de sauvegarde:"
 
-#: src/Services/HostsFile.vala:128
+#: src/Services/HostsFile.vala:140
 msgid "Host file restored."
 msgstr "Fichier hosts restauré."
 
-#: src/Services/HostsFile.vala:132
+#: src/Services/HostsFile.vala:144
 msgid "Unable to restore from backup file: "
 msgstr "Impossible de restaurer depuis la sauvegarde."
 
-#: src/Services/HostsFile.vala:155
+#: src/Services/HostsFile.vala:167
 msgid "Host file updated."
 msgstr "Fichier hosts mis à jour."
 

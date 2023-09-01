@@ -109,12 +109,22 @@ namespace HostsManager {
 			);
 		}
 
+		public void hot_reload () {
+
+			this.hosts_file_service.read_file ();
+			this.hosts_list_store.remove_all ();
+			this.append_hots_rows_to_list_store ();
+
+			this.toast.title = _("Host file has changed. Reloaded.");
+			this.toast_overlay.add_toast (this.toast);
+		}
+
 		private void app_quit () {
 
 			this.application.quit ();
 		}
 
-		public void show_about () {
+		private void show_about () {
 
 			string[] developers = {
 				"Sébastien PORQUET <sebastien.porquet@ijaz.fr>",
@@ -140,7 +150,7 @@ namespace HostsManager {
 		//
 		// Store
 		//
-		public void append_hots_rows_to_list_store () {
+		private void append_hots_rows_to_list_store () {
 
 			try {
 				for (MatchInfo match_info = this.hosts_file_service.get_entries (); match_info.matches (); match_info.next ()) {

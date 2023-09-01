@@ -10,7 +10,6 @@ namespace HostsManager.Widgets {
 			 HOSTNAME
 		}
 
-
 		public EditableLabel editable_label { get; construct; }
 		public Models.HostRow host_row  { get; set;}
 		public Services.HostsFile hosts_file_service  { get; set; }

@@ -1,3 +1,6 @@
+### 2023-09-01 - Release v3.0.10
+* Hot reload: if the hosts file has changed, entries are reloaded.
+
 ### 2023-09-01 - Release v3.0.9
 * Fix issue when newly added host was added on the same last line of the previously last host of the file
 * Add another missing FR translation.

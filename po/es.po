@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.bbuhler.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 10:40+0200\n"
+"POT-Creation-Date: 2023-09-01 19:58+0200\n"
 "PO-Revision-Date: 2019-10-23 18:26+0200\n"
 "Last-Translator: Daniel R. <riesp@pm.me>\n"
 "Language-Team: \n"
@@ -81,31 +81,35 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/MainWindow.vala:128
+#: src/MainWindow.vala:118
+msgid "Host file has changed. Reloaded."
+msgstr ""
+
+#: src/MainWindow.vala:138
 msgid "Sébastien PORQUET"
 msgstr ""
 
-#: src/MainWindow.vala:133
+#: src/MainWindow.vala:143
 msgid "© 2018 Benjamin BUHLER"
 msgstr ""
 
-#: src/MainWindow.vala:270
+#: src/MainWindow.vala:280
 msgid "No deleted entries to restore."
 msgstr ""
 
-#: src/Services/HostsFile.vala:33
+#: src/Services/HostsFile.vala:45
 msgid "Host file backup here: "
 msgstr ""
 
-#: src/Services/HostsFile.vala:128
+#: src/Services/HostsFile.vala:140
 msgid "Host file restored."
 msgstr ""
 
-#: src/Services/HostsFile.vala:132
+#: src/Services/HostsFile.vala:144
 msgid "Unable to restore from backup file: "
 msgstr ""
 
-#: src/Services/HostsFile.vala:155
+#: src/Services/HostsFile.vala:167
 msgid "Host file updated."
 msgstr ""
 

@@ -14,18 +14,30 @@ namespace HostsManager.Services {
 		private string hosts_file_contents;
 		private File host_file;
 		private File host_file_bkp;
+		private FileMonitor host_file_monitor;
 
 		public HostsFile (HostsManager.MainWindow main_window) {
 
 			Object (
-			        main_window: main_window
+			 	main_window: main_window
 			);
 
 			string host_file_path = Config.hostfile_path ();
 			this.host_file = File.new_for_path (host_file_path);
 			this.host_file_bkp = File.new_for_path (host_file_path + ".bkp");
 
+
 			try {
+
+				this.host_file_monitor = host_file.monitor (FileMonitorFlags.NONE, null);
+				this.host_file_monitor.changed.connect ((src, dest, event) => {
+
+						if (event == FileMonitorEvent.CHANGED) {
+
+							this.main_window.hot_reload ();
+						}
+				});
+
 
 				debug ("Backup of \"%s\" -> \"%s\" ", host_file.get_path (), host_file_bkp.get_path ());
 				host_file.copy (host_file_bkp, FileCopyFlags.OVERWRITE);
@@ -135,7 +147,7 @@ namespace HostsManager.Services {
 			}
 		}
 
-		private void read_file () {
+		public void read_file () {
 
 			try {
 
