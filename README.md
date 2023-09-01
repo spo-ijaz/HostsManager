@@ -23,6 +23,7 @@
 * Search through hostnames.
 * Shortcuts.
 * Restore from an automatic backup of your `/etc/hosts` file, made each time the application is started.
+* Hot-reload of the entries if `/etc/hosts` file has changed.
 
 # Package
 
@@ -51,7 +52,6 @@ Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and
  	- Or maybe there's another mechanism...
 - [ ] Be able to re-order on the fly the rows.
 - [ ] Handle IPv6 ?
-- [ ] Hot reload, when file saved locally.
 
 ## Update translations
 
