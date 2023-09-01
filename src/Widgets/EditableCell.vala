@@ -46,8 +46,6 @@ namespace HostsManager.Widgets {
 
 			// column_view_cell.add_controller (hostname_drop_target);
 
-
-			//editable_label.set_text (host_row.hostname);
 			EventControllerKey event_controller_key = new EventControllerKey ();
 			event_controller_key.key_released.connect (
 				(keyval, keycode, state) => {
@@ -88,8 +86,9 @@ namespace HostsManager.Widgets {
 
 		}
 
-		public EditableCell () {
+		public EditableCell (Services.HostsFile hosts_file_service) {
 			Object (
+				hosts_file_service: hosts_file_service
 			);
 		}
 

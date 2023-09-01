@@ -1,4 +1,8 @@
-### 2023-08-31 - Release v3.0.8
+### 2023-09-01 - Release v3.0.9
+* Fix issue when newly added host was added on the same last line of the previously last host of the file
+* Add another missing FR translation.
+
+### 2023-09-01 - Release v3.0.8
 * Restore missing FR translations.
 * Code clean-up.
 

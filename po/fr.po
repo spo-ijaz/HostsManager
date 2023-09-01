@@ -66,7 +66,6 @@ msgid "Restore from backup file"
 msgstr "Restaurer depuis la sauvegarde"
 
 #: src/MainWindow.vala:78
-#, fuzzy
 msgid "Shortcuts"
 msgstr "Raccourcis"
 
@@ -87,7 +86,6 @@ msgid "© 2018 Benjamin BUHLER"
 msgstr ""
 
 #: src/MainWindow.vala:270
-#, fuzzy
 msgid "No deleted entries to restore."
 msgstr "Plus d'entrée à restaurer."
 

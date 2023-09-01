@@ -67,7 +67,7 @@ namespace HostsManager.Services {
 
 			try {
 
-				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
+				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\n\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
 				this.save_file ();
 			} catch (RegexError regex_error) {
 
@@ -81,7 +81,7 @@ namespace HostsManager.Services {
 
 			try {
 
-				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
+				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\n\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
 				this.save_file ();
 			} catch (RegexError regex_error) {
 

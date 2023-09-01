@@ -321,7 +321,7 @@ namespace HostsManager {
 		private void signal_host_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			list_item.set_child (new Widgets.EditableCell());
+			list_item.set_child (new Widgets.EditableCell(this.hosts_file_service));
 		}
 
 
@@ -342,7 +342,6 @@ namespace HostsManager {
 				editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
 				editable_cell.editable_label.set_text (host_row.ip_address);
 				editable_cell.host_row = host_row;
-				editable_cell.hosts_file_service = this.hosts_file_service;
 			}
 		}
 
@@ -365,7 +364,6 @@ namespace HostsManager {
 				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
 				editable_cell.editable_label.set_text (host_row.hostname);
 				editable_cell.host_row = host_row;
-				editable_cell.hosts_file_service = this.hosts_file_service;
 			}
 		}
 
@@ -380,5 +378,6 @@ namespace HostsManager {
 		}
 	}
 }
+
 
 
