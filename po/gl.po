@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.bbuhler.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-31 23:30+0200\n"
+"POT-Creation-Date: 2023-09-01 10:40+0200\n"
 "PO-Revision-Date: 2019-10-23 18:24+0200\n"
 "Last-Translator: Daniel R. <riesp@pm.me>\n"
 "Language-Team: \n"
@@ -27,6 +27,23 @@ msgstr ""
 msgid "Add a new entry"
 msgstr "Engadir nova entrada"
 
+#: data/ui/main-window.ui:138
+msgid "Enabled"
+msgstr ""
+
+#: data/ui/main-window.ui:151
+#, fuzzy
+msgid "IP address"
+msgstr "Enderezo IP"
+
+#: data/ui/main-window.ui:164
+msgid "Hostname"
+msgstr "Nome de host"
+
+#: data/ui/main-window.ui:182
+msgid "Undo"
+msgstr ""
+
 #: data/ui/main-window.ui:184
 msgid "Entries removed."
 msgstr ""
@@ -41,14 +58,10 @@ msgid "Delete selected entries"
 msgstr "Quere eliminar a entrada seleccionada?"
 
 #: data/ui/app-shortcuts-window.ui:41
-msgid "Shortcut list"
-msgstr ""
-
-#: data/ui/app-shortcuts-window.ui:48
 msgid "Undo deleted entries"
 msgstr ""
 
-#: data/ui/app-shortcuts-window.ui:55
+#: data/ui/app-shortcuts-window.ui:48
 msgid "Quit this application"
 msgstr ""
 
@@ -57,7 +70,7 @@ msgid "Restore from backup file"
 msgstr ""
 
 #: src/MainWindow.vala:78
-msgid "Shorcuts"
+msgid "Shortcuts"
 msgstr ""
 
 #: src/MainWindow.vala:79
@@ -95,13 +108,6 @@ msgstr ""
 #: src/Services/HostsFile.vala:155
 msgid "Host file updated."
 msgstr ""
-
-#, fuzzy
-#~ msgid "IP address"
-#~ msgstr "Enderezo IP"
-
-#~ msgid "Hostname"
-#~ msgstr "Nome de host"
 
 #, fuzzy
 #~ msgid "Add a new host"

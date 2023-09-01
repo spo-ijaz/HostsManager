@@ -5,6 +5,7 @@ hostsmanager_sources = [
 	'Services/Config.vala',
 	'Services/HostsFile.vala',
 	'Services/HostsRegex.vala',
+	'Widgets/EditableCell.vala',
 	resources
 ]
 

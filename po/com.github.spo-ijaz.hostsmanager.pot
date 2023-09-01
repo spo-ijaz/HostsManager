@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.spo-ijaz.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-31 23:30+0200\n"
+"POT-Creation-Date: 2023-09-01 10:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,22 @@ msgstr ""
 msgid "Add a new entry"
 msgstr ""
 
+#: data/ui/main-window.ui:138
+msgid "Enabled"
+msgstr ""
+
+#: data/ui/main-window.ui:151
+msgid "IP address"
+msgstr ""
+
+#: data/ui/main-window.ui:164
+msgid "Hostname"
+msgstr ""
+
+#: data/ui/main-window.ui:182
+msgid "Undo"
+msgstr ""
+
 #: data/ui/main-window.ui:184
 msgid "Entries removed."
 msgstr ""
@@ -38,14 +54,10 @@ msgid "Delete selected entries"
 msgstr ""
 
 #: data/ui/app-shortcuts-window.ui:41
-msgid "Shortcut list"
-msgstr ""
-
-#: data/ui/app-shortcuts-window.ui:48
 msgid "Undo deleted entries"
 msgstr ""
 
-#: data/ui/app-shortcuts-window.ui:55
+#: data/ui/app-shortcuts-window.ui:48
 msgid "Quit this application"
 msgstr ""
 
@@ -54,7 +66,7 @@ msgid "Restore from backup file"
 msgstr ""
 
 #: src/MainWindow.vala:78
-msgid "Shorcuts"
+msgid "Shortcuts"
 msgstr ""
 
 #: src/MainWindow.vala:79

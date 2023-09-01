@@ -1,3 +1,7 @@
+### 2023-08-31 - Release v3.0.8
+* Restore missing FR translations.
+* Code clean-up.
+
 ### 2023-08-31 - Release v3.0.7
 * We can now selected multiple entries to delete.
 * And <Ctrl>+z shortcuts will undo all the deleted entries at once.

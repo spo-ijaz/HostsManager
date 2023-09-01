@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.spo-ijaz.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-31 23:30+0200\n"
+"POT-Creation-Date: 2023-09-01 10:40+0200\n"
 "PO-Revision-Date: 2019-01-16 21:45+0100\n"
 "Last-Translator: Sébastien PORQUET\n"
 "Language-Team: Français\n"
@@ -25,6 +25,22 @@ msgstr "Chercher une entrée par un nom d'hôte"
 msgid "Add a new entry"
 msgstr "Ajouter une nouvelle entrée"
 
+#: data/ui/main-window.ui:138
+msgid "Enabled"
+msgstr "Activé"
+
+#: data/ui/main-window.ui:151
+msgid "IP address"
+msgstr "Adresse IP"
+
+#: data/ui/main-window.ui:164
+msgid "Hostname"
+msgstr "Nom d'hôte"
+
+#: data/ui/main-window.ui:182
+msgid "Undo"
+msgstr "Annuler"
+
 #: data/ui/main-window.ui:184
 msgid "Entries removed."
 msgstr "Entrées supprimées."
@@ -38,14 +54,10 @@ msgid "Delete selected entries"
 msgstr "Supprimer l'entrée sélectionnée"
 
 #: data/ui/app-shortcuts-window.ui:41
-msgid "Shortcut list"
-msgstr "Liste des raccourcis clavier"
-
-#: data/ui/app-shortcuts-window.ui:48
 msgid "Undo deleted entries"
 msgstr "Restaurer les entrées supprimées"
 
-#: data/ui/app-shortcuts-window.ui:55
+#: data/ui/app-shortcuts-window.ui:48
 msgid "Quit this application"
 msgstr "Quitter cette application"
 
@@ -54,7 +66,8 @@ msgid "Restore from backup file"
 msgstr "Restaurer depuis la sauvegarde"
 
 #: src/MainWindow.vala:78
-msgid "Shorcuts"
+#, fuzzy
+msgid "Shortcuts"
 msgstr "Raccourcis"
 
 #: src/MainWindow.vala:79
@@ -94,14 +107,5 @@ msgstr "Impossible de restaurer depuis la sauvegarde."
 msgid "Host file updated."
 msgstr "Fichier hosts mis à jour."
 
-#~ msgid "Enabled"
-#~ msgstr "Activé"
-
-#~ msgid "IP address"
-#~ msgstr "Adresse IP"
-
-#~ msgid "Hostname"
-#~ msgstr "Nom d'hôte"
-
-#~ msgid "Undo"
-#~ msgstr "Annuler"
+#~ msgid "Shortcut list"
+#~ msgstr "Liste des raccourcis clavier"

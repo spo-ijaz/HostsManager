@@ -75,7 +75,7 @@ namespace HostsManager {
 
 			Menu menu = new Menu ();
 			menu.append (_("Restore from backup file"), "win.restore-fron-backup");
-			menu.append (_("Shorcuts"), "win.show-help-overlay");
+			menu.append (_("Shortcuts"), "win.show-help-overlay");
 			menu.append (_("About"), "win.show-about");
 			menu.append (_("Quit"), "win.app-quit");
 
@@ -93,7 +93,7 @@ namespace HostsManager {
 			PropertyExpression property_expression = new PropertyExpression (typeof (Models.HostRow), null, "hostname");
 			this.hosts_string_filter.set_expression (property_expression);
 
-			// Intiailize the list store
+			// Initiailize the list store
 			this.hosts_list_undo_store = new GLib.ListStore (typeof (Models.HostRow));
 			this.hosts_file_service = new Services.HostsFile (this);
 			this.append_hots_rows_to_list_store ();
@@ -318,157 +318,59 @@ namespace HostsManager {
 		}
 
 		[GtkCallback]
-		private void signal_enabled_unbind_handler (SignalListItemFactory factory, Object object) {
+		private void signal_host_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			if (list_item.child != null) {
-
-				list_item.child = null;
-			}
+			list_item.set_child (new Widgets.EditableCell());
 		}
 
-		[GtkCallback]
-		private void signal_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
-
-			ListItem list_item = object as ListItem;
-			list_item.set_child (new EditableLabel (""));
-		}
 
 		[GtkCallback]
 		private void signal_ip_address_bind_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-
 			if (list_item.child == null) {
 
-				this.signal_ip_address_setup_handler (factory, list_item);
+				this.signal_host_ip_address_setup_handler (factory, list_item);
 			}
 
-			EditableLabel? editable_label = list_item.child as EditableLabel;
+			Widgets.EditableCell? editable_cell = list_item.child as Widgets.EditableCell;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (editable_label != null && host_row != null) {
+			if (editable_cell != null && host_row != null) {
 
-				editable_label.set_text (host_row.ip_address);
-				EventControllerKey event_controller_key = new EventControllerKey ();
-				event_controller_key.key_released.connect (
-					(keyval, keycode, state) => {
-
-					// Enter
-					if (keycode != 36) {
-						return;
-					}
-
-					string previous_ip_address = host_row.ip_address;
-					try {
-
-						Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-						this.hosts_file_service.set_ip_address (regex, editable_label.text);
-						host_row.ip_address = editable_label.text;
-						editable_label.remove_css_class ("wrong_input");
-					} catch (InvalidArgument invalid_argument) {
-
-						debug ("InvalidArgument: %s", invalid_argument.message);
-						host_row.ip_address = previous_ip_address;
-						editable_label.add_css_class ("wrong_input");
-					}
-				});
-
-				editable_label.add_controller (event_controller_key);
+				editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
+				editable_cell.editable_label.set_text (host_row.ip_address);
+				editable_cell.host_row = host_row;
+				editable_cell.hosts_file_service = this.hosts_file_service;
 			}
 		}
 
-		[GtkCallback]
-		private void signal_ip_address_unbind_handler (SignalListItemFactory factory, Object object) {
 
-			ListItem list_item = object as ListItem;
-			if (list_item.item != null) {
-
-				list_item.set_child (null);
-			}
-		}
-
-		[GtkCallback]
-		private void signal_host_setup_handler (SignalListItemFactory factory, Object object) {
-
-			ListItem list_item = object as ListItem;
-			list_item.set_child (new EditableLabel (""));
-		}
 
 		[GtkCallback]
 		private void signal_host_bind_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-
 			if (list_item.child == null) {
 
-				this.signal_host_setup_handler (factory, list_item);
+				this.signal_host_ip_address_setup_handler (factory, list_item);
 			}
 
-			EditableLabel? editable_label = list_item.child as EditableLabel;
+			Widgets.EditableCell? editable_cell = list_item.child as Widgets.EditableCell;
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (editable_label != null && host_row != null) {
+			if (editable_cell != null && host_row != null) {
 
-				//Drag & drop support
-				// Widget column_view_cell = list_item.child.get_parent ();
-
-				// DragSource hostname_drag_source = new DragSource ();
-
-				// Value the_value = Value (Type.UINT);
-				// the_value.set_uint (list_item.position);
-
-				// ContentProvider content_provider = new ContentProvider.for_value (the_value);
-				// hostname_drag_source.drag_begin.connect (() => {
-
-					//For drag & drop support. Without that, DropTarget content can be garraychar, because label contains chars..
-				// 	editable_label.set_can_target (false);
-				// });
-				// hostname_drag_source.set_content (content_provider);
-				// column_view_cell.add_controller (hostname_drag_source);
-
-				// DropTarget hostname_drop_target = new DropTarget (Type.UINT, DragAction.COPY);
-				// hostname_drop_target.drop.connect ((value, x, y) => {
-
-				// 	this.handle_drop (value.get_uint (), list_item.position);
-				// 	return true;
-				// });
-
-				// column_view_cell.add_controller (hostname_drop_target);
-
-				editable_label.set_text (host_row.hostname);
-				EventControllerKey event_controller_key = new EventControllerKey ();
-				event_controller_key.key_released.connect (
-					(keyval, keycode, state) => {
-
-						// Enter
-						if (keycode != 36) {
-							return;
-						}
-
-						string previous_hostname = host_row.hostname;
-						try {
-
-							Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-							this.hosts_file_service.set_hostname (regex, editable_label.text);
-							host_row.hostname = editable_label.text;
-							editable_label.remove_css_class ("wrong_input");
-						} catch (InvalidArgument invalid_argument) {
-
-							debug ("InvalidArgument: %s", invalid_argument.message);
-							host_row.hostname = previous_hostname;
-							editable_label.add_css_class ("wrong_input");
-						}
-
-						return ;
-				});
-
-				editable_label.add_controller (event_controller_key);
+				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
+				editable_cell.editable_label.set_text (host_row.hostname);
+				editable_cell.host_row = host_row;
+				editable_cell.hosts_file_service = this.hosts_file_service;
 			}
 		}
 
 		[GtkCallback]
-		private void signal_host_unbind_handler (SignalListItemFactory factory, Object object) {
+		private void signal_column_view_unbind_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
 			if (list_item.item != null) {
@@ -476,38 +378,7 @@ namespace HostsManager {
 				list_item.set_child (null);
 			}
 		}
-
-		// private void handle_drop (uint drag_item_position, uint drop_item_position) {
-
-		// 	var iter = Gtk.BitsetIter ();
-		// 	uint position;
-		// 	uint initial_position = 0;
-		// 	uint num_items_to_delete = 0;
-
-		// 	debug ("drag_item_position: %u | drop_item_position: %u", drag_item_position, drop_item_position);
-		// 	if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
-		// 		return;
-		// 	}
-
-		// 	do {
-
-		// 		Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
-
-		// 		if (host_row != null) {
-
-		// 			if(initial_position == 0) {
-
-		// 				initial_position = position;
-		// 			}
-
-		// 			debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
-		// 			num_items_to_delete++;
-		// 		}
-		// 	} while (iter.next (out position));
-
-		// 	this.hosts_list_store.splice (initial_position, num_items_to_delete, {});
-		// 	this.hosts_file_service.save_file ();
-		// }
 	}
 }
+
 

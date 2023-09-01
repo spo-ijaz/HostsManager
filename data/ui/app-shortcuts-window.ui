@@ -37,13 +37,6 @@
             </child>
             <child>
               <object class="GtkShortcutsShortcut">
-                <property name="action-name">win.show-help-overlay</property>
-                <property name="title" translatable="yes">Shortcut list</property>
-                <property name="visible">True</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkShortcutsShortcut">
                 <property name="accelerator">&lt;Control&gt;z</property>
                 <property name="title" translatable="yes">Undo deleted entries</property>
                 <property name="visible">True</property>

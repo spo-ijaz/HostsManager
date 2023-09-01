@@ -132,23 +132,23 @@
                           <object class="GtkSignalListItemFactory">
                             <signal name="bind" handler="signal_enabled_bind_handler"/>
                             <signal name="setup" handler="signal_enabled_setup_handler"/>
-                            <signal name="unbind" handler="signal_enabled_unbind_handler"/>
+                            <signal name="unbind" handler="signal_column_view_unbind_handler"/>
                           </object>
                         </property>
-                        <property name="title">Enabled</property>
+                        <property name="title" translatable="yes">Enabled</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkColumnViewColumn" id="ipadress_column_view_column">
                         <property name="factory">
                           <object class="GtkSignalListItemFactory">
-                            <signal name="setup" handler="signal_ip_address_setup_handler"/>
+                            <signal name="setup" handler="signal_host_ip_address_setup_handler"/>
                             <signal name="bind" handler="signal_ip_address_bind_handler"/>
-                            <signal name="unbind" handler="signal_ip_address_unbind_handler"/>
+                            <signal name="unbind" handler="signal_column_view_unbind_handler"/>
                           </object>
                         </property>
                         <property name="resizable">True</property>
-                        <property name="title">IP address</property>
+                        <property name="title" translatable="yes">IP address</property>
                       </object>
                     </child>
                     <child>
@@ -157,11 +157,11 @@
                         <property name="factory">
                           <object class="GtkSignalListItemFactory">
                             <signal name="bind" handler="signal_host_bind_handler"/>
-                            <signal name="setup" handler="signal_host_setup_handler"/>
-                            <signal name="unbind" handler="signal_host_unbind_handler"/>
+                            <signal name="setup" handler="signal_host_ip_address_setup_handler"/>
+                            <signal name="unbind" handler="signal_column_view_unbind_handler"/>
                           </object>
                         </property>
-                        <property name="title">Hostname</property>
+                        <property name="title" translatable="yes">Hostname</property>
                         <!-- Custom fragments -->
                       </object>
                     </child>
@@ -179,7 +179,7 @@
   </object>
   <object class="GtkCssProvider" id="css_provider"/>
   <object class="AdwToast" id="toast_undo">
-    <property name="button-label">Undo</property>
+    <property name="button-label" translatable="yes">Undo</property>
     <property name="timeout">5</property>
     <property name="title" translatable="yes">Entries removed.</property>
     <signal name="button-clicked" handler="signal_toast_undo_button_clicked_handler"/>
