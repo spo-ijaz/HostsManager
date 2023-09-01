@@ -1,7 +1,7 @@
 %global gtk4_version 4.10
 
 Name:     hosts-manager
-Version:  3.0.9
+Version:  3.0.10
 Release:  %autorelease
 Summary:  Manage your `/etc/hosts` file
 License:  GPL-3.0-or-later
