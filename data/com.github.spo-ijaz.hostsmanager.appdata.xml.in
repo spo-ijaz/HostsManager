@@ -57,6 +57,15 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.0.1" date="2023-09-02">
+			<description>
+				<p>
+					<ul>
+						<li>Empty deleted hosts list when hosts file changed on the system, or when we reload from the backup file.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="4.0.0" date="2023-09-02">
 			<description>
 				<p>

@@ -111,6 +111,7 @@ namespace HostsManager {
 
 		public void hot_reload () {
 
+			this.hosts_list_undo_store.remove_all ();
 			this.hosts_list_store.remove_all ();
 			this.hosts_file_service.read_file ();
 			this.append_hots_rows_to_list_store ();
@@ -345,7 +346,8 @@ namespace HostsManager {
 
 		private void restore_from_backup () {
 
-			hosts_list_store.remove_all ();
+			this.hosts_list_undo_store.remove_all ();
+			this.hosts_list_store.remove_all ();
 			this.hosts_file_service.restore_from_backup ();
 			this.append_hots_rows_to_list_store ();
 		}
