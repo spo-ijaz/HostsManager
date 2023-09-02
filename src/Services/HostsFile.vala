@@ -134,20 +134,20 @@ namespace HostsManager.Services {
 
 		public void restore_from_backup () {
 
-			// try {
+			try {
 
-			// debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_path ());
-			// host_file_bkp.copy (host_file, FileCopyFlags.OVERWRITE);
-			// this.read_file ();
+				debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_path ());
+				host_file_bkp.copy (host_file, FileCopyFlags.OVERWRITE);
+				this.read_file ();
 
-			// this.main_window.toast.set_title (_("Host file restored."));
-			// this.main_window.toast_overlay.add_toast (this.main_window.toast);
-			// } catch (Error e) {
+				this.main_window.toast.set_title (_("Host file restored."));
+				this.main_window.toast_overlay.add_toast (this.main_window.toast);
+			} catch (Error e) {
 
-			// this.main_window.toast.set_title (_("Unable to restore from backup file: ") + host_file_bkp.get_path ());
-			// this.main_window.toast_overlay.add_toast (this.main_window.toast);
-			// error ("Error: %s", e.message);
-			// }
+				this.main_window.toast.set_title (_("Unable to restore from backup file: ") + host_file_bkp.get_path ());
+				this.main_window.toast_overlay.add_toast (this.main_window.toast);
+				error ("Error: %s", e.message);
+			}
 		}
 
 		public void read_file () {
@@ -155,7 +155,7 @@ namespace HostsManager.Services {
 			try {
 
 				var dis = new DataInputStream (this.host_file.read ());
-
+				this.content = {};
 				string row;
 				while ((row = dis.read_line (null)) != null) {
 
