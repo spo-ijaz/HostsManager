@@ -13,6 +13,7 @@ namespace HostsManager.Models {
 		public string hostname { get; set; }
 		public string ip_address { get; set; }
 		public string comment { get; set; }
+		public uint previous_position { get; set; } // Used when we want to undo a delete host
 
 		public HostRow (RowType row_type, bool enabled, string ip_address, string hostname, string comment) {
 

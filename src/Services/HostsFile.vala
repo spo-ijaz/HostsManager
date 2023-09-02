@@ -11,14 +11,13 @@ namespace HostsManager.Services {
 	class HostsFile : Object {
 
 		public MainWindow main_window { get; construct; }
-		public Array<string> content { get; construct; }
+		private string[] content;
+
 		private File host_file;
 		private File host_file_bkp;
 		private FileMonitor host_file_monitor;
 
 		construct {
-
-			this.content = new Array<string> ();
 
 			string host_file_path = Config.hostfile_path ();
 			this.host_file = File.new_for_path (host_file_path);
@@ -56,44 +55,35 @@ namespace HostsManager.Services {
 			);
 		}
 
-		// public MatchInfo get_entries () {
+		public string[] get_rows () {
 
-		// MatchInfo entries;
-		// HostsRegex regex = new HostsRegex ();
-		////  regex.match (this.hosts_file_content, 0, out entries);
-
-		// return entries;
-		// }
-
-		// public uint8[] get_rows () {
-
-		// return this.hosts_file_content;
-		// }
-
-		public void set_enabled (HostsRegex modRegex, bool active) {
-
-			// try {
-
-			// this.hosts_file_content = modRegex.replace (this.hosts_file_content, -1, 0, active ? """\n#\g<row>""" : """\g<row>""");
-			// this.save_file ();
-			// } catch (RegexError regex_error) {
-
-			// error ("Regex failed: %s", regex_error.message);
-			// }
+			return this.content;
 		}
 
-		public void set_ip_address (HostsRegex modRegex, string ipaddress) throws InvalidArgument {
+		public void set_enabled (HostsRegex modRegex, bool active, uint index) {
 
-			// this.valide_ip_address (ipaddress);
+			try {
 
-			// try {
+				this.content[index] = modRegex.replace (this.content[index], -1, 0, active ? """#\g<row>""" : """\g<row>""");
+				this.save_file ();
+			} catch (RegexError regex_error) {
 
-			// this.hosts_file_content = modRegex.replace (this.hosts_file_content, -1, 0, """\n\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
-			// this.save_file ();
-			// } catch (RegexError regex_error) {
+				error ("Regex failed: %s", regex_error.message);
+			}
+		}
 
-			// GLib.error ("Regex failed: %s", regex_error.message);
-			// }
+		public void set_ip_address (HostsRegex modRegex, string ipaddress, uint index) throws InvalidArgument {
+
+			this.valide_ip_address (ipaddress);
+
+			try {
+
+				this.content[index] = modRegex.replace (this.content[index], -1, 0, """\n\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
+				this.save_file ();
+			} catch (RegexError regex_error) {
+
+				GLib.error ("Regex failed: %s", regex_error.message);
+			}
 		}
 
 		public void set_hostname (HostsRegex modRegex, string hostname, uint index) throws InvalidArgument {
@@ -102,7 +92,7 @@ namespace HostsManager.Services {
 
 			try {
 
-				this.content.insert_val (index, modRegex.replace (this.content.index (index), -1, 0, """\n\g<enabled>\g<ipaddress>\g<divider>""" + hostname));
+				this.content[index] = modRegex.replace (this.content[index], -1, 0, """\n\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
 				this.save_file ();
 			} catch (RegexError regex_error) {
 
@@ -112,29 +102,33 @@ namespace HostsManager.Services {
 
 		public void add (string ipaddress, string hostname, bool save = true) throws InvalidArgument {
 
-			// this.valide_ip_address (ipaddress);
-			// this.validate_host_name (hostname);
+			this.valide_ip_address (ipaddress);
+			this.validate_host_name (hostname);
 
-			// this.hosts_file_content = this.hosts_file_content + "\n" + ipaddress + " " + hostname;
+			this.content += ipaddress + " " + hostname;
 
-			// if (save == true) {
+			if (save == true) {
 
-			// this.save_file ();
-			// }
+				this.save_file ();
+			}
 		}
 
-		public void remove (HostsRegex modRegex, bool save) {
+		public void remove (uint index, bool save) {
 
-			try {
+			this.content[index] = null;
+			if (save == true) {
 
-				// this.hosts_file_content = modRegex.replace (this.hosts_file_content, -1, 0, "");
-				// if (save == true) {
+				this.save_file ();
+			}
+		}
 
-				// this.save_file ();
-				// }
-			} catch (RegexError regex_error) {
+		public void restore (Models.HostRow host_row, bool save = true) {
 
-				error ("Regex failed: %s", regex_error.message);
+			this.content[host_row.previous_position] =  (!host_row.enabled ? "#" : "") + host_row.ip_address + " " + host_row.hostname;
+
+			if (save == true) {
+
+				this.save_file ();
 			}
 		}
 
@@ -165,7 +159,7 @@ namespace HostsManager.Services {
 				string row;
 				while ((row = dis.read_line (null)) != null) {
 
-					this.content.append_val (row);
+					this.content += row;
 				}
 			} catch (Error e) {
 
@@ -180,7 +174,7 @@ namespace HostsManager.Services {
 				// TODO: There's probably a better way to do that.
 				string all_rows = "";
 				foreach (string row in this.content) {
-					all_rows += row+"\n";
+					all_rows += row + "\n";
 				}
 
 				StringBuilder rows_string_builder = new StringBuilder (all_rows);

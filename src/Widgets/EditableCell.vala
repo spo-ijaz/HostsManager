@@ -66,7 +66,7 @@ namespace HostsManager.Widgets {
 							host_row.hostname = editable_label.text;
 						} else {
 
-							this.hosts_file_service.set_ip_address (regex, editable_label.text);
+							this.hosts_file_service.set_ip_address (regex, editable_label.text, list_item.position);
 							host_row.ip_address = editable_label.text;
 						}
 
