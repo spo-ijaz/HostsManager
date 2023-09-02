@@ -111,10 +111,9 @@ namespace HostsManager {
 
 		public void hot_reload () {
 
-			this.hosts_file_service.read_file ();
 			this.hosts_list_store.remove_all ();
+			this.hosts_file_service.read_file ();
 			this.append_hots_rows_to_list_store ();
-
 			this.toast.title = _("Host file has changed. Reloaded.");
 			this.toast_overlay.add_toast (this.toast);
 		}
@@ -160,6 +159,7 @@ namespace HostsManager {
 			string host_row_ip_address;
 			string host_row_hostname;
 			string host_row_comment;
+			string previous_full_row;
 
 
 			foreach (string row in this.hosts_file_service.get_rows ()) {
@@ -169,6 +169,7 @@ namespace HostsManager {
 				host_row_ip_address = "";
 				host_row_hostname = "";
 				host_row_comment = "";
+				previous_full_row = row;
 
 				if (regex.match (row, 0, out match_info)) {
 
@@ -188,7 +189,8 @@ namespace HostsManager {
 				                                                  host_row_enabled,
 				                                                  host_row_ip_address,
 				                                                  host_row_hostname,
-				                                                  host_row_comment
+				                                                  host_row_comment,
+				                                                  previous_full_row
 				));
 			}
 		}
@@ -244,7 +246,8 @@ namespace HostsManager {
 			                                              true,
 			                                              "127.0.0.1",
 			                                              "new.localhost",
-			                                              "");
+			                                              "",
+			                                              "127.0.0.1 new.localhost");
 			this.hosts_list_store.append (host_row);
 			this.host_row_add_into_file (host_row);
 		}
@@ -275,6 +278,7 @@ namespace HostsManager {
 			} while (iter.next (out position));
 
 			// Can't use GLib.ListStore.splice () because the model contains hosts file comments (or empty lines)
+			// So it's slow as hell.
 			uint position_to_delete;
 			for (int idx = 0; idx < host_rows_to_delete.n_items; idx++ ) {
 

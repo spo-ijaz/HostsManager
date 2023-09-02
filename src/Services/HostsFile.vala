@@ -124,7 +124,7 @@ namespace HostsManager.Services {
 
 		public void restore (Models.HostRow host_row, bool save = true) {
 
-			this.content[host_row.previous_position] =  (!host_row.enabled ? "#" : "") + host_row.ip_address + " " + host_row.hostname;
+			this.content[host_row.previous_position] = host_row.previous_full_row;
 
 			if (save == true) {
 
