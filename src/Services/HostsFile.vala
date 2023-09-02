@@ -11,31 +11,28 @@ namespace HostsManager.Services {
 	class HostsFile : Object {
 
 		public MainWindow main_window { get; construct; }
-		private string hosts_file_contents;
+		public Array<string> content { get; construct; }
 		private File host_file;
 		private File host_file_bkp;
 		private FileMonitor host_file_monitor;
 
-		public HostsFile (HostsManager.MainWindow main_window) {
+		construct {
 
-			Object (
-			 	main_window: main_window
-			);
+			this.content = new Array<string> ();
 
 			string host_file_path = Config.hostfile_path ();
 			this.host_file = File.new_for_path (host_file_path);
 			this.host_file_bkp = File.new_for_path (host_file_path + ".bkp");
-
 
 			try {
 
 				this.host_file_monitor = host_file.monitor (FileMonitorFlags.NONE, null);
 				this.host_file_monitor.changed.connect ((src, dest, event) => {
 
-						if (event == FileMonitorEvent.CHANGED) {
+					if (event == FileMonitorEvent.CHANGED) {
 
-							this.main_window.hot_reload ();
-						}
+						this.main_window.hot_reload ();
+					}
 				});
 
 
@@ -52,48 +49,60 @@ namespace HostsManager.Services {
 			this.read_file ();
 		}
 
-		public MatchInfo get_entries () {
+		public HostsFile (HostsManager.MainWindow main_window) {
 
-			MatchInfo entries;
-			HostsRegex regex = new HostsRegex ();
-			regex.match (this.hosts_file_contents, 0, out entries);
-
-			return entries;
+			Object (
+			        main_window: main_window
+			);
 		}
+
+		// public MatchInfo get_entries () {
+
+		// MatchInfo entries;
+		// HostsRegex regex = new HostsRegex ();
+		////  regex.match (this.hosts_file_content, 0, out entries);
+
+		// return entries;
+		// }
+
+		// public uint8[] get_rows () {
+
+		// return this.hosts_file_content;
+		// }
 
 		public void set_enabled (HostsRegex modRegex, bool active) {
 
-			try {
+			// try {
 
-				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, active ? """\n#\g<row>""" : """\g<row>""");
-				this.save_file ();
-			} catch (RegexError regex_error) {
+			// this.hosts_file_content = modRegex.replace (this.hosts_file_content, -1, 0, active ? """\n#\g<row>""" : """\g<row>""");
+			// this.save_file ();
+			// } catch (RegexError regex_error) {
 
-				error ("Regex failed: %s", regex_error.message);
-			}
+			// error ("Regex failed: %s", regex_error.message);
+			// }
 		}
 
 		public void set_ip_address (HostsRegex modRegex, string ipaddress) throws InvalidArgument {
 
-			this.valide_ip_address (ipaddress);
+			// this.valide_ip_address (ipaddress);
 
-			try {
+			// try {
 
-				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\n\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
-				this.save_file ();
-			} catch (RegexError regex_error) {
+			// this.hosts_file_content = modRegex.replace (this.hosts_file_content, -1, 0, """\n\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
+			// this.save_file ();
+			// } catch (RegexError regex_error) {
 
-				GLib.error ("Regex failed: %s", regex_error.message);
-			}
+			// GLib.error ("Regex failed: %s", regex_error.message);
+			// }
 		}
 
-		public void set_hostname (HostsRegex modRegex, string hostname) throws InvalidArgument {
+		public void set_hostname (HostsRegex modRegex, string hostname, uint index) throws InvalidArgument {
 
 			this.validate_host_name (hostname);
 
 			try {
 
-				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, """\n\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
+				this.content.insert_val (index, modRegex.replace (this.content.index (index), -1, 0, """\n\g<enabled>\g<ipaddress>\g<divider>""" + hostname));
 				this.save_file ();
 			} catch (RegexError regex_error) {
 
@@ -103,26 +112,26 @@ namespace HostsManager.Services {
 
 		public void add (string ipaddress, string hostname, bool save = true) throws InvalidArgument {
 
-			this.valide_ip_address (ipaddress);
-			this.validate_host_name (hostname);
+			// this.valide_ip_address (ipaddress);
+			// this.validate_host_name (hostname);
 
-			this.hosts_file_contents = this.hosts_file_contents + "\n" + ipaddress + " " + hostname;
+			// this.hosts_file_content = this.hosts_file_content + "\n" + ipaddress + " " + hostname;
 
-			if (save == true) {
+			// if (save == true) {
 
-				this.save_file ();
-			}
+			// this.save_file ();
+			// }
 		}
 
 		public void remove (HostsRegex modRegex, bool save) {
 
 			try {
 
-				this.hosts_file_contents = modRegex.replace (this.hosts_file_contents, -1, 0, "");
-				if (save == true) {
+				// this.hosts_file_content = modRegex.replace (this.hosts_file_content, -1, 0, "");
+				// if (save == true) {
 
-					this.save_file ();
-				}
+				// this.save_file ();
+				// }
 			} catch (RegexError regex_error) {
 
 				error ("Regex failed: %s", regex_error.message);
@@ -131,30 +140,36 @@ namespace HostsManager.Services {
 
 		public void restore_from_backup () {
 
-			try {
+			// try {
 
-				debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_path ());
-				host_file_bkp.copy (host_file, FileCopyFlags.OVERWRITE);
-				this.read_file ();
+			// debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_path ());
+			// host_file_bkp.copy (host_file, FileCopyFlags.OVERWRITE);
+			// this.read_file ();
 
-				this.main_window.toast.set_title (_("Host file restored."));
-				this.main_window.toast_overlay.add_toast (this.main_window.toast);
-			} catch (Error e) {
+			// this.main_window.toast.set_title (_("Host file restored."));
+			// this.main_window.toast_overlay.add_toast (this.main_window.toast);
+			// } catch (Error e) {
 
-				this.main_window.toast.set_title (_("Unable to restore from backup file: ") + host_file_bkp.get_path ());
-				this.main_window.toast_overlay.add_toast (this.main_window.toast);
-				error ("Error: %s", e.message);
-			}
+			// this.main_window.toast.set_title (_("Unable to restore from backup file: ") + host_file_bkp.get_path ());
+			// this.main_window.toast_overlay.add_toast (this.main_window.toast);
+			// error ("Error: %s", e.message);
+			// }
 		}
 
 		public void read_file () {
 
 			try {
 
-				FileUtils.get_contents (Config.hostfile_path (), out this.hosts_file_contents, null);
+				var dis = new DataInputStream (this.host_file.read ());
+
+				string row;
+				while ((row = dis.read_line (null)) != null) {
+
+					this.content.append_val (row);
+				}
 			} catch (Error e) {
 
-				error ("Error: %s", e.message);
+				error ("Error to read file: %s", e.message);
 			}
 		}
 
@@ -162,7 +177,15 @@ namespace HostsManager.Services {
 
 			try {
 
-				FileUtils.set_contents (Config.hostfile_path (), this.hosts_file_contents, this.hosts_file_contents.length);
+				// TODO: There's probably a better way to do that.
+				string all_rows = "";
+				foreach (string row in this.content) {
+					all_rows += row+"\n";
+				}
+
+				StringBuilder rows_string_builder = new StringBuilder (all_rows);
+
+				this.host_file.replace_contents (rows_string_builder.data, null, false, FileCreateFlags.NONE, null);
 
 				this.main_window.toast.set_title (_("Host file updated."));
 				this.main_window.toast_overlay.add_toast (this.main_window.toast);

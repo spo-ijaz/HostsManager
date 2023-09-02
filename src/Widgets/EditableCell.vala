@@ -13,6 +13,7 @@ namespace HostsManager.Widgets {
 		public EditableLabel editable_label { get; construct; }
 		public Models.HostRow host_row  { get; set;}
 		public Services.HostsFile hosts_file_service  { get; set; }
+		public ListItem list_item  { get; set; }
 
 		public FieldType field_type { get; set; }
 
@@ -61,7 +62,7 @@ namespace HostsManager.Widgets {
 
 						if (this.field_type == FieldType.HOSTNAME) {
 
-							this.hosts_file_service.set_hostname (regex, editable_label.text);
+							this.hosts_file_service.set_hostname (regex, editable_label.text, list_item.position);
 							host_row.hostname = editable_label.text;
 						} else {
 
@@ -82,12 +83,12 @@ namespace HostsManager.Widgets {
 
 			editable_label.add_controller (event_controller_key);
 			this.append (editable_label);
-
 		}
 
-		public EditableCell (Services.HostsFile hosts_file_service) {
+		public EditableCell (Services.HostsFile hosts_file_service, ListItem list_item) {
 			Object (
-				hosts_file_service: hosts_file_service
+				hosts_file_service: hosts_file_service,
+				list_item: list_item
 			);
 		}
 

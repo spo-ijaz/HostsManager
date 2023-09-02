@@ -152,18 +152,44 @@ namespace HostsManager {
 		//
 		private void append_hots_rows_to_list_store () {
 
-			try {
-				for (MatchInfo match_info = this.hosts_file_service.get_entries (); match_info.matches (); match_info.next ()) {
+			MatchInfo match_info;
+			Services.HostsRegex regex = new Services.HostsRegex ();
 
-					this.hosts_list_store.append (new Models.HostRow (
-					                                                  true,
-					                                                  match_info.fetch_named ("enabled") != "#",
-					                                                  match_info.fetch_named ("ipaddress"),
-					                                                  match_info.fetch_named ("hostname")));
+			Models.HostRow.RowType host_row_type;
+			bool host_row_enabled;
+			string host_row_ip_address;
+			string host_row_hostname;
+			string host_row_comment;
+
+
+			foreach (string row in this.hosts_file_service.content) {
+
+				host_row_type = Models.HostRow.RowType.EMPTY;
+				host_row_enabled = false;
+				host_row_ip_address = "";
+				host_row_hostname = "";
+				host_row_comment = "";
+
+				if (regex.match (row, 0, out match_info)) {
+
+					host_row_type = Models.HostRow.RowType.HOST;
+					host_row_enabled = match_info.fetch_named ("enabled") != "#";
+					host_row_ip_address = match_info.fetch_named ("ipaddress");
+					host_row_hostname = match_info.fetch_named ("hostname");
+				} else {
+
+					host_row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
+					host_row_comment = row;
 				}
-			} catch (Error e) {
 
-				error ("Regex failed: %s", e.message);
+
+				this.hosts_list_store.append (new Models.HostRow (
+				                                                  host_row_type,
+				                                                  host_row_enabled,
+				                                                  host_row_ip_address,
+				                                                  host_row_hostname,
+				                                                  host_row_comment
+				));
 			}
 		}
 
@@ -214,10 +240,11 @@ namespace HostsManager {
 		private void host_row_add () {
 
 			Models.HostRow host_row = new Models.HostRow (
-			                                              true,
+			                                              Models.HostRow.RowType.HOST,
 			                                              true,
 			                                              "127.0.0.1",
-			                                              "new.localhost");
+			                                              "new.localhost",
+			                                              "");
 			this.hosts_list_store.append (host_row);
 			this.host_row_add_into_file (host_row);
 		}
@@ -238,7 +265,7 @@ namespace HostsManager {
 				Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
 				if (host_row != null) {
 
-					if(initial_position == 0) {
+					if (initial_position == 0) {
 
 						initial_position = position;
 					}
@@ -260,7 +287,7 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_toast_undo_button_clicked_handler () {
 
-			if(this.hosts_list_undo_store.get_n_items () > 0) {
+			if (this.hosts_list_undo_store.get_n_items () > 0) {
 
 				for (int position = 0; position <= this.hosts_list_undo_store.n_items; position++) {
 
@@ -317,6 +344,12 @@ namespace HostsManager {
 
 			if (check_button != null && host_row != null) {
 
+				if (host_row.row_type != Models.HostRow.RowType.HOST) {
+
+					check_button.get_parent ().set_visible (false);
+					return;
+				}
+
 				check_button.active = host_row.enabled;
 				check_button.toggled.connect (() => {
 
@@ -331,9 +364,8 @@ namespace HostsManager {
 		private void signal_host_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			list_item.set_child (new Widgets.EditableCell(this.hosts_file_service));
+			list_item.set_child (new Widgets.EditableCell (this.hosts_file_service, list_item));
 		}
-
 
 		[GtkCallback]
 		private void signal_ip_address_bind_handler (SignalListItemFactory factory, Object object) {
@@ -349,13 +381,17 @@ namespace HostsManager {
 
 			if (editable_cell != null && host_row != null) {
 
+				if (host_row.row_type != Models.HostRow.RowType.HOST) {
+
+					editable_cell.get_parent ().set_visible (false);
+					return;
+				}
+
 				editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
 				editable_cell.editable_label.set_text (host_row.ip_address);
 				editable_cell.host_row = host_row;
 			}
 		}
-
-
 
 		[GtkCallback]
 		private void signal_host_bind_handler (SignalListItemFactory factory, Object object) {
@@ -370,6 +406,12 @@ namespace HostsManager {
 			Models.HostRow? host_row = list_item.item as Models.HostRow;
 
 			if (editable_cell != null && host_row != null) {
+
+				if (host_row.row_type != Models.HostRow.RowType.HOST) {
+
+					editable_cell.get_parent ().set_visible (false);
+					return;
+				}
 
 				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
 				editable_cell.editable_label.set_text (host_row.hostname);
@@ -388,6 +430,3 @@ namespace HostsManager {
 		}
 	}
 }
-
-
-
