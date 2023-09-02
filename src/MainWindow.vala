@@ -11,7 +11,7 @@ namespace HostsManager {
 		private const ActionEntry[] ACTION_ENTRIES = {
 			{ "focus-search-bar", focus_search_bar },
 			{ "host-row-add", host_row_add },
-			//  { "host-row-delete", host_row_delete, false},
+			{ "host-row-delete", host_row_delete},
 			{ "host-row-undo", signal_toast_undo_button_clicked_handler },
 			{ "restore-fron-backup", restore_from_backup },
 			{ "show-about", show_about },
@@ -252,16 +252,15 @@ namespace HostsManager {
 			this.host_row_add_into_file (host_row);
 		}
 
-		private void host_row_delete (bool from_drop = false) {
+		private void host_row_delete () {
 
 			var iter = Gtk.BitsetIter ();
 			uint position;
 			GLib.ListStore host_rows_to_delete = new GLib.ListStore (typeof (Models.HostRow));
 
-			// if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
-			// return;
-			// }
-			iter.init_first (this.hosts_multi_selection.get_selection (), out position);
+			if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
+			return;
+			}
 
 			do {
 
@@ -291,11 +290,7 @@ namespace HostsManager {
 			}
 
 			this.hosts_file_service.save_file ();
-
-			if (from_drop == false) {
-
-				this.toast_overlay.add_toast (this.toast_undo);
-			}
+			this.toast_overlay.add_toast (this.toast_undo);
 		}
 
 		[GtkCallback]
@@ -430,7 +425,7 @@ namespace HostsManager {
 				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
 				editable_cell.editable_label.set_text (host_row.hostname);
 				editable_cell.host_row = host_row;
-				editable_cell.initDragAndDrop ();
+				//editable_cell.initDragAndDrop ();
 			}
 		}
 
@@ -445,41 +440,41 @@ namespace HostsManager {
 		}
 
 		// Drag & Drop
-		public void handle_drop (uint drag_item_position, uint drop_item_position) {
+		//  public void handle_drop (uint drag_item_position, uint drop_item_position) {
 
 
-			var iter = Gtk.BitsetIter ();
-			uint position;
-			uint initial_position = 0;
-			bool initial_position_init = false;
-			Object[] host_rows_to_move = {};
+		//  	var iter = Gtk.BitsetIter ();
+		//  	uint position;
+		//  	uint initial_position = 0;
+		//  	bool initial_position_init = false;
+		//  	Object[] host_rows_to_move = {};
 
-			debug ("drag_item_position: %u | drop_item_position: %u", drag_item_position, drop_item_position);
-			// if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
-			// debug ("par la");
-			// return;
-			// }
+		//  	debug ("drag_item_position: %u | drop_item_position: %u", drag_item_position, drop_item_position);
+		//  	// if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
+		//  	// debug ("par la");
+		//  	// return;
+		//  	// }
 
-			iter.init_first (this.hosts_multi_selection.get_selection (), out position);
-			do {
+		//  	iter.init_first (this.hosts_multi_selection.get_selection (), out position);
+		//  	do {
 
-				debug ("M - par la");
-				Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
-				if (host_row != null && host_row.row_type == Models.HostRow.RowType.HOST) {
+		//  		debug ("M - par la");
+		//  		Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
+		//  		if (host_row != null && host_row.row_type == Models.HostRow.RowType.HOST) {
 
-					if (initial_position_init == false) {
+		//  			if (initial_position_init == false) {
 
-						initial_position_init = true;
-						initial_position = position;
-					}
+		//  				initial_position_init = true;
+		//  				initial_position = position;
+		//  			}
 
-					host_rows_to_move += host_row;
-				}
-			} while (iter.next (out position));
+		//  			host_rows_to_move += host_row;
+		//  		}
+		//  	} while (iter.next (out position));
 
-			this.host_row_delete (true);
-			debug ("drop_item_position: %u | num host_rows_to_move:  %u", drop_item_position, host_rows_to_move.length);
-			this.hosts_list_store.splice (drop_item_position, 0, host_rows_to_move);
-		}
+		//  	this.host_row_delete (true);
+		//  	debug ("drop_item_position: %u | num host_rows_to_move:  %u", drop_item_position, host_rows_to_move.length);
+		//  	this.hosts_list_store.splice (drop_item_position, 0, host_rows_to_move);
+		//  }
 	}
 }

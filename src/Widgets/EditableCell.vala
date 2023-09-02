@@ -68,35 +68,35 @@ namespace HostsManager.Widgets {
 			);
 		}
 
-		public void initDragAndDrop () {
+		//  public void initDragAndDrop () {
 
-			//Drag & drop support
-			Widget column_view_cell = list_item.child.get_parent ();
+		//  	//Drag & drop support
+		//  	Widget column_view_cell = list_item.child.get_parent ();
 
-			DragSource hostname_drag_source = new DragSource ();
+		//  	DragSource hostname_drag_source = new DragSource ();
 
-			Value the_value = Value (Type.UINT);
-			the_value.set_uint (list_item.position);
+		//  	Value the_value = Value (Type.UINT);
+		//  	the_value.set_uint (list_item.position);
 
-			ContentProvider content_provider = new ContentProvider.for_value (the_value);
-			hostname_drag_source.drag_begin.connect (() => {
+		//  	ContentProvider content_provider = new ContentProvider.for_value (the_value);
+		//  	hostname_drag_source.drag_begin.connect (() => {
 
-				//For drag & drop support. Without that, DropTarget content can be garraychar, because label contains chars..
-				//  this.set_can_target (false);
-			});
-			hostname_drag_source.set_content (content_provider);
-			column_view_cell.add_controller (hostname_drag_source);
+		//  		//For drag & drop support. Without that, DropTarget content can be garraychar, because label contains chars..
+		//  		//  this.set_can_target (false);
+		//  	});
+		//  	hostname_drag_source.set_content (content_provider);
+		//  	column_view_cell.add_controller (hostname_drag_source);
 
-			DropTarget hostname_drop_target = new DropTarget (Type.UINT, DragAction.COPY);
-			hostname_drop_target.drop.connect ((value, x, y) => {
+		//  	DropTarget hostname_drop_target = new DropTarget (Type.UINT, DragAction.COPY);
+		//  	hostname_drop_target.drop.connect ((value, x, y) => {
 
-				main_window.handle_drop (value.get_uint (), list_item.position);
-				//  this.set_can_target (true);
-				return true;
-			});
+		//  		main_window.handle_drop (value.get_uint (), list_item.position);
+		//  		//  this.set_can_target (true);
+		//  		return true;
+		//  	});
 
-			column_view_cell.add_controller (hostname_drop_target);
-		}
+		//  	column_view_cell.add_controller (hostname_drop_target);
+		//  }
 		
 	}
 }
