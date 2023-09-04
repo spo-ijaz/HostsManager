@@ -57,6 +57,16 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.0.2" date="2023-09-04">
+			<description>
+				<p>
+					<ul>
+						<li>Revert changes from 4.0.0/1 - there's an issue while updating entries when list is filtered.</li>
+						<li>These changes will come back only when I'm sure it's OK, with unit tests in place.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="4.0.1" date="2023-09-02">
 			<description>
 				<p>
