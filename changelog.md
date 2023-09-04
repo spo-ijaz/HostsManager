@@ -1,3 +1,15 @@
+### 2023-09-04 - Release v4.0.2
+* Revert changes from 4.0.0/1 - there's an issue while updating entries when list is filtered. 
+* These changes will come back only when I'm sure it's OK, with unit tests in place.
+
+### 2023-09-02 - Release v4.0.1
+* Empty deleted hosts list when hosts file changed on the system, or when we reload from the backup file.
+
+### 2023-09-02 - Release v4.0.0
+* Better deletion handler: when entries are deleted, they come back to the same place where they were instead of being appended to the end of the file.
+* Undo delete shortcut now undo only one entry at once...
+* ... whereas "undo" button from the toast will restore all deleted entries at once.
+*
 ### 2023-09-01 - Release v3.0.10
 * Hot reload: if the hosts file has changed, entries are reloaded.
 
@@ -18,4 +30,3 @@
 ### 2023-08-30 - Release v3.0.6
 * Move add entry button to the right.
 * Undo deleted entries, with `<Ctrl> + Z` shortcut.
-

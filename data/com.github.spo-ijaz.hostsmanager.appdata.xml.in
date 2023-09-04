@@ -57,6 +57,36 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.0.2" date="2023-09-04">
+			<description>
+				<p>
+					<ul>
+						<li>Revert changes from 4.0.0/1 - there's an issue while updating entries when list is filtered.</li>
+						<li>These changes will come back only when I'm sure it's OK, with unit tests in place.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
+		<release version="4.0.1" date="2023-09-02">
+			<description>
+				<p>
+					<ul>
+						<li>Empty deleted hosts list when hosts file changed on the system, or when we reload from the backup file.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
+		<release version="4.0.0" date="2023-09-02">
+			<description>
+				<p>
+					<ul>
+						<li>Better deletion handler: when entries are deleted, they come back to the same place where they were instead of being appended to the end of the file.</li>
+						<li>Undo delete shortcut now undo only one entry at once...</li>
+						<li>...whereas "undo" button from the toast will restore all deleted entries at once.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="3.0.10" date="2023-09-01">
 			<description>
 				<p>
