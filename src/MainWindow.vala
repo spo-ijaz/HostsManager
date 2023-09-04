@@ -12,7 +12,7 @@ namespace HostsManager {
 			{ "focus-search-bar", focus_search_bar },
 			{ "host-row-add", host_row_add },
 			{ "host-row-delete", host_row_delete },
-			{ "host-row-undo", signal_shortcut_undo_triggered },
+			{ "host-row-undo", signal_toast_undo_button_clicked_handler },
 			{ "restore-fron-backup", restore_from_backup },
 			{ "show-about", show_about },
 			{ "app-quit", app_quit },
@@ -111,10 +111,10 @@ namespace HostsManager {
 
 		public void hot_reload () {
 
-			this.hosts_list_undo_store.remove_all ();
-			this.hosts_list_store.remove_all ();
 			this.hosts_file_service.read_file ();
+			this.hosts_list_store.remove_all ();
 			this.append_hots_rows_to_list_store ();
+
 			this.toast.title = _("Host file has changed. Reloaded.");
 			this.toast_overlay.add_toast (this.toast);
 		}
@@ -152,47 +152,18 @@ namespace HostsManager {
 		//
 		private void append_hots_rows_to_list_store () {
 
-			MatchInfo match_info;
-			Services.HostsRegex regex = new Services.HostsRegex ();
+			try {
+				for (MatchInfo match_info = this.hosts_file_service.get_entries (); match_info.matches (); match_info.next ()) {
 
-			Models.HostRow.RowType host_row_type;
-			bool host_row_enabled;
-			string host_row_ip_address;
-			string host_row_hostname;
-			string host_row_comment;
-			string previous_full_row;
-
-
-			foreach (string row in this.hosts_file_service.get_rows ()) {
-
-				host_row_type = Models.HostRow.RowType.EMPTY;
-				host_row_enabled = false;
-				host_row_ip_address = "";
-				host_row_hostname = "";
-				host_row_comment = "";
-				previous_full_row = row;
-
-				if (regex.match (row, 0, out match_info)) {
-
-					host_row_type = Models.HostRow.RowType.HOST;
-					host_row_enabled = match_info.fetch_named ("enabled") != "#";
-					host_row_ip_address = match_info.fetch_named ("ipaddress");
-					host_row_hostname = match_info.fetch_named ("hostname");
-				} else {
-
-					host_row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
-					host_row_comment = row;
+					this.hosts_list_store.append (new Models.HostRow (
+					                                                  true,
+					                                                  match_info.fetch_named ("enabled") != "#",
+					                                                  match_info.fetch_named ("ipaddress"),
+					                                                  match_info.fetch_named ("hostname")));
 				}
+			} catch (Error e) {
 
-
-				this.hosts_list_store.append (new Models.HostRow (
-				                                                  host_row_type,
-				                                                  host_row_enabled,
-				                                                  host_row_ip_address,
-				                                                  host_row_hostname,
-				                                                  host_row_comment,
-				                                                  previous_full_row
-				));
+				error ("Regex failed: %s", e.message);
 			}
 		}
 
@@ -243,12 +214,10 @@ namespace HostsManager {
 		private void host_row_add () {
 
 			Models.HostRow host_row = new Models.HostRow (
-			                                              Models.HostRow.RowType.HOST,
+			                                              true,
 			                                              true,
 			                                              "127.0.0.1",
-			                                              "new.localhost",
-			                                              "",
-			                                              "127.0.0.1 new.localhost");
+			                                              "new.localhost");
 			this.hosts_list_store.append (host_row);
 			this.host_row_add_into_file (host_row);
 		}
@@ -257,7 +226,8 @@ namespace HostsManager {
 
 			var iter = Gtk.BitsetIter ();
 			uint position;
-			GLib.ListStore host_rows_to_delete = new GLib.ListStore (typeof (Models.HostRow));
+			uint initial_position = 0;
+			uint num_items_to_delete = 0;
 
 			if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
 				return;
@@ -265,64 +235,45 @@ namespace HostsManager {
 
 			do {
 
-				debug ("D - par la");
 				Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
-				if (host_row != null && host_row.row_type == Models.HostRow.RowType.HOST) {
+				if (host_row != null) {
+
+					if(initial_position == 0) {
+
+						initial_position = position;
+					}
 
 					debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
-
-					host_rows_to_delete.append (host_row);
-
-					host_row.previous_position = position;
+					num_items_to_delete++;
 					this.hosts_list_undo_store.append (host_row);
-					this.hosts_file_service.remove (position, false);
+
+					Services.HostsRegex modRegex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
+					this.hosts_file_service.remove (modRegex, false);
 				}
 			} while (iter.next (out position));
 
-			// Can't use GLib.ListStore.splice () because the model contains hosts file comments (or empty lines)
-			// So it's slow as hell.
-			uint position_to_delete;
-			for (int idx = 0; idx < host_rows_to_delete.n_items; idx++ ) {
-
-				if (this.hosts_list_store.find (host_rows_to_delete.get_item (idx), out position_to_delete)) {
-
-					this.hosts_list_store.remove (position_to_delete);
-				}
-			}
-
+			this.hosts_list_store.splice (initial_position, num_items_to_delete, {});
 			this.hosts_file_service.save_file ();
 			this.toast_overlay.add_toast (this.toast_undo);
 		}
 
-		private void host_row_delete_undo (bool from_shortcut = false) {
+		[GtkCallback]
+		private void signal_toast_undo_button_clicked_handler () {
 
-			if (this.hosts_list_undo_store.get_n_items () > 0) {
+			if(this.hosts_list_undo_store.get_n_items () > 0) {
 
-				int position;
-				for (position = 0; position <= this.hosts_list_undo_store.n_items; position++) {
+				for (int position = 0; position <= this.hosts_list_undo_store.n_items; position++) {
 
 					Models.HostRow host_row = this.hosts_list_undo_store.get_item (position) as Models.HostRow;
 					if (host_row != null) {
 
-						debug ("Restoring host \"%s\", IP address \"%s\", previous position: %u", host_row.hostname, host_row.ip_address, host_row.previous_position);
-						this.hosts_list_store.insert (host_row.previous_position, host_row);
-						this.hosts_file_service.restore (host_row, false);
-
-						if (from_shortcut == true) {
-
-							break;
-						}
+						debug ("Restoring host \"%s\", IP address \"%s\"", host_row.hostname, host_row.ip_address);
+						this.hosts_list_store.append (host_row);
+						this.host_row_add_into_file (host_row, false);
 					}
 				}
 
-				if (from_shortcut == false) {
-
-					this.hosts_list_undo_store.remove_all ();
-				} else {
-
-					this.hosts_list_undo_store.remove (position);
-				}
-
+				this.hosts_list_undo_store.remove_all ();
 				this.hosts_file_service.save_file ();
 			} else {
 
@@ -331,23 +282,9 @@ namespace HostsManager {
 			}
 		}
 
-		private void signal_shortcut_undo_triggered () {
-
-			// will undo only one row at once.
-			this.host_row_delete_undo (true);
-		}
-
-		[GtkCallback]
-		private void signal_toast_undo_button_clicked_handler () {
-
-			// will undo all deleted rows.
-			this.host_row_delete_undo (false);
-		}
-
 		private void restore_from_backup () {
 
-			this.hosts_list_undo_store.remove_all ();
-			this.hosts_list_store.remove_all ();
+			hosts_list_store.remove_all ();
 			this.hosts_file_service.restore_from_backup ();
 			this.append_hots_rows_to_list_store ();
 		}
@@ -380,17 +317,11 @@ namespace HostsManager {
 
 			if (check_button != null && host_row != null) {
 
-				if (host_row.row_type != Models.HostRow.RowType.HOST) {
-
-					check_button.get_parent ().set_visible (false);
-					return;
-				}
-
 				check_button.active = host_row.enabled;
 				check_button.toggled.connect (() => {
 
 					Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-					this.hosts_file_service.set_enabled (regex, !check_button.active, list_item.position);
+					this.hosts_file_service.set_enabled (regex, !check_button.active);
 					host_row.enabled = check_button.active;
 				});
 			}
@@ -400,8 +331,9 @@ namespace HostsManager {
 		private void signal_host_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			list_item.set_child (new Widgets.EditableCell (this, this.hosts_file_service, list_item));
+			list_item.set_child (new Widgets.EditableCell(this.hosts_file_service));
 		}
+
 
 		[GtkCallback]
 		private void signal_ip_address_bind_handler (SignalListItemFactory factory, Object object) {
@@ -417,17 +349,13 @@ namespace HostsManager {
 
 			if (editable_cell != null && host_row != null) {
 
-				if (host_row.row_type != Models.HostRow.RowType.HOST) {
-
-					editable_cell.get_parent ().set_visible (false);
-					return;
-				}
-
 				editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
 				editable_cell.editable_label.set_text (host_row.ip_address);
 				editable_cell.host_row = host_row;
 			}
 		}
+
+
 
 		[GtkCallback]
 		private void signal_host_bind_handler (SignalListItemFactory factory, Object object) {
@@ -443,16 +371,9 @@ namespace HostsManager {
 
 			if (editable_cell != null && host_row != null) {
 
-				if (host_row.row_type != Models.HostRow.RowType.HOST) {
-
-					editable_cell.get_parent ().set_visible (false);
-					return;
-				}
-
 				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
 				editable_cell.editable_label.set_text (host_row.hostname);
 				editable_cell.host_row = host_row;
-				// editable_cell.initDragAndDrop ();
 			}
 		}
 
@@ -465,43 +386,5 @@ namespace HostsManager {
 				list_item.set_child (null);
 			}
 		}
-
-		// Drag & Drop
-		// public void handle_drop (uint drag_item_position, uint drop_item_position) {
-
-
-		// var iter = Gtk.BitsetIter ();
-		// uint position;
-		// uint initial_position = 0;
-		// bool initial_position_init = false;
-		// Object[] host_rows_to_move = {};
-
-		// debug ("drag_item_position: %u | drop_item_position: %u", drag_item_position, drop_item_position);
-		//// if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
-		//// debug ("par la");
-		//// return;
-		//// }
-
-		// iter.init_first (this.hosts_multi_selection.get_selection (), out position);
-		// do {
-
-		// debug ("M - par la");
-		// Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
-		// if (host_row != null && host_row.row_type == Models.HostRow.RowType.HOST) {
-
-		// if (initial_position_init == false) {
-
-		// initial_position_init = true;
-		// initial_position = position;
-		// }
-
-		// host_rows_to_move += host_row;
-		// }
-		// } while (iter.next (out position));
-
-		// this.host_row_delete (true);
-		// debug ("drop_item_position: %u | num host_rows_to_move:  %u", drop_item_position, host_rows_to_move.length);
-		// this.hosts_list_store.splice (drop_item_position, 0, host_rows_to_move);
-		// }
 	}
 }

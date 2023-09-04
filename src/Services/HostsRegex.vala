@@ -21,6 +21,3 @@ namespace HostsManager.Services {
 		}
 	}
 }
-
-
-//  (?P<enabled>#?)\s?(?P<row>(?P<ipaddress>[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})(?P<divider>\s+)(?P<hostname>[a-zA-Z0-9.-]+))

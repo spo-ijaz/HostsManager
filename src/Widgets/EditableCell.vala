@@ -1,5 +1,5 @@
 using Gtk;
-using Gdk;
+
 
 namespace HostsManager.Widgets {
 
@@ -10,17 +10,41 @@ namespace HostsManager.Widgets {
 			 HOSTNAME
 		}
 
-		public MainWindow main_window { get; construct; }
 		public EditableLabel editable_label { get; construct; }
 		public Models.HostRow host_row  { get; set;}
 		public Services.HostsFile hosts_file_service  { get; set; }
-		public ListItem list_item  { get; set; }
 
 		public FieldType field_type { get; set; }
 
 		construct {
 
 			this.editable_label = new EditableLabel ("");
+			//Drag & drop support
+			// Widget column_view_cell = list_item.child.get_parent ();
+
+			// DragSource hostname_drag_source = new DragSource ();
+
+			// Value the_value = Value (Type.UINT);
+			// the_value.set_uint (list_item.position);
+
+			// ContentProvider content_provider = new ContentProvider.for_value (the_value);
+			// hostname_drag_source.drag_begin.connect (() => {
+
+				//For drag & drop support. Without that, DropTarget content can be garraychar, because label contains chars..
+			// 	editable_label.set_can_target (false);
+			// });
+			// hostname_drag_source.set_content (content_provider);
+			// column_view_cell.add_controller (hostname_drag_source);
+
+			// DropTarget hostname_drop_target = new DropTarget (Type.UINT, DragAction.COPY);
+			// hostname_drop_target.drop.connect ((value, x, y) => {
+
+			// 	this.handle_drop (value.get_uint (), list_item.position);
+			// 	return true;
+			// });
+
+			// column_view_cell.add_controller (hostname_drop_target);
+
 			EventControllerKey event_controller_key = new EventControllerKey ();
 			event_controller_key.key_released.connect (
 				(keyval, keycode, state) => {
@@ -37,11 +61,11 @@ namespace HostsManager.Widgets {
 
 						if (this.field_type == FieldType.HOSTNAME) {
 
-							this.hosts_file_service.set_hostname (regex, editable_label.text, list_item.position);
+							this.hosts_file_service.set_hostname (regex, editable_label.text);
 							host_row.hostname = editable_label.text;
 						} else {
 
-							this.hosts_file_service.set_ip_address (regex, editable_label.text, list_item.position);
+							this.hosts_file_service.set_ip_address (regex, editable_label.text);
 							host_row.ip_address = editable_label.text;
 						}
 
@@ -58,45 +82,45 @@ namespace HostsManager.Widgets {
 
 			editable_label.add_controller (event_controller_key);
 			this.append (editable_label);
+
 		}
 
-		public EditableCell (MainWindow main_window, Services.HostsFile hosts_file_service, ListItem list_item) {
+		public EditableCell (Services.HostsFile hosts_file_service) {
 			Object (
-				main_window: main_window,
-				hosts_file_service: hosts_file_service,
-				list_item: list_item
+				hosts_file_service: hosts_file_service
 			);
 		}
 
-		//  public void initDragAndDrop () {
+		// private void handle_drop (uint drag_item_position, uint drop_item_position) {
 
-		//  	//Drag & drop support
-		//  	Widget column_view_cell = list_item.child.get_parent ();
+		// 	var iter = Gtk.BitsetIter ();
+		// 	uint position;
+		// 	uint initial_position = 0;
+		// 	uint num_items_to_delete = 0;
 
-		//  	DragSource hostname_drag_source = new DragSource ();
+		// 	debug ("drag_item_position: %u | drop_item_position: %u", drag_item_position, drop_item_position);
+		// 	if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
+		// 		return;
+		// 	}
 
-		//  	Value the_value = Value (Type.UINT);
-		//  	the_value.set_uint (list_item.position);
+		// 	do {
 
-		//  	ContentProvider content_provider = new ContentProvider.for_value (the_value);
-		//  	hostname_drag_source.drag_begin.connect (() => {
+		// 		Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
 
-		//  		//For drag & drop support. Without that, DropTarget content can be garraychar, because label contains chars..
-		//  		//  this.set_can_target (false);
-		//  	});
-		//  	hostname_drag_source.set_content (content_provider);
-		//  	column_view_cell.add_controller (hostname_drag_source);
+		// 		if (host_row != null) {
 
-		//  	DropTarget hostname_drop_target = new DropTarget (Type.UINT, DragAction.COPY);
-		//  	hostname_drop_target.drop.connect ((value, x, y) => {
+		// 			if(initial_position == 0) {
 
-		//  		main_window.handle_drop (value.get_uint (), list_item.position);
-		//  		//  this.set_can_target (true);
-		//  		return true;
-		//  	});
+		// 				initial_position = position;
+		// 			}
 
-		//  	column_view_cell.add_controller (hostname_drop_target);
-		//  }
-		
+		// 			debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
+		// 			num_items_to_delete++;
+		// 		}
+		// 	} while (iter.next (out position));
+
+		// 	this.hosts_list_store.splice (initial_position, num_items_to_delete, {});
+		// 	this.hosts_file_service.save_file ();
+		// }
 	}
 }
