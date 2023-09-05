@@ -8,6 +8,7 @@ namespace HostsManager.Models {
 			HOST
 		}
 
+		public uint line_number { get; set; }
 		public RowType row_type { get; set; }
 		public bool enabled { get; set; }
 		public string hostname { get; set; }
@@ -16,8 +17,9 @@ namespace HostsManager.Models {
 		public uint previous_position { get; set; } // Used when we want to
 		public string previous_full_row { get; set; } // undo a delete host
 
-		public HostRow (RowType row_type, bool enabled, string ip_address, string hostname, string comment, string previous_full_row) {
+		public HostRow (uint line_number, RowType row_type, bool enabled, string ip_address, string hostname, string comment, string previous_full_row) {
 
+			this.line_number = line_number;
 			this.row_type = row_type;
 			this.enabled = enabled;
 			this.ip_address = ip_address;

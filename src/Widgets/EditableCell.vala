@@ -12,6 +12,7 @@ namespace HostsManager.Widgets {
 
 		public MainWindow main_window { get; construct; }
 		public EditableLabel editable_label { get; construct; }
+		public Label label { get; construct; }
 		public Models.HostRow host_row  { get; set;}
 		public Services.HostsFile hosts_file_service  { get; set; }
 		public ListItem list_item  { get; set; }
@@ -21,6 +22,7 @@ namespace HostsManager.Widgets {
 		construct {
 
 			this.editable_label = new EditableLabel ("");
+			this.label = new Label ("");
 			EventControllerKey event_controller_key = new EventControllerKey ();
 			event_controller_key.key_released.connect (
 				(keyval, keycode, state) => {
@@ -30,34 +32,42 @@ namespace HostsManager.Widgets {
 						return;
 					}
 
-					string previous_hostname = host_row.hostname;
+					string previous_hostname = this.host_row.hostname;
 					try {
 
-						Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
+						Services.HostsRegex regex = new Services.HostsRegex (this.host_row.ip_address, this.host_row.hostname);
 
 						if (this.field_type == FieldType.HOSTNAME) {
 
-							this.hosts_file_service.set_hostname (regex, editable_label.text, list_item.position);
-							host_row.hostname = editable_label.text;
+							this.hosts_file_service.set_hostname (regex, editable_label.text, this.host_row.line_number);
+							this.host_row.hostname = editable_label.text;
 						} else {
 
-							this.hosts_file_service.set_ip_address (regex, editable_label.text, list_item.position);
-							host_row.ip_address = editable_label.text;
+							this.hosts_file_service.set_ip_address (regex, this.editable_label.text, this.host_row.line_number);
+							this.host_row.ip_address = editable_label.text;
 						}
 
-						editable_label.remove_css_class ("wrong_input");
+						this.editable_label.remove_css_class ("wrong_input");
 					} catch (InvalidArgument invalid_argument) {
 
 						debug ("InvalidArgument: %s", invalid_argument.message);
-						host_row.hostname = previous_hostname;
-						editable_label.add_css_class ("wrong_input");
+						this.host_row.hostname = previous_hostname;
+						this.editable_label.add_css_class ("wrong_input");
 					}
 
 					return ;
 			});
 
-			editable_label.add_controller (event_controller_key);
+			this.editable_label.add_controller (event_controller_key);
 			this.append (editable_label);
+			this.notify.connect((pspec) => {
+				
+				if(pspec.get_name () == "host-row" && this.field_type == FieldType.HOSTNAME) {
+					
+					this.label.set_label (this.host_row.line_number.to_string ("%u") + " | ");
+					this.prepend (this.label);
+				}
+			});
 		}
 
 		public EditableCell (MainWindow main_window, Services.HostsFile hosts_file_service, ListItem list_item) {

@@ -98,6 +98,12 @@ namespace HostsManager {
 			this.hosts_file_service = new Services.HostsFile (this);
 			this.append_hots_rows_to_list_store ();
 
+			//  for (uint idx; idx < this.hosts_list_store.n_items; idx++) {
+
+			//  	Models.HostRow host_row = this.hosts_list_store.get_item (idx) as Models.HostRow;
+			//  	debug("%s %s %s", host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
+			//  }
+
 			// To automatically select the current row
 			// Works but give this error : Gtk-CRITICAL ** gtk_widget_compute_point: assertion 'GTK_IS_WIDGET (widget)' failed
 			// this.hosts_column_view.set_single_click_activate (true);
@@ -155,44 +161,36 @@ namespace HostsManager {
 			MatchInfo match_info;
 			Services.HostsRegex regex = new Services.HostsRegex ();
 
-			Models.HostRow.RowType host_row_type;
-			bool host_row_enabled;
-			string host_row_ip_address;
-			string host_row_hostname;
-			string host_row_comment;
-			string previous_full_row;
-
-
+			uint line_number = 0;
 			foreach (string row in this.hosts_file_service.get_rows ()) {
 
-				host_row_type = Models.HostRow.RowType.EMPTY;
-				host_row_enabled = false;
-				host_row_ip_address = "";
-				host_row_hostname = "";
-				host_row_comment = "";
-				previous_full_row = row;
+				debug ("row: %s", row);
+				Models.HostRow host_row = new Models.HostRow (
+					line_number,
+					Models.HostRow.RowType.EMPTY,
+					false,
+					"",
+					"",
+					"",
+					row
+				);
 
 				if (regex.match (row, 0, out match_info)) {
+					debug ("`->added as host line");
+					host_row.row_type = Models.HostRow.RowType.HOST;
+					host_row.enabled = match_info.fetch_named ("enabled") != "#";
+					host_row.ip_address = match_info.fetch_named ("ipaddress");
+					host_row.hostname = match_info.fetch_named ("hostname");
 
-					host_row_type = Models.HostRow.RowType.HOST;
-					host_row_enabled = match_info.fetch_named ("enabled") != "#";
-					host_row_ip_address = match_info.fetch_named ("ipaddress");
-					host_row_hostname = match_info.fetch_named ("hostname");
 				} else {
-
-					host_row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
-					host_row_comment = row;
+					debug ("`-> added as comment");
+					host_row.row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
+					host_row.comment = row;
 				}
 
-
-				this.hosts_list_store.append (new Models.HostRow (
-				                                                  host_row_type,
-				                                                  host_row_enabled,
-				                                                  host_row_ip_address,
-				                                                  host_row_hostname,
-				                                                  host_row_comment,
-				                                                  previous_full_row
-				));
+				this.hosts_list_store.append (host_row);
+				//  this.hosts_list_store.splice (line_number, 0, {host_row});
+				line_number++;
 			}
 		}
 
@@ -230,19 +228,12 @@ namespace HostsManager {
 
 				debug ("InvalidArgument: %s", invalid_argument.message);
 			}
-
-			// We wait a little the time for the new row widgets to be displayed and
-			// so hosts_scrolled_window.kvadjustment is updated accordingly.
-			Timeout.add_once (50, () => {
-
-				Adjustment adjustment = this.hosts_scrolled_window.vadjustment;
-				adjustment.set_value (adjustment.get_upper ());
-			});
 		}
 
 		private void host_row_add () {
 
 			Models.HostRow host_row = new Models.HostRow (
+			                                              this.hosts_list_store.n_items,
 			                                              Models.HostRow.RowType.HOST,
 			                                              true,
 			                                              "127.0.0.1",
@@ -251,6 +242,14 @@ namespace HostsManager {
 			                                              "127.0.0.1 new.localhost");
 			this.hosts_list_store.append (host_row);
 			this.host_row_add_into_file (host_row);
+
+			// We wait a little the time for the new row widgets to be displayed and
+			// so hosts_scrolled_window.kvadjustment is updated accordingly.
+			Timeout.add_once (50, () => {
+
+				Adjustment adjustment = this.hosts_scrolled_window.vadjustment;
+				adjustment.set_value (adjustment.get_upper ());
+			});
 		}
 
 		private void host_row_delete () {
@@ -264,8 +263,6 @@ namespace HostsManager {
 			}
 
 			do {
-
-				debug ("D - par la");
 				Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
 				if (host_row != null && host_row.row_type == Models.HostRow.RowType.HOST) {
 
@@ -275,7 +272,7 @@ namespace HostsManager {
 
 					host_row.previous_position = position;
 					this.hosts_list_undo_store.append (host_row);
-					this.hosts_file_service.remove (position, false);
+					this.hosts_file_service.remove (host_row.line_number, false);
 				}
 			} while (iter.next (out position));
 
@@ -382,6 +379,7 @@ namespace HostsManager {
 
 				if (host_row.row_type != Models.HostRow.RowType.HOST) {
 
+					debug("signal_enabled_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
 					check_button.get_parent ().set_visible (false);
 					return;
 				}
@@ -390,7 +388,7 @@ namespace HostsManager {
 				check_button.toggled.connect (() => {
 
 					Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-					this.hosts_file_service.set_enabled (regex, !check_button.active, list_item.position);
+					this.hosts_file_service.set_enabled (regex, !check_button.active, host_row.line_number);
 					host_row.enabled = check_button.active;
 				});
 			}
@@ -418,7 +416,7 @@ namespace HostsManager {
 			if (editable_cell != null && host_row != null) {
 
 				if (host_row.row_type != Models.HostRow.RowType.HOST) {
-
+					debug("signal_ip_address_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
 					editable_cell.get_parent ().set_visible (false);
 					return;
 				}
@@ -445,6 +443,7 @@ namespace HostsManager {
 
 				if (host_row.row_type != Models.HostRow.RowType.HOST) {
 
+					debug("signal_host_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
 					editable_cell.get_parent ().set_visible (false);
 					return;
 				}
@@ -452,7 +451,6 @@ namespace HostsManager {
 				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
 				editable_cell.editable_label.set_text (host_row.hostname);
 				editable_cell.host_row = host_row;
-				// editable_cell.initDragAndDrop ();
 			}
 		}
 
