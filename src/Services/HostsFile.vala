@@ -30,7 +30,7 @@ namespace HostsManager.Services {
 
 					if (event == FileMonitorEvent.CHANGED) {
 
-						
+
 						this.main_window.hot_reload ();
 					}
 				});
@@ -57,14 +57,14 @@ namespace HostsManager.Services {
 			);
 		}
 
-		public void remove (uint index, bool save) {
+		//  public void remove (uint index, bool save) {
 
-			// this.content[index] = null;
-			// if (save == true) {
+		//  	// this.content[index] = null;
+		//  	// if (save == true) {
 
-			// this.save_file ();
-			// }
-		}
+		//  	// this.save_file ();
+		//  	// }
+		//  }
 
 		public void restore (Models.HostRow host_row, bool save = true) {
 
@@ -105,13 +105,10 @@ namespace HostsManager.Services {
 				MatchInfo match_info;
 				Services.HostsRegex regex = new Services.HostsRegex ();
 				string row;
-				uint line_number = 0;
 
 				while ((row = data_input_stream.read_line (null)) != null) {
 
-					Models.HostRow host_row = new Models.HostRow (
-					                                              line_number,
-					                                              Models.HostRow.RowType.EMPTY,
+					Models.HostRow host_row = new Models.HostRow (Models.HostRow.RowType.EMPTY,
 					                                              false,
 					                                              "",
 					                                              "",
@@ -143,9 +140,7 @@ namespace HostsManager.Services {
 			try {
 
 				// TODO: There's probably a better way to do that.
-				Models.HostRow host_row = new Models.HostRow (
-				                                              0,
-				                                              Models.HostRow.RowType.EMPTY,
+				Models.HostRow host_row = new Models.HostRow (Models.HostRow.RowType.EMPTY,
 				                                              false,
 				                                              "",
 				                                              "",

@@ -98,12 +98,6 @@ namespace HostsManager {
 			this.hosts_file_service = new Services.HostsFile (this, this.hosts_list_store);
 			this.hosts_file_service.read_file ();
 
-			//  for (uint idx; idx < this.hosts_list_store.n_items; idx++) {
-
-			//  	Models.HostRow host_row = this.hosts_list_store.get_item (idx) as Models.HostRow;
-			//  	debug("%s %s %s", host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
-			//  }
-
 			// To automatically select the current row
 			// Works but give this error : Gtk-CRITICAL ** gtk_widget_compute_point: assertion 'GTK_IS_WIDGET (widget)' failed
 			// this.hosts_column_view.set_single_click_activate (true);
@@ -178,14 +172,12 @@ namespace HostsManager {
 		//
 		private void host_row_add () {
 
-			Models.HostRow host_row = new Models.HostRow (
-			                                              this.hosts_list_store.n_items,
-			                                              Models.HostRow.RowType.HOST,
+			Models.HostRow host_row = new Models.HostRow (Models.HostRow.RowType.HOST,
 			                                              true,
 			                                              "127.0.0.1",
-			                                              "new.localhost",
+			                                              "domain.localhost.com",
 			                                              "",
-			                                              "127.0.0.1 new.localhost");
+			                                              "127.0.0.1 domain.localhost.com");
 			this.hosts_list_store.append (host_row);
 			this.hosts_file_service.save_file ();
 
@@ -201,35 +193,67 @@ namespace HostsManager {
 		private void host_row_delete () {
 
 			var iter = Gtk.BitsetIter ();
-			uint position;
+			uint item_position_in_selection;
+			uint item_position_to_remove;
 			GLib.ListStore host_rows_to_delete = new GLib.ListStore (typeof (Models.HostRow));
 
-			if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
+			// If we delete lot's of entry, we remove previous undo deleted entries
+			// because if we undo, we want only what we just mass deleted and not _all_ deleted entries since 
+			// the app was started
+			if (this.hosts_multi_selection.n_items > 1) {
+
+				this.hosts_list_undo_store.remove_all ();
+			}
+
+			if (!iter.init_first (this.hosts_multi_selection.get_selection (), out item_position_in_selection)) {
 				return;
 			}
 
 			do {
-				Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
-				if (host_row != null && host_row.row_type == Models.HostRow.RowType.HOST) {
+				// 1. Get item from selection.
+				Models.HostRow host_row_to_remove_from_selection = hosts_multi_selection.get_item (item_position_in_selection) as Models.HostRow;
+				if (host_row_to_remove_from_selection == null) {
 
-					debug ("Deleting %s - %s", host_row.ip_address, host_row.hostname);
-
-					host_rows_to_delete.append (host_row);
-
-					host_row.previous_position = position;
-					this.hosts_list_undo_store.append (host_row);
-					this.hosts_file_service.remove (host_row.line_number, false);
+					continue;
 				}
-			} while (iter.next (out position));
+
+				if (host_row_to_remove_from_selection.row_type != Models.HostRow.RowType.HOST) {
+
+
+					continue;
+				}
+
+				// 2. Get corresponding item from our main GLib.ListStore.
+				if (this.hosts_list_store.find (host_row_to_remove_from_selection, out item_position_to_remove)) {
+
+					debug ("Adding this item to removal list: %u | %s - %s", item_position_to_remove, host_row_to_remove_from_selection.ip_address, host_row_to_remove_from_selection.hostname);
+					host_row_to_remove_from_selection.previous_item_position = item_position_to_remove;
+					this.hosts_list_undo_store.append (host_row_to_remove_from_selection);
+					host_rows_to_delete.append (host_row_to_remove_from_selection);
+				}
+			} while (iter.next (out item_position_in_selection));
 
 			// Can't use GLib.ListStore.splice () because the model contains hosts file comments (or empty lines)
 			// So it's slow as hell.
-			uint position_to_delete;
 			for (int idx = 0; idx < host_rows_to_delete.n_items; idx++ ) {
 
-				if (this.hosts_list_store.find (host_rows_to_delete.get_item (idx), out position_to_delete)) {
+				Models.HostRow host_row_to_delete = host_rows_to_delete.get_item (idx) as Models.HostRow;
+				if (host_row_to_delete == null) {
 
-					this.hosts_list_store.remove (position_to_delete);
+					continue;
+				}
+
+
+				if (this.hosts_list_store.find (host_row_to_delete, out item_position_to_remove)) {
+
+					Models.HostRow host_row_to_remove = this.hosts_list_store.get_item (item_position_to_remove) as Models.HostRow;
+					if (host_row_to_remove == null) {
+
+						continue;
+					}
+
+					debug ("Removing item %u | %s - %s", item_position_to_remove, host_row_to_remove.ip_address, host_row_to_remove.hostname);
+					this.hosts_list_store.remove (item_position_to_remove);
 				}
 			}
 
@@ -247,8 +271,8 @@ namespace HostsManager {
 					Models.HostRow host_row = this.hosts_list_undo_store.get_item (position) as Models.HostRow;
 					if (host_row != null) {
 
-						debug ("Restoring host \"%s\", IP address \"%s\", previous position: %u", host_row.hostname, host_row.ip_address, host_row.previous_position);
-						this.hosts_list_store.insert (host_row.previous_position, host_row);
+						debug ("Restoring host \"%s\", IP address \"%s\", previous position: %u", host_row.hostname, host_row.ip_address, host_row.previous_item_position);
+						this.hosts_list_store.insert (host_row.previous_item_position, host_row);
 						this.hosts_file_service.restore (host_row, false);
 
 						if (from_shortcut == true) {
