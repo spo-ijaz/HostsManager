@@ -11,7 +11,7 @@ namespace HostsManager.Services {
 	class HostsFile : Object {
 
 		public MainWindow main_window { get; construct; }
-		private string[] content;
+		public ListStore hosts_list_store { get; construct; }
 
 		private File host_file;
 		private File host_file_bkp;
@@ -30,6 +30,7 @@ namespace HostsManager.Services {
 
 					if (event == FileMonitorEvent.CHANGED) {
 
+						
 						this.main_window.hot_reload ();
 					}
 				});
@@ -45,91 +46,34 @@ namespace HostsManager.Services {
 				error ("Error: %s", e.message);
 			}
 
-			this.read_file ();
+			// this.read_file ();
 		}
 
-		public HostsFile (HostsManager.MainWindow main_window) {
+		public HostsFile (HostsManager.MainWindow main_window, ListStore hosts_list_store) {
 
 			Object (
-			        main_window: main_window
+			        main_window: main_window,
+			        hosts_list_store: hosts_list_store
 			);
-		}
-
-		public string[] get_rows () {
-
-			return this.content;
-		}
-
-		public void set_enabled (HostsRegex modRegex, bool active, uint index) {
-
-			try {
-
-				this.content[index] = modRegex.replace (this.content[index], -1, 0, active ? """#\g<row>""" : """\g<row>""");
-				this.save_file ();
-			} catch (RegexError regex_error) {
-
-				error ("Regex failed: %s", regex_error.message);
-			}
-		}
-
-		public void set_ip_address (HostsRegex modRegex, string ipaddress, uint index) throws InvalidArgument {
-
-			this.valide_ip_address (ipaddress);
-
-			try {
-
-				this.content[index] = modRegex.replace (this.content[index], -1, 0, """\n\g<enabled>""" + ipaddress + """\g<divider>\g<hostname>""");
-				this.save_file ();
-			} catch (RegexError regex_error) {
-
-				GLib.error ("Regex failed: %s", regex_error.message);
-			}
-		}
-
-		public void set_hostname (HostsRegex modRegex, string hostname, uint index) throws InvalidArgument {
-
-			this.validate_host_name (hostname);
-
-			try {
-
-				this.content[index] = modRegex.replace (this.content[index], -1, 0, """\n\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
-				this.save_file ();
-			} catch (RegexError regex_error) {
-
-				GLib.error ("Regex failed: %s", regex_error.message);
-			}
-		}
-
-		public void add (string ipaddress, string hostname, bool save = true) throws InvalidArgument {
-
-			this.valide_ip_address (ipaddress);
-			this.validate_host_name (hostname);
-
-			this.content += ipaddress + " " + hostname;
-
-			if (save == true) {
-
-				this.save_file ();
-			}
 		}
 
 		public void remove (uint index, bool save) {
 
-			this.content[index] = null;
-			if (save == true) {
+			// this.content[index] = null;
+			// if (save == true) {
 
-				this.save_file ();
-			}
+			// this.save_file ();
+			// }
 		}
 
 		public void restore (Models.HostRow host_row, bool save = true) {
 
-			this.content[host_row.previous_position] = host_row.previous_full_row;
+			// this.content[host_row.previous_position] = host_row.previous_full_row;
 
-			if (save == true) {
+			// if (save == true) {
 
-				this.save_file ();
-			}
+			// this.save_file ();
+			// }
 		}
 
 		public void restore_from_backup () {
@@ -137,6 +81,7 @@ namespace HostsManager.Services {
 			try {
 
 				debug ("Restauring backup of \"%s\" -> \"%s\" ", host_file_bkp.get_path (), host_file.get_path ());
+				this.hosts_list_store.remove_all ();
 				host_file_bkp.copy (host_file, FileCopyFlags.OVERWRITE);
 				this.read_file ();
 
@@ -154,12 +99,38 @@ namespace HostsManager.Services {
 
 			try {
 
-				var dis = new DataInputStream (this.host_file.read ());
-				this.content = {};
-				string row;
-				while ((row = dis.read_line (null)) != null) {
+				this.hosts_list_store.remove_all ();
+				var data_input_stream = new DataInputStream (this.host_file.read ());
 
-					this.content += row;
+				MatchInfo match_info;
+				Services.HostsRegex regex = new Services.HostsRegex ();
+				string row;
+				uint line_number = 0;
+
+				while ((row = data_input_stream.read_line (null)) != null) {
+
+					Models.HostRow host_row = new Models.HostRow (
+					                                              line_number,
+					                                              Models.HostRow.RowType.EMPTY,
+					                                              false,
+					                                              "",
+					                                              "",
+					                                              "",
+					                                              row);
+
+					if (regex.match (row, 0, out match_info)) {
+
+						host_row.row_type = Models.HostRow.RowType.HOST;
+						host_row.enabled = match_info.fetch_named ("enabled") != "#";
+						host_row.ip_address = match_info.fetch_named ("ipaddress");
+						host_row.hostname = match_info.fetch_named ("hostname");
+					} else {
+
+						host_row.row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
+						host_row.comment = row;
+					}
+
+					this.hosts_list_store.append (host_row);
 				}
 			} catch (Error e) {
 
@@ -172,9 +143,32 @@ namespace HostsManager.Services {
 			try {
 
 				// TODO: There's probably a better way to do that.
+				Models.HostRow host_row = new Models.HostRow (
+				                                              0,
+				                                              Models.HostRow.RowType.EMPTY,
+				                                              false,
+				                                              "",
+				                                              "",
+				                                              "",
+				                                              "");
+
 				string all_rows = "";
-				foreach (string row in this.content) {
-					all_rows += row + "\n";
+				for (uint idx = 0; idx < this.hosts_list_store.n_items; idx++) {
+
+					host_row = this.hosts_list_store.get_item (idx) as Models.HostRow;
+
+					if (host_row != null) {
+
+						if (host_row.row_type == Models.HostRow.RowType.HOST) {
+
+							all_rows += (host_row.enabled ? "" : "#") + host_row.ip_address + " " + host_row.hostname;
+						} else {
+
+							all_rows += host_row.row;
+						}
+
+						all_rows += "\n";
+					}
 				}
 
 				StringBuilder rows_string_builder = new StringBuilder (all_rows);
@@ -189,7 +183,7 @@ namespace HostsManager.Services {
 			}
 		}
 
-		private void validate_host_name (string hostname) throws InvalidArgument {
+		public void validate_host_name (string hostname) throws InvalidArgument {
 
 			if (!Regex.match_simple ("^" + Config.hostname_regex_str () + "$", hostname)) {
 
@@ -197,7 +191,7 @@ namespace HostsManager.Services {
 			}
 		}
 
-		private void valide_ip_address (string ipaddress) throws InvalidArgument {
+		public void valide_ip_address (string ipaddress) throws InvalidArgument {
 
 			if (!Regex.match_simple ("^" + Config.ipaddress_regex_str () + "$", ipaddress)) {
 
