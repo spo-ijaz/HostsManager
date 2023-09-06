@@ -41,16 +41,13 @@ namespace HostsManager {
 		[GtkChild]
 		public unowned ScrolledWindow hosts_scrolled_window;
 		[GtkChild]
-		public unowned ColumnView hosts_column_view;
-		[GtkChild]
-		public unowned MultiSelection hosts_multi_selection;
-		[GtkChild]
-		public unowned FilterListModel hosts_filter_list_model;
-		[GtkChild]
-		public unowned GLib.ListStore hosts_list_store;
-		[GtkChild]
-		public unowned StringFilter hosts_string_filter;
+		public unowned Box box;
 
+		private  ListBox hosts_list_box;
+		private MultiSelection hosts_multi_selection;
+		private FilterListModel hosts_filter_list_model;
+		private GLib.ListStore hosts_list_store;
+		private StringFilter hosts_string_filter;
 
 		private Services.HostsFile hosts_file_service;
 		private GLib.ListStore hosts_list_undo_store;
@@ -64,11 +61,11 @@ namespace HostsManager {
 			}
 
 			// Custom CSS
-			this.css_provider.load_from_resource ("/com/github/spo-ijaz/hostsmanager/ui/hosts-manager.css");
-			StyleContext.add_provider_for_display (
-			                                       this.get_display (),
-			                                       this.css_provider,
-			                                       STYLE_PROVIDER_PRIORITY_USER);
+			//  this.css_provider.load_from_resource ("/com/github/spo-ijaz/hostsmanager/ui/hosts-manager.css");
+			//  StyleContext.add_provider_for_display (
+			//                                         this.get_display (),
+			//                                         this.css_provider,
+			//                                         STYLE_PROVIDER_PRIORITY_USER);
 
 			// Action, menu, shortcuts...
 			this.add_action_entries (ACTION_ENTRIES, this);
@@ -91,12 +88,29 @@ namespace HostsManager {
 
 			// Filter for LibStore.
 			PropertyExpression property_expression = new PropertyExpression (typeof (Models.HostRow), null, "hostname");
-			this.hosts_string_filter.set_expression (property_expression);
+
+			//  model: Gtk.NoSelection
+			//  |       `-> model: Gtk.FilterListModel
+			//  |            |-> model: GLib.ListStore
+			//  |            `-> filter: Gtk.StringFilter
+
+			this.hosts_string_filter = new StringFilter (property_expression);
+			this.hosts_list_store = new GLib.ListStore (typeof (Models.HostRow));
+			this.hosts_filter_list_model = new FilterListModel (this.hosts_list_store, this.hosts_string_filter);
+
+			this.hosts_multi_selection = new MultiSelection (this.hosts_filter_list_model);
+
+			this.hosts_list_box = new ListBox ();
+			this.hosts_list_box.bind_model (this.hosts_multi_selection, create_host_list_box_row);
+			//  this.box.append (this.hosts_list_box);
+			this.hosts_scrolled_window.set_child (this.hosts_list_box);
+			//  this.hosts_scrolled_window.set_child_visible (true);
 
 			// Initiailize the list store
+			//this.hosts_list_store = new GLib.ListStore (typeof (Models.HostRow));
 			this.hosts_list_undo_store = new GLib.ListStore (typeof (Models.HostRow));
-			this.hosts_file_service = new Services.HostsFile (this);
-			this.append_hots_rows_to_list_store ();
+			this.hosts_file_service = new Services.HostsFile (this, this.hosts_list_store);
+			//  this.append_hots_rows_to_list_store ();
 
 			//  for (uint idx; idx < this.hosts_list_store.n_items; idx++) {
 
@@ -118,9 +132,7 @@ namespace HostsManager {
 		public void hot_reload () {
 
 			this.hosts_list_undo_store.remove_all ();
-			this.hosts_list_store.remove_all ();
 			this.hosts_file_service.read_file ();
-			this.append_hots_rows_to_list_store ();
 			this.toast.title = _("Host file has changed. Reloaded.");
 			this.toast_overlay.add_toast (this.toast);
 		}
@@ -156,42 +168,23 @@ namespace HostsManager {
 		//
 		// Store
 		//
-		private void append_hots_rows_to_list_store () {
+		private Widget create_host_list_box_row (Object item) {
 
-			MatchInfo match_info;
-			Services.HostsRegex regex = new Services.HostsRegex ();
+			//Models.HostRow host_row = item as Models.HostRow;
 
-			uint line_number = 0;
-			foreach (string row in this.hosts_file_service.get_rows ()) {
+			return new Widgets.HostRow (item as Models.HostRow);
 
-				debug ("row: %s", row);
-				Models.HostRow host_row = new Models.HostRow (
-					line_number,
-					Models.HostRow.RowType.EMPTY,
-					false,
-					"",
-					"",
-					"",
-					row
-				);
+			//  ListBoxRow list_box_row = new ListBoxRow ();
 
-				if (regex.match (row, 0, out match_info)) {
-					debug ("`->added as host line");
-					host_row.row_type = Models.HostRow.RowType.HOST;
-					host_row.enabled = match_info.fetch_named ("enabled") != "#";
-					host_row.ip_address = match_info.fetch_named ("ipaddress");
-					host_row.hostname = match_info.fetch_named ("hostname");
 
-				} else {
-					debug ("`-> added as comment");
-					host_row.row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
-					host_row.comment = row;
-				}
+			//  //  debug ("item: %s", host_row.hostname);
+			//  Adw.EntryRow entry_row =  new Adw.EntryRow ();
+			//  entry_row.set_title_selectable (true);
+			//  entry_row.set_title (host_row.hostname);
+			//  entry_row.set_text (host_row.ip_address);
+			//  list_box_row.set_child (entry_row);
 
-				this.hosts_list_store.append (host_row);
-				//  this.hosts_list_store.splice (line_number, 0, {host_row});
-				line_number++;
-			}
+			//  return list_box_row;
 		}
 
 		//
@@ -344,125 +337,123 @@ namespace HostsManager {
 		private void restore_from_backup () {
 
 			this.hosts_list_undo_store.remove_all ();
-			this.hosts_list_store.remove_all ();
 			this.hosts_file_service.restore_from_backup ();
-			this.append_hots_rows_to_list_store ();
 		}
 
 		//
 		// ColumnsViewColumn's widgets signals handler
 		//
-		[GtkCallback]
-		private void signal_enabled_setup_handler (SignalListItemFactory factory, Object object) {
+		//  [GtkCallback]
+		//  private void signal_enabled_setup_handler (SignalListItemFactory factory, Object object) {
 
-			CheckButton check_button = new CheckButton ();
-			check_button.active = false;
-			check_button.set_halign (Align.CENTER);
+		//  	CheckButton check_button = new CheckButton ();
+		//  	check_button.active = false;
+		//  	check_button.set_halign (Align.CENTER);
 
-			ListItem list_item = object as ListItem;
-			list_item.set_child (check_button);
-		}
+		//  	ListItem list_item = object as ListItem;
+		//  	list_item.set_child (check_button);
+		//  }
 
-		[GtkCallback]
-		private void signal_enabled_bind_handler (SignalListItemFactory factory, Object object) {
+		//  [GtkCallback]
+		//  private void signal_enabled_bind_handler (SignalListItemFactory factory, Object object) {
 
-			ListItem list_item = object as ListItem;
-			if (list_item.child == null) {
+		//  	ListItem list_item = object as ListItem;
+		//  	if (list_item.child == null) {
 
-				this.signal_enabled_setup_handler (factory, list_item);
-			}
+		//  		this.signal_enabled_setup_handler (factory, list_item);
+		//  	}
 
-			CheckButton? check_button = list_item.get_child () as CheckButton;
-			Models.HostRow? host_row = list_item.item as Models.HostRow;
+		//  	CheckButton? check_button = list_item.get_child () as CheckButton;
+		//  	Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (check_button != null && host_row != null) {
+		//  	if (check_button != null && host_row != null) {
 
-				if (host_row.row_type != Models.HostRow.RowType.HOST) {
+		//  		if (host_row.row_type != Models.HostRow.RowType.HOST) {
 
-					debug("signal_enabled_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
-					check_button.get_parent ().set_visible (false);
-					return;
-				}
+		//  			debug("signal_enabled_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
+		//  			check_button.get_parent ().set_visible (false);
+		//  			return;
+		//  		}
 
-				check_button.active = host_row.enabled;
-				check_button.toggled.connect (() => {
+		//  		check_button.active = host_row.enabled;
+		//  		check_button.toggled.connect (() => {
 
-					Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
-					this.hosts_file_service.set_enabled (regex, !check_button.active, host_row.line_number);
-					host_row.enabled = check_button.active;
-				});
-			}
-		}
+		//  			Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
+		//  			this.hosts_file_service.set_enabled (regex, !check_button.active, host_row.line_number);
+		//  			host_row.enabled = check_button.active;
+		//  		});
+		//  	}
+		//  }
 
-		[GtkCallback]
-		private void signal_host_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
+		//  [GtkCallback]
+		//  private void signal_host_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
-			ListItem list_item = object as ListItem;
-			list_item.set_child (new Widgets.EditableCell (this, this.hosts_file_service, list_item));
-		}
+		//  	ListItem list_item = object as ListItem;
+		//  	list_item.set_child (new Widgets.EditableCell (this, this.hosts_file_service, list_item));
+		//  }
 
-		[GtkCallback]
-		private void signal_ip_address_bind_handler (SignalListItemFactory factory, Object object) {
+		//  [GtkCallback]
+		//  private void signal_ip_address_bind_handler (SignalListItemFactory factory, Object object) {
 
-			ListItem list_item = object as ListItem;
-			if (list_item.child == null) {
+		//  	ListItem list_item = object as ListItem;
+		//  	if (list_item.child == null) {
 
-				this.signal_host_ip_address_setup_handler (factory, list_item);
-			}
+		//  		this.signal_host_ip_address_setup_handler (factory, list_item);
+		//  	}
 
-			Widgets.EditableCell? editable_cell = list_item.child as Widgets.EditableCell;
-			Models.HostRow? host_row = list_item.item as Models.HostRow;
+		//  	Widgets.EditableCell? editable_cell = list_item.child as Widgets.EditableCell;
+		//  	Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (editable_cell != null && host_row != null) {
+		//  	if (editable_cell != null && host_row != null) {
 
-				if (host_row.row_type != Models.HostRow.RowType.HOST) {
-					debug("signal_ip_address_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
-					editable_cell.get_parent ().set_visible (false);
-					return;
-				}
+		//  		if (host_row.row_type != Models.HostRow.RowType.HOST) {
+		//  			debug("signal_ip_address_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
+		//  			editable_cell.get_parent ().set_visible (false);
+		//  			return;
+		//  		}
 
-				editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
-				editable_cell.editable_label.set_text (host_row.ip_address);
-				editable_cell.host_row = host_row;
-			}
-		}
+		//  		editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
+		//  		editable_cell.editable_label.set_text (host_row.ip_address);
+		//  		editable_cell.host_row = host_row;
+		//  	}
+		//  }
 
-		[GtkCallback]
-		private void signal_host_bind_handler (SignalListItemFactory factory, Object object) {
+		//  [GtkCallback]
+		//  private void signal_host_bind_handler (SignalListItemFactory factory, Object object) {
 
-			ListItem list_item = object as ListItem;
-			if (list_item.child == null) {
+		//  	ListItem list_item = object as ListItem;
+		//  	if (list_item.child == null) {
 
-				this.signal_host_ip_address_setup_handler (factory, list_item);
-			}
+		//  		this.signal_host_ip_address_setup_handler (factory, list_item);
+		//  	}
 
-			Widgets.EditableCell? editable_cell = list_item.child as Widgets.EditableCell;
-			Models.HostRow? host_row = list_item.item as Models.HostRow;
+		//  	Widgets.EditableCell? editable_cell = list_item.child as Widgets.EditableCell;
+		//  	Models.HostRow? host_row = list_item.item as Models.HostRow;
 
-			if (editable_cell != null && host_row != null) {
+		//  	if (editable_cell != null && host_row != null) {
 
-				if (host_row.row_type != Models.HostRow.RowType.HOST) {
+		//  		if (host_row.row_type != Models.HostRow.RowType.HOST) {
 
-					debug("signal_host_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
-					editable_cell.get_parent ().set_visible (false);
-					return;
-				}
+		//  			debug("signal_host_bind_handler - %u %s %s %s ", host_row.line_number, host_row.row_type.to_string(), host_row.ip_address, host_row.hostname);
+		//  			editable_cell.get_parent ().set_visible (false);
+		//  			return;
+		//  		}
 
-				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
-				editable_cell.editable_label.set_text (host_row.hostname);
-				editable_cell.host_row = host_row;
-			}
-		}
+		//  		editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
+		//  		editable_cell.editable_label.set_text (host_row.hostname);
+		//  		editable_cell.host_row = host_row;
+		//  	}
+		//  }
 
-		[GtkCallback]
-		private void signal_column_view_unbind_handler (SignalListItemFactory factory, Object object) {
+		//  [GtkCallback]
+		//  private void signal_column_view_unbind_handler (SignalListItemFactory factory, Object object) {
 
-			ListItem list_item = object as ListItem;
-			if (list_item.item != null) {
+		//  	ListItem list_item = object as ListItem;
+		//  	if (list_item.item != null) {
 
-				list_item.set_child (null);
-			}
-		}
+		//  		list_item.set_child (null);
+		//  	}
+		//  }
 
 		// Drag & Drop
 		// public void handle_drop (uint drag_item_position, uint drop_item_position) {
