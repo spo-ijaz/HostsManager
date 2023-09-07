@@ -61,7 +61,9 @@
 			<description>
 				<p>
 					<ul>
-						<li></li>
+						<li>New entries deletion handler fixed. (we can remove and undo one or more entries)</li>
+						<li>Update / deleted issues when filter is activated are fixed.</li>
+						<li>Change the way the "undo" functionality works. (check README.md)</li>
 					</ul>
 				</p>
 			</description>

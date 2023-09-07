@@ -18,7 +18,9 @@
 
 * Adding entry.
 * Delete multiple entries at once.
-* Restore deleted entries if you made mistake.
+* Restore deleted entries if you made mistake :
+  * If entries are removed one by one, shortcut `<Ctrl>+z` (or `undo` button) will undo the deletions until there are no more entries to restore.
+  * If more than one entries are removed at once, shortcut `<Ctrl>+z` (or `undo` button), will restore all deleted entries at once. ( and deleted history is emptied when multiple entries are deleted at once.)
 * Checks on IP address and hostname.
 * Search through hostnames.
 * Shortcuts.

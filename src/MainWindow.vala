@@ -84,6 +84,11 @@ namespace HostsManager {
 
 			this.add_controller (shortcut_controller);
 
+			// Search bar entry, handle esc to toggle visibility.
+			this.search_bar.connect_entry (this.search_entry);
+
+			this.search_toggle_button.bind_property ("active", this.search_bar, "visible");
+
 
 			// Help overlay
 			Builder help_builder = new Builder.from_resource ("/com/github/spo-ijaz/hostsmanager/ui/app-shortcuts-window.ui");
@@ -148,17 +153,9 @@ namespace HostsManager {
 		//
 		// Search bar
 		//
-		[GtkCallback]
-		private void on_search_toggle_button_toggled () {
-
-			this.search_bar.set_visible (this.search_toggle_button.get_active ());
-			this.search_entry.grab_focus ();
-		}
-
 		private void focus_search_bar (SimpleAction action, GLib.Variant? parameter) {
 
-			this.search_toggle_button.set_active (!this.search_toggle_button.get_active ());
-			this.on_search_toggle_button_toggled ();
+			this.search_toggle_button.set_active(true);
 		}
 
 		[GtkCallback]
@@ -197,7 +194,7 @@ namespace HostsManager {
 			GLib.ListStore host_rows_to_delete = new GLib.ListStore (typeof (Models.HostRow));
 
 			// If we delete lot's of entry, we remove previous undo deleted entries
-			// because if we undo, we want only what we just mass deleted and not _all_ deleted entries since 
+			// because if we undo, we want only what we just mass deleted and not _all_ deleted entries since
 			// the app was started
 			if (this.hosts_multi_selection.n_items > 1) {
 

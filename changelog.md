@@ -1,5 +1,7 @@
 ### 2023-09-07 - Release v4.1.0
-
+* New entries deletion handler fixed. (we can remove, undo one or more entries)
+* Update / deleted issues when filter is activated are fixed.
+* Change the way the "undo" functionality works. (check README.md)
 
 ### 2023-09-02 - Release v4.0.1
 * Empty deleted hosts list when hosts file changed on the system, or when we reload from the backup file.

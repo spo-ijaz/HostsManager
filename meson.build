@@ -2,7 +2,7 @@
 project(
 	'com.github.spo-ijaz.hostsmanager',
 	['vala', 'c'],
-	version: '4.0.1',
+	version: '4.1.0',
 	license: 'MIT License',
 	meson_version: '>= 0.63',
 )
