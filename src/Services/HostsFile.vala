@@ -113,7 +113,6 @@ namespace HostsManager.Services {
 					                                              false,
 					                                              "",
 					                                              "",
-					                                              "",
 					                                              row);
 
 					if (regex.match (row, 0, out match_info)) {
@@ -125,14 +124,13 @@ namespace HostsManager.Services {
 					} else {
 
 						host_row.row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
-						host_row.comment = row;
 					}
 
-					debug ("Append row : %s - %s | %s | ( %s )", 
-					host_row.ip_address,
-					host_row.hostname,
-					host_row.row,
-					host_row.row_type.to_string());
+					//  debug ("Append row : %s - %s | %s | ( %s )", 
+					//  host_row.ip_address,
+					//  host_row.hostname,
+					//  host_row.row,
+					//  host_row.row_type.to_string());
 
 					this.hosts_list_store.append (host_row);
 				}
@@ -149,7 +147,6 @@ namespace HostsManager.Services {
 				// TODO: There's probably a better way to do that.
 				Models.HostRow host_row = new Models.HostRow (Models.HostRow.RowType.EMPTY,
 				                                              false,
-				                                              "",
 				                                              "",
 				                                              "",
 				                                              "");

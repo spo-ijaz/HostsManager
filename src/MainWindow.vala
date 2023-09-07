@@ -176,7 +176,6 @@ namespace HostsManager {
 			                                              true,
 			                                              "127.0.0.1",
 			                                              "domain.localhost.com",
-			                                              "",
 			                                              "127.0.0.1 domain.localhost.com");
 			this.hosts_list_store.append (host_row);
 			this.hosts_file_service.save_file ();
@@ -323,7 +322,6 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_enabled_setup_handler (SignalListItemFactory factory, Object object) {
 
-			debug("signal_enabled_setup_handler");
 			CheckButton check_button = new CheckButton ();
 			check_button.active = false;
 			check_button.set_halign (Align.CENTER);
@@ -346,11 +344,13 @@ namespace HostsManager {
 
 			if (check_button != null && host_row != null) {
 
+				bool visible = true;
 				if (host_row.row_type != Models.HostRow.RowType.HOST) {
 
-					check_button.get_parent ().set_visible (false);
-					return;
+					visible = false;
 				}
+
+				check_button.get_parent ().set_visible (visible);
 
 				Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
 
@@ -383,11 +383,13 @@ namespace HostsManager {
 
 			if (editable_cell != null && host_row != null) {
 
+				bool visible = true;
 				if (host_row.row_type != Models.HostRow.RowType.HOST) {
 
-					editable_cell.get_parent ().set_visible (false);
-					return;
+					visible = false;
 				}
+
+				editable_cell.get_parent ().set_visible (visible);
 
 				editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
 				editable_cell.editable_label.set_text (host_row.ip_address);
@@ -409,11 +411,13 @@ namespace HostsManager {
 
 			if (editable_cell != null && host_row != null) {
 
+				bool visible = true;
 				if (host_row.row_type != Models.HostRow.RowType.HOST) {
 
-					editable_cell.get_parent ().set_visible (false);
-					return;
+					visible = false;
 				}
+
+				editable_cell.get_parent ().set_visible (visible);
 
 				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
 				editable_cell.editable_label.set_text (host_row.hostname);
