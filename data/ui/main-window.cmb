@@ -84,7 +84,6 @@
 	(1,111,"GtkColumnViewColumn","title","Hostname",None,None,None,None,None,None,None,None,None),
 	(1,113,"GtkSearchBar","child",None,None,None,None,None,114,None,None,None,None),
 	(1,113,"GtkSearchBar","search-mode-enabled","True",None,None,None,None,None,None,None,None,None),
-	(1,113,"GtkSearchBar","show-close-button","True",None,None,None,None,None,None,None,None,None),
 	(1,113,"GtkWidget","visible","False",None,None,None,None,None,None,None,None,None),
 	(1,114,"GtkSearchEntry","activates-default","True",None,None,None,None,None,None,None,None,None),
 	(1,115,"GtkPopover","cascade-popdown","True",None,None,None,None,None,None,None,None,None),
@@ -107,7 +106,6 @@
 	(73,1,112,"GtkSignalListItemFactory","bind","signal_host_bind_handler",None,None,None,None,None),
 	(74,1,112,"GtkSignalListItemFactory","setup","signal_host_ip_address_setup_handler",None,None,None,None,None),
 	(75,1,112,"GtkSignalListItemFactory","unbind","signal_column_view_unbind_handler",None,None,None,None,None),
-	(77,1,119,"AdwToast","button-clicked","signal_toast_undo_button_clicked_handler",None,None,None,None,None),
-	(78,1,113,"GtkWidget","hide","signal_search_bar_hide_handler",None,None,None,None,None)
+	(77,1,119,"AdwToast","button-clicked","signal_toast_undo_button_clicked_handler",None,None,None,None,None)
   </object_signal>
 </cambalache-project>

@@ -57,12 +57,13 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
-		<release version="4.0.2" date="2023-09-04">
+		<release version="4.1.0" date="2023-09-07">
 			<description>
 				<p>
 					<ul>
-						<li>Revert changes from 4.0.0/1 - there's an issue while updating entries when list is filtered.</li>
-						<li>These changes will come back only when I'm sure it's OK, with unit tests in place.</li>
+						<li>New entries deletion handler fixed. (we can remove and undo one or more entries)</li>
+						<li>Update / deleted issues when filter is activated are fixed.</li>
+						<li>Change the way the "undo" functionality works. (check README.md)</li>
 					</ul>
 				</p>
 			</description>
