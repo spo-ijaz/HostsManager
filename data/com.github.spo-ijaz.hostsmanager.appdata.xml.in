@@ -57,6 +57,15 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.1.0" date="2023-09-07">
+			<description>
+				<p>
+					<ul>
+						<li></li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="4.0.1" date="2023-09-02">
 			<description>
 				<p>

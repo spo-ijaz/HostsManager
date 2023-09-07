@@ -323,6 +323,7 @@ namespace HostsManager {
 		[GtkCallback]
 		private void signal_enabled_setup_handler (SignalListItemFactory factory, Object object) {
 
+			debug("signal_enabled_setup_handler");
 			CheckButton check_button = new CheckButton ();
 			check_button.active = false;
 			check_button.set_halign (Align.CENTER);
@@ -351,11 +352,12 @@ namespace HostsManager {
 					return;
 				}
 
+				Services.HostsRegex regex = new Services.HostsRegex (host_row.ip_address, host_row.hostname);
+
 				check_button.active = host_row.enabled;
 				check_button.toggled.connect (() => {
 
-					host_row.enabled = check_button.active;
-					this.hosts_file_service.save_file ();
+					this.hosts_file_service.set_enabled (regex, !check_button.active, host_row);
 				});
 			}
 		}

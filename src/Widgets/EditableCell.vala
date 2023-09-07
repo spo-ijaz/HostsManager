@@ -37,16 +37,13 @@ namespace HostsManager.Widgets {
 
 					if (this.field_type == FieldType.HOSTNAME) {
 
-						this.hosts_file_service.validate_host_name (editable_label.text);
-						this.host_row.hostname = editable_label.text;
+						this.hosts_file_service.set_hostname (regex, editable_label.text, this.host_row);
 					} else {
 
-						this.hosts_file_service.valide_ip_address (editable_label.text);
-						this.host_row.ip_address = editable_label.text;
+						this.hosts_file_service.set_ip_address (regex, editable_label.text, this.host_row);
 					}
 
 					this.editable_label.remove_css_class ("wrong_input");
-					this._hosts_file_service.save_file ();
 				} catch (InvalidArgument invalid_argument) {
 
 					debug ("InvalidArgument: %s", invalid_argument.message);

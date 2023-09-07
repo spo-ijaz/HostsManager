@@ -57,14 +57,14 @@ namespace HostsManager.Services {
 			);
 		}
 
-		//  public void remove (uint index, bool save) {
+		// public void remove (uint index, bool save) {
 
-		//  	// this.content[index] = null;
-		//  	// if (save == true) {
+		//// this.content[index] = null;
+		//// if (save == true) {
 
-		//  	// this.save_file ();
-		//  	// }
-		//  }
+		//// this.save_file ();
+		//// }
+		// }
 
 		public void restore (Models.HostRow host_row, bool save = true) {
 
@@ -108,6 +108,7 @@ namespace HostsManager.Services {
 
 				while ((row = data_input_stream.read_line (null)) != null) {
 
+					//  debug ("row: %s", row);
 					Models.HostRow host_row = new Models.HostRow (Models.HostRow.RowType.EMPTY,
 					                                              false,
 					                                              "",
@@ -126,6 +127,12 @@ namespace HostsManager.Services {
 						host_row.row_type = row.length > 0 ? Models.HostRow.RowType.COMMENT : Models.HostRow.RowType.EMPTY;
 						host_row.comment = row;
 					}
+
+					debug ("Append row : %s - %s | %s | ( %s )", 
+					host_row.ip_address,
+					host_row.hostname,
+					host_row.row,
+					host_row.row_type.to_string());
 
 					this.hosts_list_store.append (host_row);
 				}
@@ -154,15 +161,7 @@ namespace HostsManager.Services {
 
 					if (host_row != null) {
 
-						if (host_row.row_type == Models.HostRow.RowType.HOST) {
-
-							all_rows += (host_row.enabled ? "" : "#") + host_row.ip_address + " " + host_row.hostname;
-						} else {
-
-							all_rows += host_row.row;
-						}
-
-						all_rows += "\n";
+						all_rows += host_row.row + "\n";
 					}
 				}
 
@@ -178,7 +177,50 @@ namespace HostsManager.Services {
 			}
 		}
 
-		public void validate_host_name (string hostname) throws InvalidArgument {
+		public void set_enabled (HostsRegex modRegex, bool active, Models.HostRow host_row) {
+
+			try {
+
+				host_row.row = modRegex.replace (host_row.row, -1, 0, active ? """#\g<row>""" : """\g<row>""");
+				host_row.enabled = active;
+				this.save_file ();
+			} catch (RegexError regex_error) {
+
+				error ("Regex failed: %s", regex_error.message);
+			}
+		}
+
+		public void set_ip_address (HostsRegex modRegex, string ip_address, Models.HostRow host_row) throws InvalidArgument {
+
+			this.valide_ip_address (ip_address);
+
+			try {
+
+				host_row.row = modRegex.replace (host_row.row, -1, 0, """\g<enabled>""" + ip_address + """\g<divider>\g<hostname>""");
+				host_row.ip_address = ip_address;
+				this.save_file ();
+			} catch (RegexError regex_error) {
+
+				GLib.error ("Regex failed: %s", regex_error.message);
+			}
+		}
+
+		public void set_hostname (HostsRegex modRegex, string hostname, Models.HostRow host_row) throws InvalidArgument {
+
+			this.validate_host_name (hostname);
+
+			try {
+
+				host_row.row = modRegex.replace (host_row.row, -1, 0, """\g<enabled>\g<ipaddress>\g<divider>""" + hostname);
+				host_row.hostname = hostname;
+				this.save_file ();
+			} catch (RegexError regex_error) {
+
+				GLib.error ("Regex failed: %s", regex_error.message);
+			}
+		}
+
+		private void validate_host_name (string hostname) throws InvalidArgument {
 
 			if (!Regex.match_simple ("^" + Config.hostname_regex_str () + "$", hostname)) {
 
@@ -186,7 +228,7 @@ namespace HostsManager.Services {
 			}
 		}
 
-		public void valide_ip_address (string ipaddress) throws InvalidArgument {
+		private void valide_ip_address (string ipaddress) throws InvalidArgument {
 
 			if (!Regex.match_simple ("^" + Config.ipaddress_regex_str () + "$", ipaddress)) {
 
