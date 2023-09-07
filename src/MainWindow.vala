@@ -84,10 +84,15 @@ namespace HostsManager {
 
 			this.add_controller (shortcut_controller);
 
-			// Search bar entry, handle esc to toggle visibility.
-			this.search_bar.connect_entry (this.search_entry);
-
+			// Search bar entry
 			this.search_toggle_button.bind_property ("active", this.search_bar, "visible");
+			this.search_toggle_button.toggled.connect ((toogle_button) => {
+
+				if(toogle_button.active) {
+					
+					this.search_entry.grab_focus ();
+				}
+			});
 
 
 			// Help overlay
