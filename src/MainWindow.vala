@@ -446,7 +446,6 @@ namespace HostsManager {
 			var iter = Gtk.BitsetIter ();
 
 			if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
-				debug ("handle drop return");
 				return;
 			}
 
@@ -460,14 +459,12 @@ namespace HostsManager {
 				}
 			}
 
-
 			List<uint> items_positions_moved = new List<uint> ();
 			Object[] items_to_move = {};
 			uint position_to_remove;
 			iter.init_first (this.hosts_multi_selection.get_selection (), out position_to_remove);
 			do {
 
-				debug ("position_to_remove: %u", position_to_remove);
 				items_positions_moved.append (position_to_remove);
 				items_to_move += this.hosts_multi_selection.get_item (position_to_remove);
 			} while (iter.next (out position_to_remove));
@@ -492,6 +489,8 @@ namespace HostsManager {
 					this.hosts_list_store.append (temp_list_store.get_item (position_orig));
 				}
 			}
+
+			this.hosts_file_service.save_file ();
 		}
 	}
 }
