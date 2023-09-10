@@ -2,6 +2,8 @@
 	color: red;
 }
 
-/* cell:drop(active) {
-	color: grey;
-} */
+cell:drop(active) {
+	border-bottom-style: solid;
+	border-bottom-width: 3px;
+}
+
