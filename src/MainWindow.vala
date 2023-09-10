@@ -1,4 +1,4 @@
-using Adw;
+	using Adw;
 using Gdk;
 using GLib;
 using Gtk;
@@ -368,7 +368,7 @@ namespace HostsManager {
 		private void signal_host_ip_address_setup_handler (SignalListItemFactory factory, Object object) {
 
 			ListItem list_item = object as ListItem;
-			list_item.set_child (new Widgets.EditableCell (this, this.hosts_file_service));
+			list_item.set_child (new Widgets.EditableCell (this, this.hosts_file_service, list_item));
 		}
 
 		[GtkCallback]
@@ -393,6 +393,7 @@ namespace HostsManager {
 
 				editable_cell.get_parent ().set_visible (visible);
 
+				editable_cell.init_drag_drop ();
 				editable_cell.field_type = Widgets.EditableCell.FieldType.IP_ADDRESS;
 				editable_cell.editable_label.set_text (host_row.ip_address);
 				editable_cell.host_row = host_row;
@@ -421,6 +422,7 @@ namespace HostsManager {
 
 				editable_cell.get_parent ().set_visible (visible);
 
+				editable_cell.init_drag_drop ();
 				editable_cell.field_type = Widgets.EditableCell.FieldType.HOSTNAME;
 				editable_cell.editable_label.set_text (host_row.hostname);
 				editable_cell.host_row = host_row;
@@ -437,42 +439,59 @@ namespace HostsManager {
 			}
 		}
 
-		// Drag & Drop
-		// public void handle_drop (uint drag_item_position, uint drop_item_position) {
+
+		public void handle_drop (uint drag_item_position, uint drop_item_position) {
+
+			uint position;
+			var iter = Gtk.BitsetIter ();
+
+			if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
+				debug ("handle drop return");
+				return;
+			}
 
 
-		// var iter = Gtk.BitsetIter ();
-		// uint position;
-		// uint initial_position = 0;
-		// bool initial_position_init = false;
-		// Object[] host_rows_to_move = {};
+			GLib.ListStore temp_list_store = new GLib.ListStore(typeof(Models.HostRow));
+			for (position = 0; position < this.hosts_list_store.n_items; position++) {
 
-		// debug ("drag_item_position: %u | drop_item_position: %u", drag_item_position, drop_item_position);
-		//// if (!iter.init_first (this.hosts_multi_selection.get_selection (), out position)) {
-		//// debug ("par la");
-		//// return;
-		//// }
+				Object item = this.hosts_list_store.get_item (position);
+				if (item != null) {
+					temp_list_store.append (item);
+				}
+			}
 
-		// iter.init_first (this.hosts_multi_selection.get_selection (), out position);
-		// do {
 
-		// debug ("M - par la");
-		// Models.HostRow host_row = this.hosts_list_store.get_item (position) as Models.HostRow;
-		// if (host_row != null && host_row.row_type == Models.HostRow.RowType.HOST) {
+			List<uint> items_positions_moved = new List<uint> ();
+			Object[] items_to_move = {};
+			uint position_to_remove;
+			iter.init_first (this.hosts_multi_selection.get_selection (), out position_to_remove);
+			do {
 
-		// if (initial_position_init == false) {
+				debug ("position_to_remove: %u", position_to_remove);
+				items_positions_moved.append (position_to_remove);
+				items_to_move += this.hosts_multi_selection.get_item (position_to_remove);
+			} while (iter.next (out position_to_remove));
 
-		// initial_position_init = true;
-		// initial_position = position;
-		// }
+			this.hosts_list_store.remove_all ();
 
-		// host_rows_to_move += host_row;
-		// }
-		// } while (iter.next (out position));
+			for (uint position_orig = 0; position_orig < temp_list_store.n_items; position_orig++) {
 
-		// this.host_row_delete (true);
-		// debug ("drop_item_position: %u | num host_rows_to_move:  %u", drop_item_position, host_rows_to_move.length);
-		// this.hosts_list_store.splice (drop_item_position, 0, host_rows_to_move);
-		// }
+				if (position_orig == drop_item_position) {
+
+					this.hosts_list_store.append (temp_list_store.get_item (position_orig));
+					for (uint idx = 0; idx < items_to_move.length; idx++) {
+						this.hosts_list_store.append (items_to_move[idx]);
+					}
+				}
+				else {
+
+					if(items_positions_moved.index (position_orig) >= 0) {
+						continue;
+					}
+
+					this.hosts_list_store.append (temp_list_store.get_item (position_orig));
+				}
+			}
+		}
 	}
 }
