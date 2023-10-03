@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.13.1 -->
+<!-- Created with Cambalache 0.14.0 -->
 <interface domain="com.github.spo-ijaz.hostsmanager">
   <!-- interface-name app-shortcuts-window.ui -->
-  <requires lib="gtk" version="4.10"/>
+  <requires lib="gtk" version="4.0"/>
   <object class="GtkShortcutsWindow" id="app-shortcuts-window">
     <property name="section-name">shortcuts</property>
     <child>
@@ -32,6 +32,13 @@
               <object class="GtkShortcutsShortcut">
                 <property name="accelerator">&lt;Control&gt;f</property>
                 <property name="title" translatable="yes">Search by hostname</property>
+                <property name="visible">True</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="action-name">win.show-help-overlay</property>
+                <property name="title" translatable="yes">Shortcut list</property>
                 <property name="visible">True</property>
               </object>
             </child>

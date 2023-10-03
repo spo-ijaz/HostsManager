@@ -57,6 +57,15 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.1.1" date="2023-10-03">
+			<description>
+				<p>
+					<ul>
+						<li>You can now drag and drop one or multiple host rows to re-order all your entries.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="4.1.0" date="2023-09-07">
 			<description>
 				<p>

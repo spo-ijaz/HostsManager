@@ -1,4 +1,4 @@
-	using Adw;
+using Adw;
 using Gdk;
 using GLib;
 using Gtk;
@@ -50,10 +50,13 @@ namespace HostsManager {
 		public unowned GLib.ListStore hosts_list_store;
 		[GtkChild]
 		public unowned StringFilter hosts_string_filter;
+		[GtkChild]
+		public unowned ColumnViewColumn host_column_view_column;
 
 
 		private Services.HostsFile hosts_file_service;
 		private GLib.ListStore hosts_list_undo_store;
+		private uint scroll_to = 0;
 
 		construct {
 
@@ -88,8 +91,8 @@ namespace HostsManager {
 			this.search_toggle_button.bind_property ("active", this.search_bar, "visible");
 			this.search_toggle_button.toggled.connect ((toogle_button) => {
 
-				if(toogle_button.active) {
-					
+				if (toogle_button.active) {
+
 					this.search_entry.grab_focus ();
 				}
 			});
@@ -110,7 +113,7 @@ namespace HostsManager {
 
 			// To automatically select the current row
 			// Works but give this error : Gtk-CRITICAL ** gtk_widget_compute_point: assertion 'GTK_IS_WIDGET (widget)' failed
-			// this.hosts_column_view.set_single_click_activate (true);
+			//  this.hosts_column_view.set_single_click_activate (true);
 		}
 
 		public MainWindow (App app) {
@@ -160,7 +163,7 @@ namespace HostsManager {
 		//
 		private void focus_search_bar (SimpleAction action, GLib.Variant? parameter) {
 
-			this.search_toggle_button.set_active(true);
+			this.search_toggle_button.set_active (true);
 		}
 
 		[GtkCallback]
@@ -439,9 +442,10 @@ namespace HostsManager {
 			}
 		}
 
-
 		public void handle_drop (uint drag_item_position, uint drop_item_position) {
 
+			debug ("drag_item_position: %u | drop_item_position: %u | %u", drag_item_position, drop_item_position, this.hosts_list_store.n_items);
+			this.scroll_to = drop_item_position;
 			uint position;
 			var iter = Gtk.BitsetIter ();
 
@@ -450,7 +454,7 @@ namespace HostsManager {
 			}
 
 
-			GLib.ListStore temp_list_store = new GLib.ListStore(typeof(Models.HostRow));
+			GLib.ListStore temp_list_store = new GLib.ListStore (typeof (Models.HostRow));
 			for (position = 0; position < this.hosts_list_store.n_items; position++) {
 
 				Object item = this.hosts_list_store.get_item (position);
@@ -479,15 +483,24 @@ namespace HostsManager {
 					for (uint idx = 0; idx < items_to_move.length; idx++) {
 						this.hosts_list_store.append (items_to_move[idx]);
 					}
-				}
-				else {
+				} else {
 
-					if(items_positions_moved.index (position_orig) >= 0) {
+					if (items_positions_moved.index (position_orig) >= 0) {
 						continue;
 					}
 
 					this.hosts_list_store.append (temp_list_store.get_item (position_orig));
 				}
+			}
+
+			
+
+			if (((Gtk.get_major_version() * 100) + (Gtk.get_minor_version())) >= 412) {
+
+				Timeout.add_once (250, () => {
+					debug ("scroll_to : %u", this.scroll_to);
+					this.hosts_column_view.scroll_to (this.scroll_to, this.host_column_view_column, ListScrollFlags.FOCUS, null);
+				});
 			}
 
 			this.hosts_file_service.save_file ();

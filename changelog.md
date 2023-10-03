@@ -1,3 +1,6 @@
+### 2023-10-03 - Release v4.1.1
+* You can now drag and drop one or multiple host rows to re-order all your entries
+
 ### 2023-09-07 - Release v4.1.0
 * New entries deletion handler fixed. (we can remove, undo one or more entries)
 * Update / deleted issues when filter is activated are fixed.
