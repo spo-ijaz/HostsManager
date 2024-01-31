@@ -2,7 +2,7 @@
 project(
 	'com.github.spo-ijaz.hostsmanager',
 	['vala', 'c'],
-	version: '4.1.0',
+	version: '4.2.0',
 	license: 'MIT License',
 	meson_version: '>= 0.63',
 )
@@ -26,7 +26,7 @@ app_config_h_dir = include_directories('.')
 
 # Dependencies
 adw_dep = dependency('libadwaita-1', version: '>= 1.3')
-gtk4_dep = dependency('gtk4', version: '>= 4.10')
+gtk4_dep = dependency('gtk4', version: '>= 4.12')
 
 # Configuration
 app_conf = configuration_data()

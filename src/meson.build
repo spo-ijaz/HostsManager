@@ -4,8 +4,14 @@ hostsmanager_sources = [
 	'Models/HostRow.vala',
 	'Services/Config.vala',
 	'Services/HostsFile.vala',
-	'Services/HostsRegex.vala',
+	'Services/RegexHostRow.vala',
+	'Services/RegexHostGroupRow.vala',
+	'Services/RegexCommentRow.vala',
+	'Widgets/CommentActionRow.vala',
+	'Widgets/HostActionRow.vala',
 	'Widgets/EditableCell.vala',
+	'Widgets/HostGroupExpanderRow.vala',
+	'Widgets/HostsListBox.vala',
 	resources
 ]
 

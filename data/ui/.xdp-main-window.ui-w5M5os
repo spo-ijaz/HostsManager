@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!-- Created with Cambalache 0.17.0 -->
+<!-- Created with Cambalache 0.16.0 -->
 <interface domain="com.github.spo-ijaz.hostsmanager">
   <!-- interface-name main-window.ui -->
   <requires lib="gtk" version="4.12"/>
@@ -52,27 +52,22 @@
     </child>
     <child>
       <object class="AdwToastOverlay" id="toast_overlay">
-        <property name="accessible-role">generic</property>
         <child>
           <object class="GtkBox" id="box">
-            <property name="accessible-role">generic</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="AdwHeaderBar" id="header_bar">
-                <property name="accessible-role">generic</property>
                 <property name="title-widget">
                   <object class="AdwWindowTitle" id="window_title">
-                    <property name="accessible-role">heading</property>
                     <property name="title">HostsManager</property>
                   </object>
                 </property>
                 <child type="end">
                   <object class="GtkMenuButton" id="menu_button">
                     <property name="accessible-role">button</property>
-                    <property name="icon-name">open-menu-symbolic</property>
+                    <property name="icon-name">open-menu</property>
                     <property name="popover">
                       <object class="GtkPopoverMenu" id="popover_menu">
-                        <property name="accessible-role">generic</property>
                         <property name="cascade-popdown">True</property>
                       </object>
                     </property>
@@ -84,7 +79,7 @@
                     <property name="accessible-role">toggle-button</property>
                     <property name="icon-name">preferences-system-search-symbolic</property>
                     <property name="tooltip-text" translatable="yes">Search by hostname</property>
-                    <signal name="toggled" handler="signal_on_search_toggle_button_toggled"/>
+                    <signal name="toggled" handler="on_search_toggle_button_toggled"/>
                   </object>
                 </child>
                 <child type="end">
@@ -99,10 +94,8 @@
             </child>
             <child>
               <object class="GtkSearchBar" id="search_bar">
-                <property name="accessible-role">search</property>
                 <property name="child">
                   <object class="GtkSearchEntry" id="search_entry">
-                    <property name="accessible-role">search-box</property>
                     <property name="activates-default">True</property>
                   </object>
                 </property>
@@ -112,7 +105,6 @@
             </child>
             <child>
               <object class="GtkScrolledWindow" id="hosts_scrolled_window">
-                <property name="accessible-role">generic</property>
                 <property name="vexpand">True</property>
               </object>
             </child>

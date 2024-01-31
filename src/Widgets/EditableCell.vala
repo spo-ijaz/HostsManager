@@ -33,7 +33,7 @@ namespace HostsManager.Widgets {
 				string previous_hostname = this.host_row.hostname;
 				try {
 
-					Services.HostsRegex regex = new Services.HostsRegex (this.host_row.ip_address, this.host_row.hostname);
+					Services.RegexHostRow regex = new Services.RegexHostRow (this.host_row.ip_address, this.host_row.hostname);
 
 					if (this.field_type == FieldType.HOSTNAME) {
 
