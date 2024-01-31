@@ -23,6 +23,7 @@ namespace HostsManager.Models {
 		public string host_group_name { get; set; }
 		public string comment { get; set; }
 		public string row { get; set; }
+		public ListStore rows_list_store { get; set; }
 
 		public HostRow (RowType row_type, bool enabled, string ip_address, IPVersion ip_version, string hostname, string host_group_name, string comment, uint list_box_row_idx, string row) {
 

@@ -105,51 +105,89 @@ namespace HostsManager.Services {
 				Services.RegexHostRow regex_host_row = new Services.RegexHostRow ();
 				Services.RegexHostGroupRow regex_host_group_row = new Services.RegexHostGroupRow ();
 				Services.RegexCommentRow regex_comment_row = new Services.RegexCommentRow ();
-				string row;
 
-				// We store row by row, nothing more.
-				// It's the HostsListBox widget which is responsible for grouping the host rows.
-				uint num_row = 0;
-				while ((row = data_input_stream.read_line (null)) != null) {
+				bool in_group = false;
+				uint current_in_group_num_row = 0;
+				ListStore current_in_group_rows_list_store = new GLib.ListStore (typeof (Models.HostRow));
 
-					debug ("| row #%u :  %s", num_row, row);
-					Models.HostRow row_model = new Models.HostRow (Models.HostRow.RowType.EMPTY,
-					                                               false,
-					                                               "",
-					                                               Models.HostRow.IPVersion.IPV4,
-					                                               "",
-					                                               "",
-					                                               "",
-					                                               num_row++,
-					                                               row);
+				string current_row;
+				uint current_row_num = 0;
 
-					if (regex_host_row.match (row, 0, out match_info)) {
+				while ((current_row = data_input_stream.read_line (null)) != null) {
 
-						row_model.row_type = Models.HostRow.RowType.HOST;
-						row_model.enabled = match_info.fetch_named ("enabled") != "#";
-						row_model.ip_address = match_info.fetch_named ("ipaddress");
-						row_model.hostname = match_info.fetch_named ("hostname");
-					} else if (regex_host_group_row.match (row, 0, out match_info)) {
+					debug ("| row #%u :  %s", current_row_num, current_row);
+					Models.HostRow host_row = new Models.HostRow (Models.HostRow.RowType.EMPTY,
+					                                              false,
+					                                              "",
+					                                              Models.HostRow.IPVersion.IPV4,
+					                                              "",
+					                                              "",
+					                                              "",
+					                                              current_row_num,
+					                                              current_row);
 
-						row_model.row_type = Models.HostRow.RowType.HOST_GROUP;
-						row_model.host_group_name = match_info.fetch_named ("host_group_name");
-					} else if (regex_comment_row.match (row, 0, out match_info)) {
+					if (regex_host_row.match (host_row.row, 0, out match_info)) {
 
-						row_model.row_type = Models.HostRow.RowType.COMMENT;
-						row_model.comment = match_info.fetch_named ("comment");
+						host_row.row_type = Models.HostRow.RowType.HOST;
+						host_row.enabled = match_info.fetch_named ("enabled") != "#";
+						host_row.ip_address = match_info.fetch_named ("ipaddress");
+						host_row.hostname = match_info.fetch_named ("hostname");
+					} else if (regex_host_group_row.match (current_row, 0, out match_info)) {
+
+						host_row.row_type = Models.HostRow.RowType.HOST_GROUP;
+						host_row.host_group_name = match_info.fetch_named ("host_group_name");
+					} else if (regex_comment_row.match (current_row, 0, out match_info)) {
+
+						host_row.row_type = Models.HostRow.RowType.COMMENT;
+						host_row.comment = match_info.fetch_named ("comment");
 					} else {
 
-						row_model.row_type = Models.HostRow.RowType.EMPTY;
+						host_row.row_type = Models.HostRow.RowType.EMPTY;
 					}
 
-					debug ("|-> row type        : %s", row_model.row_type.to_string ());
-					debug ("|-> ip              : %s", row_model.ip_address);
-					debug ("|-> hostname        : %s", row_model.hostname);
-					debug ("|-> host_group_name : %s", row_model.host_group_name);
-					debug ("|-> comment         : %s", row_model.comment);
-					debug ("------------");
+					// debug ("|-> row type        : %s", host_row.row_type.to_string ());
+					// debug ("|-> ip              : %s", host_row.ip_address);
+					// debug ("|-> hostname        : %s", host_row.hostname);
+					// debug ("|-> host_group_name : %s", host_row.host_group_name);
+					// debug ("|-> comment         : %s", host_row.comment);
 
-					this.rows_list_store.append (row_model);
+					if (host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
+
+						// append to host list store of the current group.
+						if (in_group) {
+
+							Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
+							current_group_host_row.rows_list_store = current_in_group_rows_list_store;
+							// debug ("                    | %s group added ( #%u )", current_group_host_row.row, current_in_group_num_row);
+						}
+
+						in_group = true;
+						current_in_group_rows_list_store = new GLib.ListStore (typeof (Models.HostRow));
+
+						this.rows_list_store.append (host_row);
+						current_in_group_num_row = this.rows_list_store.get_n_items () - 1;
+						// debug ("                    | %s group detected ( #%u )", host_row.row, current_in_group_num_row);
+					} else {
+
+						if (in_group) {
+
+							current_in_group_rows_list_store.append (host_row);
+						} else {
+
+							in_group = false;
+							this.rows_list_store.append (host_row);
+						}
+					}
+
+					current_row_num++;
+					// debug ("------------");
+				}
+
+				// Add latest row / group
+				if (in_group) {
+
+					Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
+					current_group_host_row.rows_list_store = current_in_group_rows_list_store;
 				}
 			} catch (Error e) {
 

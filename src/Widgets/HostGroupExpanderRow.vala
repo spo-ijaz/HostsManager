@@ -10,6 +10,7 @@ namespace HostsManager.Widgets {
         public Models.HostRow host_row { get; construct; }
 
         private Gtk.Button edit_button;
+        private Gtk.Button trash_button;
 
         construct {
 
@@ -17,9 +18,11 @@ namespace HostsManager.Widgets {
 
             this.edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
             this.edit_button.set_has_frame (false);
-
-            // this.add_suffix (this.edit_button);
             this.add_prefix (this.edit_button);
+
+            this.trash_button = new Gtk.Button.from_icon_name ("user-trash-symbolic");
+            this.trash_button.set_has_frame (false);
+            this.add_suffix (this.trash_button);
         }
 
         public HostGroupExpanderRow (MainWindow main_window, Models.HostRow host_row) {

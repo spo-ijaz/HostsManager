@@ -41,10 +41,6 @@ namespace HostsManager {
 		[GtkChild]
 		public unowned ScrolledWindow hosts_scrolled_window;
 		// [GtkChild]
-		// public unowned ColumnView hosts_column_view;
-		// [GtkChild]
-		// public unowned MultiSelection hosts_multi_selection;
-		// [GtkChild]
 		// public unowned FilterListModel hosts_filter_list_model;
 		// [GtkChild]
 		// public unowned GLib.ListStore hosts_list_store;
@@ -90,15 +86,15 @@ namespace HostsManager {
 			this.add_controller (shortcut_controller);
 
 			// Search bar entry
-			// this.search_toggle_button.bind_property ("active", this.search_bar, "visible");
-			// this.search_toggle_button.toggled.connect ((toogle_button) => {
+			this.search_toggle_button.bind_property ("active", this.search_bar, "visible");
+			this.search_toggle_button.toggled.connect ((toogle_button) => {
 
-			// if(toogle_button.active) {
+				if (toogle_button.active) {
 
-			// this.search_entry.grab_focus ();
-			// }
-			// });
-
+					this.search_entry.grab_focus ();
+				}
+			});
+			this.search_entry.search_changed.connect (signal_search_changed_stop_search_handler);
 
 			// Help overlay
 			Builder help_builder = new Builder.from_resource ("/com/github/spo-ijaz/hostsmanager/ui/app-shortcuts-window.ui");
@@ -117,107 +113,6 @@ namespace HostsManager {
 
 			this.hosts_list_box = new Widgets.HostsListBox (this, this.hosts_file_service);
 			this.hosts_scrolled_window.set_child (this.hosts_list_box.list_box);
-			this.hosts_list_box.populate (0, this.hosts_list_box.list_box, false);
-			
-
-			// Gtk.Switch action_row_1_switch = new Gtk.Switch ();
-			// action_row_1_switch.set_valign (Gtk.Align.BASELINE_CENTER);
-			// Gtk.Switch action_row_2_switch = new Gtk.Switch ();
-			// action_row_2_switch.set_valign (Gtk.Align.BASELINE_CENTER);
-
-			// Gtk.Button action_row_1_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
-			// action_row_1_button.set_has_frame (false);
-			// Gtk.Button action_row_2_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
-			// action_row_2_button.set_has_frame (false);
-
-			// Adw.ActionRow action_row_1 = new Adw.ActionRow ();
-			// action_row_1.title = "www.rootdb.fr";
-			// action_row_1.subtitle = "192.168.1.10";
-			// action_row_1.add_prefix (action_row_1_switch);
-			// action_row_1.add_suffix (action_row_1_button);
-
-			// Adw.ActionRow action_row_2 = new Adw.ActionRow ();
-			// action_row_2.title  = "demot.rootdb.fr";
-			// action_row_2.subtitle = "192.168.1.20";
-			// action_row_2.add_prefix (action_row_2_switch);
-			// action_row_2.add_suffix (action_row_2_button);
-
-
-			// Gtk.ListBoxRow list_box_row_entry_1 = new Gtk.ListBoxRow ();
-			// list_box_row_entry_1.set_child (action_row_1);
-
-			// Gtk.ListBoxRow list_box_row_entry_2 = new Gtk.ListBoxRow ();
-			// list_box_row_entry_2.set_child (action_row_2);
-
-			// Gtk.Button button_1 = new Gtk.Button.from_icon_name ("document-edit-symbolic");
-			// button_1.set_has_frame (false);
-
-			// popover_section_edit.set_parent (button_1);
-			////  popover_edit.position = Gtk.PositionType.BOTTOM;
-
-			// button_1.clicked.connect ((button_1) => {
-
-			// popover_section_edit.popup ();
-			// });
-
-
-			// ExpanderRow expander_row_1 = new ExpanderRow ();
-			// expander_row_1.title = "Detected section 1";
-			// expander_row_1.subtitle = "2 entries";
-			// expander_row_1.add_suffix (button_1);
-			// expander_row_1.add_row (list_box_row_entry_1);
-			// expander_row_1.add_row (list_box_row_entry_2);
-
-			// Gtk.ListBoxRow list_box_row_1= new Gtk.ListBoxRow ();
-			// list_box_row_1.set_child (expander_row_1);
-
-
-
-			// ExpanderRow expander_row_2 = new ExpanderRow ();
-			// expander_row_2.title = "Detected section 2";
-			// expander_row_2.subtitle = "no entry";
-
-			// Gtk.ListBoxRow list_box_row_2= new Gtk.ListBoxRow ();
-			// list_box_row_2.set_child (expander_row_2);
-
-			// host_groups_list_box.insert (list_box_row_2, 0);
-
-			// host_groups_list_box.insert (list_box_row_1, 0);
-
-
-
-			// expander_row.
-			// ExpanderRow expander_row = new ExpanderRow ();
-			// expander_row.title = "Titre";
-			// expander_row.subtitle = "Sous-titre";
-
-			// host_groups_list_box = new Gtk.ListBox ();
-
-			// host_groups_list_box.append (expander_row);
-
-
-			// expander_row.
-			// ExpanderRow expander_row2 = new ExpanderRow ();
-			// expander_row2.title = "Titre";
-			// expander_row2.subtitle = "Sous-titre";
-
-			// host_groups_list_box.append (expander_row2);
-
-
-			// SwitchRow switch_row_1 = new SwitchRow ();
-			// switch_row_1.title = "www.rootdb.fr";
-			// switch_row_1.subtitle = "127.0.0.1";
-
-			// expander_row.set_child (switch_row_1);
-
-			// this.host_groups_list_box.set_visible (true);
-			// this.hosts_scrolled_window.set_child (host_groups_list_box);
-			// this.hosts_scrolled_window.set_visible (true);
-
-
-			// To automatically select the current row
-			// Works but give this error : Gtk-CRITICAL ** gtk_widget_compute_point: assertion 'GTK_IS_WIDGET (widget)' failed
-			// this.hosts_column_view.set_single_click_activate (true);
 		}
 
 		public MainWindow (App app) {
@@ -267,14 +162,20 @@ namespace HostsManager {
 		//
 		private void focus_search_bar (SimpleAction action, GLib.Variant? parameter) {
 
-			this.search_toggle_button.set_active (true);
+			if (this.search_toggle_button.active) {
+
+				this.search_toggle_button.set_active (false);
+			} else {
+
+				this.search_toggle_button.set_active (true);
+				this.search_entry.grab_focus ();
+			}
 		}
 
-		// [GtkCallback]
-		// private void signal_search_entry_search_changed_handler () {
+		private void signal_search_changed_stop_search_handler () {
 
-		////  this.hosts_string_filter.set_search (search_entry.text);
-		// }
+			this.hosts_list_box.set_search_entry_text(this.search_entry.text);
+		}
 
 		//
 		// Host row creation / deletion / restoration

@@ -3,16 +3,25 @@ using Gdk;
 
 namespace HostsManager.Widgets {
 
-	class HostsListBox : Gtk.Widget {
+	class HostsListBox : Widget {
 
 		public MainWindow main_window { get; construct; }
 		public Services.HostsFile hosts_file_service  { get; construct; }
-		public Gtk.ListBox list_box { get; construct; }
+		public ListBox list_box { get; construct; }
+
+		private GLib.List<ListBox> group_list_box;
+
+		private string search_entry_text;
 
 		construct {
 
-			this.list_box = new Gtk.ListBox();
-			// this.append(this.list_box);
+			this.group_list_box = new GLib.List<ListBox>();
+
+			this.list_box = new ListBox();
+			this.list_box.bind_model(this.hosts_file_service.rows_list_store, create_widget_func);
+
+			this.search_entry_text = "";
+			this.list_box.set_filter_func(this.filter_list_box);
 		}
 
 		public HostsListBox(MainWindow main_window, Services.HostsFile hosts_file_service) {
@@ -22,104 +31,70 @@ namespace HostsManager.Widgets {
 			);
 		}
 
-		/*
+		public void set_search_entry_text(string search_entry_text) {
 
-		        1. populate (0, this.list_box, false);
+			this.search_entry_text = search_entry_text;
+			this.list_box.invalidate_filter();
+			this.group_list_box.foreach ((list_box) => {
+				list_box.invalidate_filter();
+			});
 
+		}
 
-		        func populate(uint idx, Widget containerWidget, bool inGroup) {
+		private Gtk.Widget create_widget_func(Object item) {
+			
+			Models.HostRow host_row = item as Models.HostRow;
 
-		                for (; idx < list_store.n_items; idx++) {
-
-		                        HostRow row = list_store.get_item(idx)
-
-		                        if row_type = group
-
-		                                if inGroup {
-		                                        this.list_box.append(containerWidget)
-		                                }
-
-		                                populate(idx++, new ExpanderRow, true)
-
-		                        else
-		                                addListBoxRow(row, containerWidget)
-		                                populate(idx++, containerWidget, inGroup);
-
-		                }
-
-
-		        }
-
-
-		        func addListBoxRow(HostRow row, Widget containerWidget) {
-
-		                Widget list_box_row;
-
-		                if row_type = host {
-
-		                        list_box_row = new HostRow (row)
-		                } else if row_type = comment {
-
-		                        list_box_row = new CommentRow (row)
-		                }
-
-		                if widget type of Adw.expanderRow
-		                        (containerWidget as ExpanderRow).add_row(list_box_row)
-		                else
-		                        (containerWidget as ListBox).append(list_box_row)
-		        }
-
-		 */
-
-
-		public void populate(uint idx, Gtk.Widget container_widget, bool in_group) {
-
-			debug("| idx: %u", idx);
-
-			if (this.hosts_file_service.rows_list_store.n_items == idx) {
-
-				this.list_box.append(container_widget);
-				return;
-			}
-
-			Models.HostRow host_row = this.hosts_file_service.rows_list_store.get_item(idx) as Models.HostRow;
 			if (host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
 
-				if (in_group) {
+				// Erreur de segmentation (core dumped) - if not set here
+				this.search_entry_text = "";
 
-					this.list_box.append(container_widget);
-				}
+				Widgets.HostGroupExpanderRow expander_row = new Widgets.HostGroupExpanderRow(this.main_window, host_row);
+				
+				ListBox group_hosts_list_box = new ListBox();
+				group_hosts_list_box.bind_model(host_row.rows_list_store, this.create_widget_func);
+				group_hosts_list_box.set_filter_func(this.filter_list_box);
+				this.group_list_box.append(group_hosts_list_box);
+				
+				expander_row.add_row(group_hosts_list_box);
 
-				populate(++idx, new Widgets.HostGroupExpanderRow(this.main_window, host_row), true);
+				return expander_row;
+
+				//  return  new Widgets.HostGroupExpanderRow(this.main_window, host_row);
+			} 
+			else if (host_row.row_type == Models.HostRow.RowType.HOST) {
+
+				return new Widgets.HostActionRow(this.main_window, host_row);
+			} else  if (host_row.row_type == Models.HostRow.RowType.COMMENT) {
+
+				return new Widgets.CommentActionRow(this.main_window, host_row);
 			} else {
 
-				_addListBoxRow(host_row, container_widget);
-				populate(++idx, container_widget, in_group);
+				return new Gtk.ListBoxRow();
 			}
 		}
 
-		private void _addListBoxRow(Models.HostRow host_row, Gtk.Widget container_widget) {
+		private bool filter_list_box(ListBoxRow list_box_row) {
 
-			Gtk.Widget list_box_row;
+			if (this.search_entry_text.length <= 2) {
 
-			if (host_row.row_type == Models.HostRow.RowType.HOST) {
-
-				this._addToContainerWidget(new Widgets.HostActionRow(this.main_window, host_row), container_widget);
-			} else if (host_row.row_type == Models.HostRow.RowType.COMMENT) {
-
-				this._addToContainerWidget(new Widgets.CommentActionRow(this.main_window, host_row), container_widget);
+				return true;
 			}
-		}
 
-		private void _addToContainerWidget(Gtk.Widget list_box_row, Gtk.Widget container_widget) {
+			Regex search_regexp = new Regex(this.search_entry_text);
 
-			if (container_widget.name == "HostsManagerWidgetsHostGroupExpanderRow") {
+			if (list_box_row.name == "HostsManagerWidgetsHostActionRow") {
 
-				(container_widget as Adw.ExpanderRow).add_row(list_box_row);
-			} else {
+				Widgets.HostActionRow host_action_row = list_box_row as Widgets.HostActionRow;
+				return search_regexp.match(host_action_row.title);
+			} else if (list_box_row.name == "HostsManagerWidgetsCommentActionRow") {
 
-				(container_widget as Gtk.ListBox).append(list_box_row);
+				Widgets.CommentActionRow comment_action_row = list_box_row as Widgets.CommentActionRow;
+				return search_regexp.match(comment_action_row.title);
 			}
+			
+			return true;
 		}
 	}
 }
