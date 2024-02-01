@@ -8,6 +8,7 @@ hostsmanager_sources = [
 	'Services/RegexHostGroupRow.vala',
 	'Services/RegexCommentRow.vala',
 	'Widgets/CommentActionRow.vala',
+	'Widgets/CommentEditMessageDialog.vala',
 	'Widgets/HostActionRow.vala',
 	'Widgets/EditableCell.vala',
 	'Widgets/HostGroupExpanderRow.vala',

@@ -4,23 +4,33 @@ using Gdk;
 
 namespace HostsManager.Widgets {
 
-    class CommentActionRow : Adw.ActionRow  {
+    class CommentActionRow : ActionRow  {
 
         public MainWindow main_window { get; construct; }
         public Models.HostRow host_row { get; construct; }
 
-        private Gtk.Button edit_button;
-        private Gtk.Button trash_button;
+        private Button edit_button;
+        private Button trash_button;
 
         construct {
 
             this.title = host_row.comment;
-
-            this.edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
+            this.edit_button = new Button.from_icon_name ("document-edit-symbolic");
             this.edit_button.set_has_frame (false);
+            this.edit_button.clicked.connect ((edit_button) => {
+
+                Widgets.CommentEditMessageDialog comment_edit_message_dialog = new Widgets.CommentEditMessageDialog (this.main_window, this.host_row);
+                comment_edit_message_dialog.present ();
+                comment_edit_message_dialog.response.connect ((response) => {
+                    if (response == "replace") {
+
+                        this.title = this.host_row.comment;
+                    }
+                });
+            });
             this.add_prefix (edit_button);
 
-            this.trash_button = new Gtk.Button.from_icon_name ("user-trash-symbolic");
+            this.trash_button = new Button.from_icon_name ("user-trash-symbolic");
             this.trash_button.set_has_frame (false);
             this.add_suffix (this.trash_button);
         }
