@@ -253,7 +253,7 @@ namespace HostsManager.Services {
 				this.save_file ();
 			} catch (RegexError regex_error) {
 
-				GLib.error ("Regex failed: %s", regex_error.message);
+				GLib.error ("set_ip_address - regex failed: %s", regex_error.message);
 			}
 		}
 
@@ -268,7 +268,7 @@ namespace HostsManager.Services {
 				this.save_file ();
 			} catch (RegexError regex_error) {
 
-				GLib.error ("Regex failed: %s", regex_error.message);
+				GLib.error ("set_hostname - regex failed: %s", regex_error.message);
 			}
 		}
 
