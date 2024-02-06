@@ -53,7 +53,8 @@ namespace HostsManager {
 
 		private Services.HostsFile hosts_file_service;
 		// private GLib.ListStore hosts_list_undo_store;
-		private GLib.ListStore rows_list_store;
+		//  private GLib.ListStore rows_list_store;
+		private Models.HostListModel rows_list_store;
 		private Widgets.HostsListBox hosts_list_box;
 
 		construct {
@@ -106,7 +107,7 @@ namespace HostsManager {
 
 			// Initiailize the list store
 			// this.hosts_list_undo_store = new GLib.ListStore (typeof (Models.HostRow));
-			this.rows_list_store = new GLib.ListStore (typeof (Models.HostRow));
+			this.rows_list_store = new Models.HostListModel ();
 			this.hosts_file_service = new Services.HostsFile (this, this.rows_list_store);
 			this.hosts_file_service.read_file ();
 

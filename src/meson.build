@@ -1,6 +1,7 @@
 hostsmanager_sources = [
 	'HostsManager.vala',
 	'MainWindow.vala',
+	'Models/HostListModel.vala',
 	'Models/HostRow.vala',
 	'Services/Config.vala',
 	'Services/HostsFile.vala',

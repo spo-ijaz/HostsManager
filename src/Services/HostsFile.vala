@@ -11,7 +11,8 @@ namespace HostsManager.Services {
 	class HostsFile : Object {
 
 		public MainWindow main_window { get; construct; }
-		public ListStore rows_list_store { get; construct; }
+		// public ListStore rows_list_store { get; construct; }
+		public Models.HostListModel rows_list_store { get; construct; }
 
 		private File host_file;
 		private File host_file_bkp;
@@ -48,7 +49,7 @@ namespace HostsManager.Services {
 			// this.read_file ();
 		}
 
-		public HostsFile (HostsManager.MainWindow main_window, ListStore rows_list_store) {
+		public HostsFile (HostsManager.MainWindow main_window, Models.HostListModel rows_list_store) {
 
 			Object (
 			        main_window: main_window,
@@ -107,23 +108,24 @@ namespace HostsManager.Services {
 				Services.RegexCommentRow regex_comment_row = new Services.RegexCommentRow ();
 
 				bool in_group = false;
-				uint current_in_group_num_row = 0;
-				ListStore current_in_group_rows_list_store = new GLib.ListStore (typeof (Models.HostRow));
+				uint current_parent_id = 0;
 
 				string current_row;
+				uint current_id = 0;
 				uint current_row_num = 0;
 
 				while ((current_row = data_input_stream.read_line (null)) != null) {
 
 					debug ("| row #%u :  %s", current_row_num, current_row);
-					Models.HostRow host_row = new Models.HostRow (Models.HostRow.RowType.EMPTY,
+					Models.HostRow host_row = new Models.HostRow (current_id,
+					                                              0,
+					                                              Models.HostRow.RowType.EMPTY,
 					                                              false,
 					                                              "",
 					                                              Models.HostRow.IPVersion.IPV4,
 					                                              "",
 					                                              "",
 					                                              "",
-					                                              current_row_num,
 					                                              current_row);
 
 					if (regex_host_row.match (host_row.row, 0, out match_info)) {
@@ -156,38 +158,39 @@ namespace HostsManager.Services {
 						// append to host list store of the current group.
 						if (in_group) {
 
-							Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
-							current_group_host_row.rows_list_store = current_in_group_rows_list_store;
+							//  Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
+							//  current_group_host_row.rows_list_store = current_in_group_rows_list_store;
 							// debug ("                    | %s group added ( #%u )", current_group_host_row.row, current_in_group_num_row);
 						}
 
 						in_group = true;
-						current_in_group_rows_list_store = new GLib.ListStore (typeof (Models.HostRow));
-
+						current_parent_id = current_id;
 						this.rows_list_store.append (host_row);
-						current_in_group_num_row = this.rows_list_store.get_n_items () - 1;
+						
 						// debug ("                    | %s group detected ( #%u )", host_row.row, current_in_group_num_row);
 					} else {
 
 						if (in_group) {
 
-							current_in_group_rows_list_store.append (host_row);
+							host_row.parent_id = current_parent_id;
 						} else {
 
 							in_group = false;
-							this.rows_list_store.append (host_row);
+							current_parent_id = 0;
 						}
+
+						this.rows_list_store.append (host_row);
 					}
 
-					current_row_num++;
+					current_id++;
 					// debug ("------------");
 				}
 
 				// Add latest row / group
 				if (in_group) {
 
-					Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
-					current_group_host_row.rows_list_store = current_in_group_rows_list_store;
+					//  Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_parent_id) as Models.HostRow;
+					//  current_group_host_row.rows_list_store = current_in_group_rows_list_store;
 				}
 			} catch (Error e) {
 
