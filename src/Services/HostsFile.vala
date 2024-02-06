@@ -116,7 +116,7 @@ namespace HostsManager.Services {
 
 				while ((current_row = data_input_stream.read_line (null)) != null) {
 
-					debug ("| row #%u :  %s", current_row_num, current_row);
+					//  debug ("| row #%u :  %s", current_row_num, current_row);
 					Models.HostRow host_row = new Models.HostRow (current_id,
 					                                              0,
 					                                              Models.HostRow.RowType.EMPTY,
