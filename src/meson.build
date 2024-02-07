@@ -9,11 +9,12 @@ hostsmanager_sources = [
 	'Services/RegexHostRowIpv6.vala',
 	'Services/RegexHostGroupRow.vala',
 	'Services/RegexCommentRow.vala',
+	'Widgets/BaseActionRow.vala',
 	'Widgets/CommentActionRow.vala',
-	'Widgets/CommentEditMessageDialog.vala',
 	'Widgets/HostActionRow.vala',
 	'Widgets/HostGroupExpanderRow.vala',
 	'Widgets/HostsListBox.vala',
+	'Widgets/RowEditMessageDialog.vala',
 	resources
 ]
 

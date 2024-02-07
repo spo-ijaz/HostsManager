@@ -42,12 +42,6 @@
             <property name="trigger">&lt;Control&gt;n</property>
           </object>
         </child>
-        <child>
-          <object class="GtkShortcut">
-            <property name="action">action(win.host-row-undo)</property>
-            <property name="trigger">&lt;Control&gt;z</property>
-          </object>
-        </child>
       </object>
     </child>
     <child>

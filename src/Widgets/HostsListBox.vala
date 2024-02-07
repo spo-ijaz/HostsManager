@@ -55,18 +55,21 @@ namespace HostsManager.Widgets {
 				Widgets.HostGroupExpanderRow host_group_expander_row = new Widgets.HostGroupExpanderRow (this.main_window, host_row);
 				host_group_expander_row.add_controller (hostname_drag_source);
 				host_group_expander_row.expand_button.clicked.connect (() => this.handle_expand_button_clicked (host_group_expander_row));
+				host_group_expander_row.trash_button_clicked.connect (() => this.hosts_file_service.rows_list_store.remove (host_row));
 
 				return host_group_expander_row;
 			} else if (host_row.row_type == Models.HostRow.RowType.HOST) {
 
 				Widgets.HostActionRow host_action_row = new Widgets.HostActionRow (this.main_window, host_row);
 				host_action_row.add_controller (hostname_drag_source);
+				host_action_row.trash_button_clicked.connect (() => this.hosts_file_service.rows_list_store.remove (host_row));
 
 				return host_action_row;
 			} else if (host_row.row_type == Models.HostRow.RowType.COMMENT) {
 
 				Widgets.CommentActionRow comment_action_row = new Widgets.CommentActionRow (this.main_window, host_row);
 				comment_action_row.add_controller (hostname_drag_source);
+				comment_action_row.trash_button_clicked.connect (() => this.hosts_file_service.rows_list_store.remove (host_row));
 
 				return comment_action_row;
 			} else {

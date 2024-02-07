@@ -137,6 +137,27 @@ namespace HostsManager.Models {
 			}
 		}
 
+		public void remove (Models.HostRow host_row) {
+
+			int host_row_index = this.rows.index (host_row);
+
+			this.rows.remove (host_row);
+			this.items_changed (host_row_index, 1, 0);
+
+			if (host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
+
+				this.rows.foreach ((child_host_row) => {
+
+					if (child_host_row.parent_id == host_row.id) {
+
+						int sub_host_row_index = this.rows.index (child_host_row);
+						this.rows.remove (child_host_row);
+						this.items_changed (sub_host_row_index, 1, 0);
+					}
+				});
+			}
+		}
+
 		public void remove_all () {
 
 			this.rows.foreach ((host_row) => {

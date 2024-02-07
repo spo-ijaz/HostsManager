@@ -11,7 +11,6 @@ namespace HostsManager.Services {
 	class HostsFile : Object {
 
 		public MainWindow main_window { get; construct; }
-		// public ListStore rows_list_store { get; construct; }
 		public Models.HostListModel rows_list_store { get; construct; }
 
 		private File host_file;
@@ -121,7 +120,7 @@ namespace HostsManager.Services {
 
 				while ((current_row = data_input_stream.read_line (null)) != null) {
 
-					debug ("| row #%u :  %s", current_id, current_row);
+					//  debug ("| row #%u :  %s", current_id, current_row);
 					Models.HostRow host_row = new Models.HostRow (current_id,
 					                                              0,
 					                                              Models.HostRow.RowType.EMPTY,
@@ -168,11 +167,11 @@ namespace HostsManager.Services {
 						}
 					}
 
-					debug ("|-> row type        : %s", host_row.row_type.to_string ());
-					debug ("|-> ip              : %s", host_row.ip_address);
-					debug ("|-> hostname        : %s", host_row.hostname);
-					debug ("|-> host_group_name : %s", host_row.host_group_name);
-					debug ("|-> comment         : %s", host_row.comment);
+					//  debug ("|-> row type        : %s", host_row.row_type.to_string ());
+					//  debug ("|-> ip              : %s", host_row.ip_address);
+					//  debug ("|-> hostname        : %s", host_row.hostname);
+					//  debug ("|-> host_group_name : %s", host_row.host_group_name);
+					//  debug ("|-> comment         : %s", host_row.comment);
 
 					if (host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
 

@@ -4,29 +4,27 @@ using Gdk;
 
 namespace HostsManager.Widgets {
 
-    class HostGroupExpanderRow : Adw.ActionRow  {
+    class HostGroupExpanderRow : Widgets.BaseActionRow  {
 
-        public MainWindow main_window { get; construct; }
-        public Models.HostRow host_row { get; construct; }
         public Gtk.Button expand_button  { get; construct; }
         public bool expanded;
-
-
-        private Gtk.Button edit_button;
-        private Gtk.Button trash_button;
 
         construct {
 
             this.title = host_row.host_group_name;
             this.expanded = false;
 
-            this.edit_button = new Gtk.Button.from_icon_name ("document-edit-symbolic");
-            this.edit_button.set_has_frame (false);
-            this.add_prefix (this.edit_button);
+            this.edit_button.clicked.connect ((edit_button) => {
 
-            this.trash_button = new Gtk.Button.from_icon_name ("user-trash-symbolic");
-            this.trash_button.set_has_frame (false);
-            this.add_suffix (this.trash_button);
+                Widgets.RowEditMessageDialog comment_edit_message_dialog = new Widgets.RowEditMessageDialog (this.main_window, this.host_row);
+                comment_edit_message_dialog.present ();
+                comment_edit_message_dialog.response.connect ((response) => {
+                    if (response == "replace") {
+
+                        this.title = this.host_row.host_group_name;
+                    }
+                });
+            });
 
             this.expand_button = new Gtk.Button.from_icon_name ("pan-end-symbolic");
             this.expand_button.set_has_frame (false);
