@@ -47,19 +47,8 @@ namespace HostsManager.Widgets {
 			the_value.set_object (host_row);
 
 			ContentProvider content_provider = new ContentProvider.for_value (the_value);
-			hostname_drag_source.drag_begin.connect (() => {
-
-				// For drag & drop support. Without that, DropTarget content can be garraychar, because label contains chars..
-				// this.set_can_target (false);
-			});
 			hostname_drag_source.set_actions (DragAction.MOVE);
 			hostname_drag_source.set_content (content_provider);
-
-
-			// DropTarget hostname_drop_target = new DropTarget (Type.OBJECT, DragAction.MOVE);
-			// hostname_drop_target.drop.connect ((value, x, y) => this.handle_drop (value, x, y));
-
-			// this.list_box.add_controller (hostname_drop_target);
 
 			if (host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
 
@@ -68,7 +57,6 @@ namespace HostsManager.Widgets {
 
 				Widgets.HostGroupExpanderRow host_group_expander_row = new Widgets.HostGroupExpanderRow (this.main_window, host_row);
 				host_group_expander_row.add_controller (hostname_drag_source);
-				// host_group_expander_row.add_controller (hostname_drop_target);
 				host_group_expander_row.expand_button.clicked.connect (() => this.handle_expand_button_clicked (host_group_expander_row));
 
 				return host_group_expander_row;
@@ -76,7 +64,6 @@ namespace HostsManager.Widgets {
 
 				Widgets.HostActionRow host_action_row = new Widgets.HostActionRow (this.main_window, host_row);
 				host_action_row.add_controller (hostname_drag_source);
-				// host_action_row.add_controller (hostname_drop_target);
 
 				return host_action_row;
 			} else if (host_row.row_type == Models.HostRow.RowType.COMMENT) {
@@ -84,14 +71,12 @@ namespace HostsManager.Widgets {
 
 				Widgets.CommentActionRow comment_action_row = new Widgets.CommentActionRow (this.main_window, host_row);
 				comment_action_row.add_controller (hostname_drag_source);
-				// comment_action_row.add_controller (hostname_drop_target);
 
 				return comment_action_row;
 			} else {
 
 				ListBoxRow list_box_row = new ListBoxRow ();
 				list_box_row.add_controller (hostname_drag_source);
-				// list_box_row.add_controller (hostname_drop_target);
 
 				return list_box_row;
 			}

@@ -112,11 +112,10 @@ namespace HostsManager.Services {
 
 				string current_row;
 				uint current_id = 0;
-				uint current_row_num = 0;
 
 				while ((current_row = data_input_stream.read_line (null)) != null) {
 
-					//  debug ("| row #%u :  %s", current_row_num, current_row);
+					debug ("| row #%u :  %s", current_id, current_row);
 					Models.HostRow host_row = new Models.HostRow (current_id,
 					                                              0,
 					                                              Models.HostRow.RowType.EMPTY,
