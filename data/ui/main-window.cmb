@@ -70,6 +70,7 @@
 	(1,117,"AdwToast","timeout","1",None,None,None,None,None,None,None,None,None),
 	(1,119,"AdwSplitButton","icon-name","list-add-symbolic",None,None,None,None,None,None,None,None,None),
 	(1,119,"AdwSplitButton","popover",None,None,None,None,None,120,None,None,None,None),
+	(1,119,"GtkActionable","action-name","win.host-row-add",None,None,None,None,None,None,None,None,None),
 	(1,120,"GtkPopover","cascade-popdown","True",None,None,None,None,None,None,None,None,None)
   </object_property>
   <object_signal>

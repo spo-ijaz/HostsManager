@@ -75,6 +75,7 @@
                 </child>
                 <child type="start">
                   <object class="AdwSplitButton" id="add_row_split_button">
+                    <property name="action-name">win.host-row-add</property>
                     <property name="icon-name">list-add-symbolic</property>
                     <property name="popover">
                       <object class="GtkPopoverMenu" id="popover_add_row_menu">

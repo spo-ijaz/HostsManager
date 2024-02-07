@@ -3,6 +3,8 @@ using Gdk;
 using GLib;
 using Gtk;
 
+//  todo: fix when adding a host group inside empty host group row (there's a margin)
+//  todo: fix when add a comment/action row inside empty host group row
 namespace HostsManager {
 
 	[GtkTemplate (ui = "/com/github/spo-ijaz/hostsmanager/ui/main-window.ui")]
@@ -10,10 +12,10 @@ namespace HostsManager {
 
 		private const ActionEntry[] ACTION_ENTRIES = {
 			{ "focus-search-bar", focus_search_bar },
-			{ "host-row-add", host_row_add },
-			{ "add-host-group-row", host_comment_row_add },
-			{ "add-comment-row", host_group_row_add },
-			{ "host-row-delete", host_row_delete },
+			{ "host-row-add", add_host_row },
+			{ "add-host-group-row", add_hosts_group_row },
+			{ "add-comment-row", add_comment_row },
+			{ "host-row-delete", delete_row },
 			{ "restore-fron-backup", restore_from_backup },
 			{ "show-about", show_about },
 			{ "app-quit", app_quit },
@@ -178,29 +180,59 @@ namespace HostsManager {
 		//
 		// Host row creation / deletion / restoration
 		//
-		private void host_row_add () {
+		private void add_host_row () {
 
-			Models.HostRow host_row = this.get_selected_host_row ();
-			if (host_row == null) {
+			Models.HostRow new_host_row = new Models.HostRow (
+			                                                  this.hosts_file_service.rows_list_store.get_n_items (),
+			                                                  0,
+			                                                  Models.HostRow.RowType.HOST,
+			                                                  true,
+			                                                  "127.0.0.1",
+			                                                  Models.HostRow.IPVersion.IPV4,
+			                                                  "hostname.domaine",
+			                                                  "",
+			                                                  "", "127.0.0.1 hostname.domaine");
+			this.add_new_host_row (new_host_row);
+		}
+
+		private void add_comment_row () {
+
+			Models.HostRow new_host_row = new Models.HostRow (
+			                                                  this.hosts_file_service.rows_list_store.get_n_items (),
+			                                                  0,
+			                                                  Models.HostRow.RowType.COMMENT,
+			                                                  true,
+			                                                  "",
+			                                                  Models.HostRow.IPVersion.IPV4,
+			                                                  "",
+			                                                  "",
+			                                                  "a comment", "# a comment");
+			this.add_new_host_row (new_host_row);
+		}
+
+		private void add_hosts_group_row () {
+
+			Models.HostRow new_host_row = new Models.HostRow (
+			                                                  this.hosts_file_service.rows_list_store.get_n_items (),
+			                                                  0,
+			                                                  Models.HostRow.RowType.HOST_GROUP,
+			                                                  true,
+			                                                  "",
+			                                                  Models.HostRow.IPVersion.IPV4,
+			                                                  "",
+			                                                  "Group name",
+			                                                  "", "## Group name");
+			this.add_new_host_row (new_host_row);
+		}
+
+		private void delete_row () {
+
+			Models.HostRow selected_host_row = this.get_selected_host_row ();
+			if (selected_host_row == null) {
 				return;
 			}
 
-			
-		}
-
-		private void host_comment_row_add () {
-		}
-
-		private void host_group_row_add () {
-		}
-
-		private void host_row_delete () {
-
-			Models.HostRow host_row = this.get_selected_host_row ();
-			if (host_row == null) {
-				return;
-			}
-			this.hosts_file_service.rows_list_store.remove (host_row);
+			this.hosts_file_service.rows_list_store.remove (selected_host_row);
 		}
 
 		[GtkCallback]
@@ -226,6 +258,19 @@ namespace HostsManager {
 			}
 
 			return host_row;
+		}
+
+		private void add_new_host_row (Models.HostRow new_host_row) {
+
+			Models.HostRow selected_host_row = this.get_selected_host_row ();
+
+			if (selected_host_row == null) {
+
+				this.hosts_file_service.rows_list_store.append (new_host_row);
+			} else {
+
+				this.hosts_file_service.rows_list_store.insert_after_position (new_host_row, selected_host_row);
+			}
 		}
 	}
 }

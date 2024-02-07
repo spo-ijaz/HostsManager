@@ -16,6 +16,9 @@ namespace HostsManager.Models {
 		public void append (Models.HostRow host_row) {
 
 			this.rows.append (host_row);
+
+			int host_row_index = this.rows.index (host_row);
+			this.items_changed (host_row_index, 0, 1);
 		}
 
 		public GLib.Object? get_item (uint position) {
