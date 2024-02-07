@@ -58,15 +58,6 @@ namespace HostsManager.Services {
 			);
 		}
 
-		// public void remove (uint index, bool save) {
-
-		//// this.content[index] = null;
-		//// if (save == true) {
-
-		//// this.save_file ();
-		//// }
-		// }
-
 		public void restore (Models.HostRow host_row, bool save = true) {
 
 			// this.content[host_row.previous_position] = host_row.previous_full_row;

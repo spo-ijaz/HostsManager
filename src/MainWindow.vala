@@ -12,7 +12,6 @@ namespace HostsManager {
 			{ "focus-search-bar", focus_search_bar },
 			{ "host-row-add", host_row_add },
 			{ "host-row-delete", host_row_delete },
-			{ "host-row-undo", signal_shortcut_undo_triggered },
 			{ "restore-fron-backup", restore_from_backup },
 			{ "show-about", show_about },
 			{ "app-quit", app_quit },
@@ -24,8 +23,6 @@ namespace HostsManager {
 		public unowned ToastOverlay toast_overlay;
 		[GtkChild]
 		public unowned Toast toast;
-		[GtkChild]
-		public unowned Toast toast_undo;
 		[GtkChild]
 		public unowned ShortcutController shortcut_controller;
 		[GtkChild]
@@ -173,26 +170,22 @@ namespace HostsManager {
 		}
 
 		private void host_row_delete () {
-		}
 
-		private void host_row_delete_undo (bool from_shortcut = false) {
+			Widgets.BaseActionRow action_row = this.hosts_list_box.list_box.get_selected_row () as Widgets.BaseActionRow;
+			if (action_row == null) {
+				return;
+			}
+
+			Models.HostRow host_row = action_row.host_row;
+			if (host_row == null) {
+				return;
+			}
+
+			this.hosts_file_service.rows_list_store.remove (host_row);
 		}
 
 		[GtkCallback]
 		private void signal_on_search_toggle_button_toggled () {
-		}
-
-		private void signal_shortcut_undo_triggered () {
-
-			// will undo only one row at once.
-			this.host_row_delete_undo (true);
-		}
-
-		[GtkCallback]
-		private void signal_toast_undo_button_clicked_handler () {
-
-			// will undo all deleted rows.
-			this.host_row_delete_undo (false);
 		}
 
 		private void restore_from_backup () {

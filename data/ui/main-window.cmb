@@ -24,8 +24,7 @@
 	(1,115,"GtkPopoverMenu","popover_menu",83,None,None,None,None,None),
 	(1,116,"AdwWindowTitle","window_title",82,None,None,None,None,None),
 	(1,117,"AdwToast","toast",None,None,None,None,None,None),
-	(1,118,"GtkCssProvider","css_provider",None,None,None,None,None,None),
-	(1,119,"AdwToast","toast_undo",None,None,None,None,None,None)
+	(1,118,"GtkCssProvider","css_provider",None,None,None,None,None,None)
   </object>
   <object_property>
 	(1,1,"GtkAccessible","accessible-role","window",None,None,None,None,None,None,None,None,None),
@@ -71,13 +70,9 @@
 	(1,115,"GtkPopover","cascade-popdown","True",None,None,None,None,None,None,None,None,None),
 	(1,116,"AdwWindowTitle","title","HostsManager",None,None,None,None,None,None,None,None,None),
 	(1,116,"GtkAccessible","accessible-role","heading",None,None,None,None,None,None,None,None,None),
-	(1,117,"AdwToast","timeout","1",None,None,None,None,None,None,None,None,None),
-	(1,119,"AdwToast","button-label","Undo",None,None,None,None,None,None,None,None,None),
-	(1,119,"AdwToast","timeout","5",None,None,None,None,None,None,None,None,None),
-	(1,119,"AdwToast","title","Entries removed.","True",None,None,None,None,None,None,None,None)
+	(1,117,"AdwToast","timeout","1",None,None,None,None,None,None,None,None,None)
   </object_property>
   <object_signal>
-	(66,1,99,"GtkToggleButton","toggled","signal_on_search_toggle_button_toggled",None,None,None,None,None),
-	(77,1,119,"AdwToast","button-clicked","signal_toast_undo_button_clicked_handler",None,None,None,None,None)
+	(66,1,99,"GtkToggleButton","toggled","signal_on_search_toggle_button_toggled",None,None,None,None,None)
   </object_signal>
 </cambalache-project>

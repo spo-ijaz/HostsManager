@@ -15,6 +15,7 @@ namespace HostsManager.Widgets {
 		construct {
 
 			this.list_box = new ListBox ();
+			this.list_box.set_selection_mode (SelectionMode.SINGLE);
 			this.list_box.bind_model (this.hosts_file_service.rows_list_store, create_widget_func);
 			this.list_box.set_filter_func (this.filter_list_box);
 
