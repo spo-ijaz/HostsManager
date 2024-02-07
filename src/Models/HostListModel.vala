@@ -46,7 +46,7 @@ namespace HostsManager.Models {
 			// If we drop on a hosts group, append the dragged row after this group.
 			if (drop_target_host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
 
-				debug ("[ drop_target_host_row.row_type == Models.HostRow.RowType.HOST_GROUP ]");
+				debug ("> Dropped on a host group row.");
 				Models.HostRow append_after_this_host_row = new Models.HostRow (0, 0, Models.HostRow.RowType.EMPTY, true, "", Models.HostRow.IPVersion.IPV4, "", "", "", "");
 				this.rows.foreach ((host_row) => {
 
@@ -62,21 +62,27 @@ namespace HostsManager.Models {
 			// Handle a comment / action row  drop, or move the main host group row.
 			else if (dragged_source_host_row.row_type != Models.HostRow.RowType.HOST_GROUP) {
 
-				debug ("[ move_host_group || drop_target_host_row.row_type != Models.HostRow.RowType.HOST_GROUP ]");
+				debug ("> Dropped on a comment or action row.");
 
-				this.insert_dragged_source_after_drop_target (dragged_source_host_row, drop_target_host_row);
 
 				// If we drop on a hosts group child row, update the model.
 				if (!ignore_parent_id && drop_target_host_row.parent_id > 0) {
 
-					debug ("[ drop_target_host_row.parent_id > 0 ] drop %u vs drag %u | %s %s %s", drop_target_host_row.parent_id, dragged_source_host_row.parent_id, drop_target_host_row.hostname, drop_target_host_row.host_group_name, drop_target_host_row.comment);
-					dragged_source_host_row.parent_id = drop_target_host_row.id;
+					debug ("> It's a row from a hosts group | parent_id: %u", drop_target_host_row.parent_id);
+					dragged_source_host_row.parent_id = drop_target_host_row.parent_id;
 				}
+				// When a row is dragged-out of hosts group.
+				else {
+
+					dragged_source_host_row.parent_id = 0;
+				}
+
+				this.insert_dragged_source_after_drop_target (dragged_source_host_row, drop_target_host_row);
 			}
 			// If we drag a hosts group, move all childs.
 			else if (dragged_source_host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
 
-				debug ("[ dragged_host_row.row_type == Models.HostRow.RowType.HOST_GROUP ]");
+				debug ("> Moving all rows from hosts group.");
 
 				List<Models.HostRow> host_groups_rows = new List<Models.HostRow> ();
 				this.rows.foreach ((host_row) => {

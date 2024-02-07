@@ -17,6 +17,7 @@ namespace HostsManager.Widgets {
 
             this.title = host_row.hostname;
             this.subtitle = host_row.ip_address;
+            this.margin_start = this.host_row.parent_id > 0 ? 30 : 0;
 
             this.enabled_swtich = new Gtk.Switch ();
             this.enabled_swtich.set_valign (Gtk.Align.BASELINE_CENTER);

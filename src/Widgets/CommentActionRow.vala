@@ -15,6 +15,9 @@ namespace HostsManager.Widgets {
         construct {
 
             this.title = host_row.comment;
+            this.margin_start = this.host_row.parent_id > 0 ? 30 : 0;
+
+
             this.edit_button = new Button.from_icon_name ("document-edit-symbolic");
             this.edit_button.set_has_frame (false);
             this.edit_button.clicked.connect ((edit_button) => {

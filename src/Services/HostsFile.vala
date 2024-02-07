@@ -18,6 +18,9 @@ namespace HostsManager.Services {
 		private File host_file_bkp;
 		private FileMonitor host_file_monitor;
 
+		private const string HOST_GROUP_ROW_START_KEY = "##";
+		private const int HOST_GROUP_ROW_END_LINES = 3;
+
 		construct {
 
 			string host_file_path = Config.hostfile_path ();
@@ -113,6 +116,9 @@ namespace HostsManager.Services {
 				string current_row;
 				uint current_id = 0;
 
+				// If >= self.HOST_GROUP_ROW_END_LINES - it's the end of a hosts group.
+				int num_empty_rows_in_raw = 0;
+
 				while ((current_row = data_input_stream.read_line (null)) != null) {
 
 					debug ("| row #%u :  %s", current_id, current_row);
@@ -129,21 +135,30 @@ namespace HostsManager.Services {
 
 					if (regex_host_row.match (host_row.row, 0, out match_info)) {
 
+						num_empty_rows_in_raw = 0;
 						host_row.row_type = Models.HostRow.RowType.HOST;
 						host_row.enabled = match_info.fetch_named ("enabled") != "#";
 						host_row.ip_address = match_info.fetch_named ("ipaddress");
 						host_row.hostname = match_info.fetch_named ("hostname");
 					} else if (regex_host_group_row.match (current_row, 0, out match_info)) {
 
+						num_empty_rows_in_raw = 0;
 						host_row.row_type = Models.HostRow.RowType.HOST_GROUP;
 						host_row.host_group_name = match_info.fetch_named ("host_group_name");
 					} else if (regex_comment_row.match (current_row, 0, out match_info)) {
 
+						num_empty_rows_in_raw = 0;
 						host_row.row_type = Models.HostRow.RowType.COMMENT;
 						host_row.comment = match_info.fetch_named ("comment");
 					} else {
 
 						host_row.row_type = Models.HostRow.RowType.EMPTY;
+						num_empty_rows_in_raw++;
+
+						if (num_empty_rows_in_raw >= HOST_GROUP_ROW_END_LINES) {
+
+							in_group = false;
+						}
 					}
 
 					// debug ("|-> row type        : %s", host_row.row_type.to_string ());
@@ -157,15 +172,15 @@ namespace HostsManager.Services {
 						// append to host list store of the current group.
 						if (in_group) {
 
-							//  Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
-							//  current_group_host_row.rows_list_store = current_in_group_rows_list_store;
+							// Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
+							// current_group_host_row.rows_list_store = current_in_group_rows_list_store;
 							// debug ("                    | %s group added ( #%u )", current_group_host_row.row, current_in_group_num_row);
 						}
 
 						in_group = true;
 						current_parent_id = current_id;
 						this.rows_list_store.append (host_row);
-						
+
 						// debug ("                    | %s group detected ( #%u )", host_row.row, current_in_group_num_row);
 					} else {
 
@@ -188,8 +203,8 @@ namespace HostsManager.Services {
 				// Add latest row / group
 				if (in_group) {
 
-					//  Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_parent_id) as Models.HostRow;
-					//  current_group_host_row.rows_list_store = current_in_group_rows_list_store;
+					// Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_parent_id) as Models.HostRow;
+					// current_group_host_row.rows_list_store = current_in_group_rows_list_store;
 				}
 			} catch (Error e) {
 
