@@ -41,14 +41,14 @@ namespace HostsManager.Models {
 			// If we drop on a hosts group, append the dragged row after this group if this group is not empty.
 			if (drop_target_host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
 
-				debug ("> Dropped on a host group row.");
+				// debug ("> Dropped on a host group row.");
 				Models.HostRow append_after_this_host_row = new Models.HostRow (0, 0, Models.HostRow.RowType.EMPTY, true, "", Models.HostRow.IPVersion.IPV4, "", "", "", "");
 				int num_hosts_group_childs = 0;
 				this.rows.foreach ((host_row) => {
 
 					if (host_row.parent_id == drop_target_host_row.id) {
 
-						debug ("looping %s %s %s", host_row.hostname, host_row.host_group_name, host_row.comment);
+						// debug ("looping %s %s %s", host_row.hostname, host_row.host_group_name, host_row.comment);
 						append_after_this_host_row = host_row;
 
 						if (host_row.row_type != Models.HostRow.RowType.EMPTY) {
@@ -58,15 +58,14 @@ namespace HostsManager.Models {
 					}
 				});
 
-				debug ("%u", num_hosts_group_childs);
 				if (num_hosts_group_childs > 0) {
 
 					this.insert_after_position (dragged_source_host_row, append_after_this_host_row, true);
 				} else {
 
-					debug ("> inserting into empy hots group.");
+					// debug ("> inserting into empy hots group.");
 					dragged_source_host_row.parent_id = drop_target_host_row.id;
-					this.insert_after_position (dragged_source_host_row, drop_target_host_row, true);
+					this.insert_dragged_source_after_drop_target (dragged_source_host_row, drop_target_host_row);
 				}
 			}
 			// Handle a comment / action row  drop, or move the main host group row.

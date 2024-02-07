@@ -18,7 +18,6 @@ namespace HostsManager.Services {
 		private File host_file_bkp;
 		private FileMonitor host_file_monitor;
 
-		private const string HOST_GROUP_ROW_START_KEY = "##";
 		private const int HOST_GROUP_ROW_END_LINES = 3;
 
 		construct {
@@ -106,7 +105,8 @@ namespace HostsManager.Services {
 				var data_input_stream = new DataInputStream (this.host_file.read ());
 
 				MatchInfo match_info;
-				Services.RegexHostRow regex_host_row = new Services.RegexHostRow ();
+				Services.RegexHostRowIpv4 regex_host_row_ipv4 = new Services.RegexHostRowIpv4 ();
+				Services.RegexHostRowIpv6 regex_host_row_ipv6 = new Services.RegexHostRowIpv6 ();
 				Services.RegexHostGroupRow regex_host_group_row = new Services.RegexHostGroupRow ();
 				Services.RegexCommentRow regex_comment_row = new Services.RegexCommentRow ();
 
@@ -133,7 +133,14 @@ namespace HostsManager.Services {
 					                                              "",
 					                                              current_row);
 
-					if (regex_host_row.match (host_row.row, 0, out match_info)) {
+					if (regex_host_row_ipv4.match (host_row.row, 0, out match_info)) {
+
+						num_empty_rows_in_raw = 0;
+						host_row.row_type = Models.HostRow.RowType.HOST;
+						host_row.enabled = match_info.fetch_named ("enabled") != "#";
+						host_row.ip_address = match_info.fetch_named ("ipaddress");
+						host_row.hostname = match_info.fetch_named ("hostname");
+					} else if (regex_host_row_ipv6.match (host_row.row, 0, out match_info)) {
 
 						num_empty_rows_in_raw = 0;
 						host_row.row_type = Models.HostRow.RowType.HOST;
@@ -161,21 +168,13 @@ namespace HostsManager.Services {
 						}
 					}
 
-					// debug ("|-> row type        : %s", host_row.row_type.to_string ());
-					// debug ("|-> ip              : %s", host_row.ip_address);
-					// debug ("|-> hostname        : %s", host_row.hostname);
-					// debug ("|-> host_group_name : %s", host_row.host_group_name);
-					// debug ("|-> comment         : %s", host_row.comment);
+					debug ("|-> row type        : %s", host_row.row_type.to_string ());
+					debug ("|-> ip              : %s", host_row.ip_address);
+					debug ("|-> hostname        : %s", host_row.hostname);
+					debug ("|-> host_group_name : %s", host_row.host_group_name);
+					debug ("|-> comment         : %s", host_row.comment);
 
 					if (host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
-
-						// append to host list store of the current group.
-						if (in_group) {
-
-							// Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_in_group_num_row) as Models.HostRow;
-							// current_group_host_row.rows_list_store = current_in_group_rows_list_store;
-							// debug ("                    | %s group added ( #%u )", current_group_host_row.row, current_in_group_num_row);
-						}
 
 						in_group = true;
 						current_parent_id = current_id;
@@ -198,13 +197,6 @@ namespace HostsManager.Services {
 
 					current_id++;
 					// debug ("------------");
-				}
-
-				// Add latest row / group
-				if (in_group) {
-
-					// Models.HostRow current_group_host_row = this.rows_list_store.get_item (current_parent_id) as Models.HostRow;
-					// current_group_host_row.rows_list_store = current_in_group_rows_list_store;
 				}
 			} catch (Error e) {
 
@@ -246,7 +238,7 @@ namespace HostsManager.Services {
 			}
 		}
 
-		public void set_enabled (RegexHostRow modRegex, bool active, Models.HostRow host_row) {
+		public void set_enabled (RegexHostRowIpv4 modRegex, bool active, Models.HostRow host_row) {
 
 			try {
 
@@ -259,9 +251,9 @@ namespace HostsManager.Services {
 			}
 		}
 
-		public void set_ip_address (RegexHostRow modRegex, string ip_address, Models.HostRow host_row) throws InvalidArgument {
+		public void set_ip_address (RegexHostRowIpv4 modRegex, string ip_address, Models.HostRow host_row) throws InvalidArgument {
 
-			this.valide_ip_address (ip_address);
+			this.valide_ipv4_address (ip_address);
 
 			try {
 
@@ -274,7 +266,7 @@ namespace HostsManager.Services {
 			}
 		}
 
-		public void set_hostname (RegexHostRow modRegex, string hostname, Models.HostRow host_row) throws InvalidArgument {
+		public void set_hostname (RegexHostRowIpv4 modRegex, string hostname, Models.HostRow host_row) throws InvalidArgument {
 
 			this.validate_host_name (hostname);
 
@@ -297,11 +289,19 @@ namespace HostsManager.Services {
 			}
 		}
 
-		private void valide_ip_address (string ipaddress) throws InvalidArgument {
+		private void valide_ipv4_address (string ipaddress) throws InvalidArgument {
 
-			if (!Regex.match_simple ("^" + Config.ipaddress_regex_str () + "$", ipaddress)) {
+			if (!Regex.match_simple ("^" + Config.ipv4_address_regex_str () + "$", ipaddress)) {
 
-				throw new InvalidArgument.IPADDRESS ("Invalid ip address format");
+				throw new InvalidArgument.IPADDRESS ("Invalid IPv4 address format.");
+			}
+		}
+
+		private void valide_ipv6_address (string ipaddress) throws InvalidArgument {
+
+			if (!Regex.match_simple ("^" + Config.ipv6_address_regex_str () + "$", ipaddress)) {
+
+				throw new InvalidArgument.IPADDRESS ("Invalid IPv6 address format.");
 			}
 		}
 	}
