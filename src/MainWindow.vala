@@ -11,6 +11,8 @@ namespace HostsManager {
 		private const ActionEntry[] ACTION_ENTRIES = {
 			{ "focus-search-bar", focus_search_bar },
 			{ "host-row-add", host_row_add },
+			{ "add-host-group-row", host_comment_row_add },
+			{ "add-comment-row", host_group_row_add },
 			{ "host-row-delete", host_row_delete },
 			{ "restore-fron-backup", restore_from_backup },
 			{ "show-about", show_about },
@@ -29,6 +31,8 @@ namespace HostsManager {
 		public unowned Adw.HeaderBar header_bar;
 		[GtkChild]
 		public unowned PopoverMenu popover_menu;
+		[GtkChild]
+		public unowned PopoverMenu popover_add_row_menu;
 		[GtkChild]
 		public unowned ToggleButton search_toggle_button;
 		[GtkChild]
@@ -60,14 +64,22 @@ namespace HostsManager {
 			// Action, menu, shortcuts...
 			this.add_action_entries (ACTION_ENTRIES, this);
 
-			Menu menu = new Menu ();
-			menu.append (_("Restore from backup file"), "win.restore-fron-backup");
-			menu.append (_("Shortcuts"), "win.show-help-overlay");
-			menu.append (_("About"), "win.show-about");
-			menu.append (_("Quit"), "win.app-quit");
+			Menu main_menu = new Menu ();
+			main_menu.append (_("Restore from backup file"), "win.restore-fron-backup");
+			main_menu.append (_("Shortcuts"), "win.show-help-overlay");
+			main_menu.append (_("About"), "win.show-about");
+			main_menu.append (_("Quit"), "win.app-quit");
 
-			this.popover_menu.set_menu_model (menu);
+			this.popover_menu.set_menu_model (main_menu);
 			this.popover_menu.activate ();
+
+			// Menu to add different type of row...
+			Menu add_row_menu = new Menu ();
+			add_row_menu.append (_("Add a host group row"), "win.add-host-group-row");
+			add_row_menu.append (_("Add a comment row"), "win.add-comment-row");
+
+			this.popover_add_row_menu.set_menu_model (add_row_menu);
+			this.popover_add_row_menu.activate ();
 
 			this.add_controller (shortcut_controller);
 
@@ -167,20 +179,27 @@ namespace HostsManager {
 		// Host row creation / deletion / restoration
 		//
 		private void host_row_add () {
-		}
 
-		private void host_row_delete () {
-
-			Widgets.BaseActionRow action_row = this.hosts_list_box.list_box.get_selected_row () as Widgets.BaseActionRow;
-			if (action_row == null) {
-				return;
-			}
-
-			Models.HostRow host_row = action_row.host_row;
+			Models.HostRow host_row = this.get_selected_host_row ();
 			if (host_row == null) {
 				return;
 			}
 
+			
+		}
+
+		private void host_comment_row_add () {
+		}
+
+		private void host_group_row_add () {
+		}
+
+		private void host_row_delete () {
+
+			Models.HostRow host_row = this.get_selected_host_row ();
+			if (host_row == null) {
+				return;
+			}
 			this.hosts_file_service.rows_list_store.remove (host_row);
 		}
 
@@ -192,6 +211,21 @@ namespace HostsManager {
 
 			// this.hosts_list_undo_store.remove_all ();
 			this.hosts_file_service.restore_from_backup ();
+		}
+
+		private Models.HostRow? get_selected_host_row () {
+
+			Widgets.BaseActionRow action_row = this.hosts_list_box.list_box.get_selected_row () as Widgets.BaseActionRow;
+			if (action_row == null) {
+				return null;
+			}
+
+			Models.HostRow host_row = action_row.host_row;
+			if (host_row == null) {
+				return null;
+			}
+
+			return host_row;
 		}
 	}
 }

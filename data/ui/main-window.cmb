@@ -17,14 +17,15 @@
 	(1,82,"AdwHeaderBar","header_bar",81,None,None,None,None,None),
 	(1,83,"GtkMenuButton","menu_button",82,None,"end",None,None,None),
 	(1,87,"GtkScrolledWindow","hosts_scrolled_window",81,None,None,None,2,None),
-	(1,99,"GtkToggleButton","search_toggle_button",82,None,"end",None,1,None),
-	(1,100,"GtkToggleButton","add_host_row_toggle_button",82,None,"end",None,2,None),
+	(1,99,"GtkToggleButton","search_toggle_button",82,None,"end",None,2,None),
 	(1,113,"GtkSearchBar","search_bar",81,None,None,None,1,None),
 	(1,114,"GtkSearchEntry","search_entry",113,None,None,None,None,None),
 	(1,115,"GtkPopoverMenu","popover_menu",83,None,None,None,None,None),
 	(1,116,"AdwWindowTitle","window_title",82,None,None,None,None,None),
 	(1,117,"AdwToast","toast",None,None,None,None,None,None),
-	(1,118,"GtkCssProvider","css_provider",None,None,None,None,None,None)
+	(1,118,"GtkCssProvider","css_provider",None,None,None,None,None,None),
+	(1,119,"AdwSplitButton","add_row_split_button",82,None,"start",None,1,None),
+	(1,120,"GtkPopoverMenu","popover_add_row_menu",119,None,None,None,-1,None)
   </object>
   <object_property>
 	(1,1,"GtkAccessible","accessible-role","window",None,None,None,None,None,None,None,None,None),
@@ -56,10 +57,6 @@
 	(1,99,"GtkAccessible","accessible-role","toggle-button",None,None,None,None,None,None,None,None,None),
 	(1,99,"GtkButton","icon-name","preferences-system-search-symbolic",None,None,None,None,None,None,None,None,None),
 	(1,99,"GtkWidget","tooltip-text","Search by hostname",1,None,None,None,None,None,None,None,None),
-	(1,100,"GtkAccessible","accessible-role","toggle-button",None,None,None,None,None,None,None,None,None),
-	(1,100,"GtkActionable","action-name","win.host-row-add",None,None,None,None,None,None,None,None,None),
-	(1,100,"GtkButton","icon-name","list-add-symbolic",None,None,None,None,None,None,None,None,None),
-	(1,100,"GtkWidget","tooltip-text","Add a new entry",1,None,None,None,None,None,None,None,None),
 	(1,113,"GtkAccessible","accessible-role","search",None,None,None,None,None,None,None,None,None),
 	(1,113,"GtkSearchBar","child",None,None,None,None,None,114,None,None,None,None),
 	(1,113,"GtkSearchBar","search-mode-enabled","True",None,None,None,None,None,None,None,None,None),
@@ -70,7 +67,10 @@
 	(1,115,"GtkPopover","cascade-popdown","True",None,None,None,None,None,None,None,None,None),
 	(1,116,"AdwWindowTitle","title","HostsManager",None,None,None,None,None,None,None,None,None),
 	(1,116,"GtkAccessible","accessible-role","heading",None,None,None,None,None,None,None,None,None),
-	(1,117,"AdwToast","timeout","1",None,None,None,None,None,None,None,None,None)
+	(1,117,"AdwToast","timeout","1",None,None,None,None,None,None,None,None,None),
+	(1,119,"AdwSplitButton","icon-name","list-add-symbolic",None,None,None,None,None,None,None,None,None),
+	(1,119,"AdwSplitButton","popover",None,None,None,None,None,120,None,None,None,None),
+	(1,120,"GtkPopover","cascade-popdown","True",None,None,None,None,None,None,None,None,None)
   </object_property>
   <object_signal>
 	(66,1,99,"GtkToggleButton","toggled","signal_on_search_toggle_button_toggled",None,None,None,None,None)

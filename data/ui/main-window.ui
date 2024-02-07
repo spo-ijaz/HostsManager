@@ -73,20 +73,22 @@
                     <property name="primary">True</property>
                   </object>
                 </child>
+                <child type="start">
+                  <object class="AdwSplitButton" id="add_row_split_button">
+                    <property name="icon-name">list-add-symbolic</property>
+                    <property name="popover">
+                      <object class="GtkPopoverMenu" id="popover_add_row_menu">
+                        <property name="cascade-popdown">True</property>
+                      </object>
+                    </property>
+                  </object>
+                </child>
                 <child type="end">
                   <object class="GtkToggleButton" id="search_toggle_button">
                     <property name="accessible-role">toggle-button</property>
                     <property name="icon-name">preferences-system-search-symbolic</property>
                     <property name="tooltip-text" translatable="yes">Search by hostname</property>
                     <signal name="toggled" handler="signal_on_search_toggle_button_toggled"/>
-                  </object>
-                </child>
-                <child type="end">
-                  <object class="GtkToggleButton" id="add_host_row_toggle_button">
-                    <property name="accessible-role">toggle-button</property>
-                    <property name="action-name">win.host-row-add</property>
-                    <property name="icon-name">list-add-symbolic</property>
-                    <property name="tooltip-text" translatable="yes">Add a new entry</property>
                   </object>
                 </child>
               </object>
