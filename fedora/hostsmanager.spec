@@ -36,7 +36,7 @@ export VALAFLAGS="-g"
 
 %check
 
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.appdata.xml
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml
 desktop-file-validate %{buildroot}/%{_datadir}/applications/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.desktop
 
 %files
@@ -45,7 +45,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/org.gnome.gitlab.spo
 %{_bindir}/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml
 %{_bindir}/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.app
 %{_datadir}/applications/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.desktop
-%{_datadir}/metainfo/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.appdata.xml
+%{_datadir}/metainfo/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml
 %{_datadir}/polkit-1/actions/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.pkexec.policy
 %{_datadir}/locale/*/LC_MESSAGES/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.mo
 %{_datadir}/icons/hicolor/*/apps/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml*.png
