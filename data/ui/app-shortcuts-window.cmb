@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' standalone='no'?>
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
-<cambalache-project version="0.13.1" target_tk="gtk-4.0">
+<cambalache-project version="0.17.0" target_tk="gtk-4.0">
   <ui>
 	(1,None,"app-shortcuts-window.ui","app-shortcuts-window.ui",None,None,None,None,"com.github.spo-ijaz.hostsmanager",None,None)
   </ui>
@@ -11,8 +11,7 @@
 	(1,4,"GtkShortcutsShortcut",None,3,None,None,None,None,None),
 	(1,5,"GtkShortcutsShortcut",None,3,None,None,None,1,None),
 	(1,6,"GtkShortcutsShortcut",None,3,None,None,None,3,None),
-	(1,7,"GtkShortcutsShortcut",None,3,None,None,None,2,None),
-	(1,8,"GtkShortcutsShortcut",None,3,None,None,None,4,None)
+	(1,7,"GtkShortcutsShortcut",None,3,None,None,None,2,None)
   </object>
   <object_property>
 	(1,1,"GtkShortcutsWindow","section-name","shortcuts",None,None,None,None,None,None,None,None,None),
@@ -32,9 +31,6 @@
 	(1,6,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
 	(1,7,"GtkShortcutsShortcut","accelerator","&lt;Control&gt;f",None,None,None,None,None,None,None,None,None),
 	(1,7,"GtkShortcutsShortcut","title","Search by hostname",1,None,None,None,None,None,None,None,None),
-	(1,7,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None),
-	(1,8,"GtkShortcutsShortcut","action-name","win.show-help-overlay",None,None,None,None,None,None,None,None,None),
-	(1,8,"GtkShortcutsShortcut","title","Shortcut list",1,None,None,None,None,None,None,None,None),
-	(1,8,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None)
+	(1,7,"GtkWidget","visible","True",None,None,None,None,None,None,None,None,None)
   </object_property>
 </cambalache-project>

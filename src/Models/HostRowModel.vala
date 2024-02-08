@@ -1,6 +1,6 @@
 namespace HostsManager.Models {
 
-	class HostRow : Object {
+	class HostRowModel : Object {
 
 		public enum RowType {
 			COMMENT,
@@ -25,7 +25,7 @@ namespace HostsManager.Models {
 		public string comment { get; set; }
 		public string row { get; set; }
 
-		public HostRow (uint id, uint parent_id, RowType row_type, bool enabled, string ip_address, IPVersion ip_version, string hostname, string host_group_name, string comment, string row) {
+		public HostRowModel (uint id, uint parent_id, RowType row_type, bool enabled, string ip_address, IPVersion ip_version, string hostname, string host_group_name, string comment, string row) {
 
 			this.id = id;
 			this.parent_id = parent_id;

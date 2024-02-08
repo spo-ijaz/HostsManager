@@ -7,7 +7,7 @@ namespace HostsManager.Widgets {
 	class RowEditMessageDialog : Adw.MessageDialog  {
 
 		public MainWindow main_window { get; construct; }
-		public Models.HostRow host_row { get; construct; }
+		public Models.HostRowModel host_row { get; construct; }
 
 		private Box box;
 		private Entry entry_text;
@@ -16,10 +16,7 @@ namespace HostsManager.Widgets {
 		construct {
 
 			this.set_modal (true);
-			this.set_size_request (
-			                       this.main_window.get_width () - 50,
-			                       -1
-			);
+			this.set_size_request (this.main_window.get_width () - 50, -1);
 
 			this.set_transient_for (this.main_window);
 
@@ -29,17 +26,17 @@ namespace HostsManager.Widgets {
 
 			switch (this.host_row.row_type) {
 
-			case Models.HostRow.RowType.COMMENT:
+			case Models.HostRowModel.RowType.COMMENT:
 				this.heading = "Update a comment row";
 				this.entry_text.set_text (this.host_row.comment);
 				break;
 
-			case Models.HostRow.RowType.HOST:
+			case Models.HostRowModel.RowType.HOST:
 				this.heading = "Update a host row";
 				this.entry_text.set_text (this.host_row.hostname);
 				break;
 
-			case Models.HostRow.RowType.HOST_GROUP:
+			case Models.HostRowModel.RowType.HOST_GROUP:
 				this.heading = "Update a group name";
 				this.entry_text.set_text (this.host_row.host_group_name);
 				break;
@@ -49,15 +46,15 @@ namespace HostsManager.Widgets {
 
 				switch (this.host_row.row_type) {
 
-					case Models.HostRow.RowType.COMMENT:
+					case Models.HostRowModel.RowType.COMMENT:
 						this.host_row.comment = editable.get_text ();
 						break;
 
-					case Models.HostRow.RowType.HOST:
+					case Models.HostRowModel.RowType.HOST:
 						this.host_row.hostname = editable.get_text ();
 						break;
 
-					case Models.HostRow.RowType.HOST_GROUP:
+					case Models.HostRowModel.RowType.HOST_GROUP:
 						this.host_row.host_group_name = editable.get_text ();
 						break;
 				}
@@ -67,7 +64,7 @@ namespace HostsManager.Widgets {
 			this.box = new Box (Orientation.VERTICAL, 2);
 			this.box.append (this.entry_text);
 
-			if (this.host_row.row_type == Models.HostRow.RowType.HOST) {
+			if (this.host_row.row_type == Models.HostRowModel.RowType.HOST) {
 
 				this.entry_ip = new Entry ();
 				this.entry_ip.set_halign (Align.FILL);
@@ -93,7 +90,7 @@ namespace HostsManager.Widgets {
 			this.set_response_appearance ("replace", Adw.ResponseAppearance.DESTRUCTIVE);
 		}
 
-		public RowEditMessageDialog (MainWindow main_window, Models.HostRow host_row) {
+		public RowEditMessageDialog (MainWindow main_window, Models.HostRowModel host_row) {
 			Object (
 			        main_window: main_window,
 			        host_row: host_row

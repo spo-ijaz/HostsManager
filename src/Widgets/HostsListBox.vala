@@ -6,7 +6,8 @@ namespace HostsManager.Widgets {
 	class HostsListBox : Widget {
 
 		public MainWindow main_window { get; construct; }
-		public Services.HostsFile hosts_file_service  { get; construct; }
+		public Services.HostsFileService hosts_file_service { get; construct; }
+		public Models.HostRowListModel host_row_list_model { get; construct; }
 		public ListBox list_box { get; construct; }
 
 		private string search_entry_text = "";
@@ -16,7 +17,7 @@ namespace HostsManager.Widgets {
 
 			this.list_box = new ListBox ();
 			this.list_box.set_selection_mode (SelectionMode.SINGLE);
-			this.list_box.bind_model (this.hosts_file_service.rows_list_store, create_widget_func);
+			this.list_box.bind_model (this.hosts_file_service.host_row_list_model, create_widget_func);
 			this.list_box.set_filter_func (this.filter_list_box);
 
 			DropTarget hostname_drop_target = new DropTarget (Type.OBJECT, DragAction.MOVE);
@@ -25,7 +26,7 @@ namespace HostsManager.Widgets {
 			this.list_box.add_controller (hostname_drop_target);
 		}
 
-		public HostsListBox (MainWindow main_window, Services.HostsFile hosts_file_service) {
+		public HostsListBox (MainWindow main_window, Services.HostsFileService hosts_file_service) {
 			Object (
 			        main_window: main_window,
 			        hosts_file_service: hosts_file_service
@@ -40,7 +41,7 @@ namespace HostsManager.Widgets {
 
 		public Widget create_widget_func (Object item) {
 
-			Models.HostRow host_row = item as Models.HostRow;
+			Models.HostRowModel host_row = item as Models.HostRowModel;
 
 			DragSource hostname_drag_source = new DragSource ();
 
@@ -51,26 +52,26 @@ namespace HostsManager.Widgets {
 			hostname_drag_source.set_actions (DragAction.MOVE);
 			hostname_drag_source.set_content (content_provider);
 
-			if (host_row.row_type == Models.HostRow.RowType.HOST_GROUP) {
+			if (host_row.row_type == Models.HostRowModel.RowType.HOST_GROUP) {
 
-				Widgets.HostGroupExpanderRow host_group_expander_row = new Widgets.HostGroupExpanderRow (this.main_window, host_row);
+				Widgets.HostGroupExpanderRow host_group_expander_row = new Widgets.HostGroupExpanderRow (this.main_window, host_row, this.hosts_file_service.host_row_list_model);
 				host_group_expander_row.add_controller (hostname_drag_source);
 				host_group_expander_row.expand_button.clicked.connect (() => this.handle_expand_button_clicked (host_group_expander_row));
-				host_group_expander_row.trash_button_clicked.connect (() => this.hosts_file_service.rows_list_store.remove (host_row));
+				host_group_expander_row.trash_button_clicked.connect (() => this.hosts_file_service.host_row_list_model.remove (host_row));
 
 				return host_group_expander_row;
-			} else if (host_row.row_type == Models.HostRow.RowType.HOST) {
+			} else if (host_row.row_type == Models.HostRowModel.RowType.HOST) {
 
-				Widgets.HostActionRow host_action_row = new Widgets.HostActionRow (this.main_window, host_row);
+				Widgets.HostActionRow host_action_row = new Widgets.HostActionRow (this.main_window, host_row, this.hosts_file_service.host_row_list_model);
 				host_action_row.add_controller (hostname_drag_source);
-				host_action_row.trash_button_clicked.connect (() => this.hosts_file_service.rows_list_store.remove (host_row));
+				host_action_row.trash_button_clicked.connect (() => this.hosts_file_service.host_row_list_model.remove (host_row));
 
 				return host_action_row;
-			} else if (host_row.row_type == Models.HostRow.RowType.COMMENT) {
+			} else if (host_row.row_type == Models.HostRowModel.RowType.COMMENT) {
 
-				Widgets.CommentActionRow comment_action_row = new Widgets.CommentActionRow (this.main_window, host_row);
+				Widgets.CommentActionRow comment_action_row = new Widgets.CommentActionRow (this.main_window, host_row, this.hosts_file_service.host_row_list_model);
 				comment_action_row.add_controller (hostname_drag_source);
-				comment_action_row.trash_button_clicked.connect (() => this.hosts_file_service.rows_list_store.remove (host_row));
+				comment_action_row.trash_button_clicked.connect (() => this.hosts_file_service.host_row_list_model.remove (host_row));
 
 				return comment_action_row;
 			} else {
@@ -129,10 +130,10 @@ namespace HostsManager.Widgets {
 
 		private bool handle_drop (Value dropped_item, double x, double y) {
 
-			Models.HostRow dragged_host_row = dropped_item.get_object () as Models.HostRow;
+			Models.HostRowModel dragged_host_row = dropped_item.get_object () as Models.HostRowModel;
 
 			Widget drop_target_widget = this.list_box.get_row_at_y ((int) y);
-			Models.HostRow drop_target_host_row = new Models.HostRow (0, 0, Models.HostRow.RowType.EMPTY, true, "", Models.HostRow.IPVersion.IPV4, "", "", "", "");
+			Models.HostRowModel drop_target_host_row = new Models.HostRowModel (0, 0, Models.HostRowModel.RowType.EMPTY, true, "", Models.HostRowModel.IPVersion.IPV4, "", "", "", "");
 
 			if (drop_target_widget.name == "HostsManagerWidgetsHostActionRow") {
 
@@ -148,7 +149,7 @@ namespace HostsManager.Widgets {
 				drop_target_host_row = host_group_expander_row.host_row;
 			}
 
-			this.hosts_file_service.rows_list_store.insert_after_position (dragged_host_row, drop_target_host_row);
+			this.hosts_file_service.host_row_list_model.insert_after_host_row (dragged_host_row, drop_target_host_row);
 			return true;
 		}
 

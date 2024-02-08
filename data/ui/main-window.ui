@@ -77,11 +77,13 @@
                   <object class="AdwSplitButton" id="add_row_split_button">
                     <property name="action-name">win.host-row-add</property>
                     <property name="icon-name">list-add-symbolic</property>
+                    <property name="label">Add</property>
                     <property name="popover">
                       <object class="GtkPopoverMenu" id="popover_add_row_menu">
                         <property name="cascade-popdown">True</property>
                       </object>
                     </property>
+                    <property name="tooltip-text">Add a host row</property>
                   </object>
                 </child>
                 <child type="end">
@@ -90,6 +92,26 @@
                     <property name="icon-name">preferences-system-search-symbolic</property>
                     <property name="tooltip-text" translatable="yes">Search by hostname</property>
                     <signal name="toggled" handler="signal_on_search_toggle_button_toggled"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="cancel_button">
+                    <property name="accessible-role">button</property>
+                    <property name="action-name">win.restore-from-backup</property>
+                    <property name="icon-name">edit-undo-symbolic</property>
+                    <property name="label">Cancel</property>
+                    <property name="visible">False</property>
+                  </object>
+                </child>
+                <child type="end">
+                  <object class="GtkButton" id="save_button">
+                    <property name="accessible-role">button</property>
+                    <property name="action-name">win.save-changes</property>
+                    <property name="halign">center</property>
+                    <property name="height-request">-2</property>
+                    <property name="icon-name">document-save-symbolic</property>
+                    <property name="label">Save</property>
+                    <property name="visible">False</property>
                   </object>
                 </child>
               </object>
@@ -111,6 +133,9 @@
               <object class="GtkScrolledWindow" id="hosts_scrolled_window">
                 <property name="accessible-role">generic</property>
                 <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkButton"/>
+                </child>
               </object>
             </child>
           </object>

@@ -17,26 +17,51 @@ namespace HostsManager.Widgets {
             this.enabled_swtich = new Gtk.Switch ();
             this.enabled_swtich.set_valign (Gtk.Align.BASELINE_CENTER);
             this.enabled_swtich.set_active (this.host_row.enabled);
+            this.enabled_swtich.state_set.connect ((state_set ) => {
+
+                this.host_row.enabled = state_set;
+                // We don't care about giving the right arguments here, it's just to inform the main windows there is an update.
+                this.host_row_list_model.items_changed (0, 0, 0);
+            });
+
             this.add_prefix (this.enabled_swtich);
 
             this.edit_button.clicked.connect ((edit_button) => {
 
-                Widgets.RowEditMessageDialog comment_edit_message_dialog = new Widgets.RowEditMessageDialog (this.main_window, this.host_row);
+                Widgets.RowEditMessageDialog comment_edit_message_dialog = new Widgets.RowEditMessageDialog (this.main_window, this.host_row_dialog);
                 comment_edit_message_dialog.present ();
                 comment_edit_message_dialog.response.connect ((response) => {
                     if (response == "replace") {
 
-                        this.title = this.host_row.hostname;
-                        this.subtitle = this.host_row.ip_address;
+                        if (this.host_row.hostname != this.host_row_dialog.hostname) {
+
+                            this.title = this.host_row_dialog.hostname;
+                            this.host_row.hostname = this.host_row_dialog.hostname;
+                            // We don't care about giving the right arguments here, it's just to inform the main windows there is an update.
+                            this.host_row_list_model.items_changed (0, 0, 0);
+                        }
+
+                        if (this.host_row.ip_address != this.host_row_dialog.ip_address) {
+
+                            this.subtitle = this.host_row_dialog.ip_address;
+                            this.host_row.ip_address = this.host_row_dialog.ip_address;
+                            // We don't care about giving the right arguments here, it's just to inform the main windows there is an update.
+                            this.host_row_list_model.items_changed (0, 0, 0);
+                        }
+                    } else {
+
+                        this.host_row_dialog.ip_address = this.host_row.ip_address;
+                        this.host_row_dialog.hostname = this.host_row.hostname;
                     }
                 });
             });
         }
 
-        public HostActionRow (MainWindow main_window, Models.HostRow host_row) {
+        public HostActionRow (MainWindow main_window, Models.HostRowModel host_row, Models.HostRowListModel host_row_list_model) {
             Object (
                     main_window: main_window,
-                    host_row: host_row
+                    host_row: host_row,
+                    host_row_list_model: host_row_list_model
             );
         }
     }
