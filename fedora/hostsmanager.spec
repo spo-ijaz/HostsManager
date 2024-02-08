@@ -36,20 +36,20 @@ export VALAFLAGS="-g"
 
 %check
 
-appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/com.github.spo-ijaz.hostsmanager.appdata.xml
-desktop-file-validate %{buildroot}/%{_datadir}/applications/com.github.spo-ijaz.hostsmanager.desktop
+appstream-util validate-relax --nonet %{buildroot}/%{_datadir}/metainfo/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.appdata.xml
+desktop-file-validate %{buildroot}/%{_datadir}/applications/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.desktop
 
 %files
 %doc AUTHORS README.md
 %license COPYING
-%{_bindir}/com.github.spo-ijaz.hostsmanager
-%{_bindir}/com.github.spo-ijaz.hostsmanager.app
-%{_datadir}/applications/com.github.spo-ijaz.hostsmanager.desktop
-%{_datadir}/metainfo/com.github.spo-ijaz.hostsmanager.appdata.xml
-%{_datadir}/polkit-1/actions/com.github.spo-ijaz.hostsmanager.pkexec.policy
-%{_datadir}/locale/*/LC_MESSAGES/com.github.spo-ijaz.hostsmanager.mo
-%{_datadir}/icons/hicolor/*/apps/com.github.spo-ijaz.hostsmanager*.png
-%{_datadir}/icons/hicolor/*/apps/com.github.spo-ijaz.hostsmanager*.svg
+%{_bindir}/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml
+%{_bindir}/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.app
+%{_datadir}/applications/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.desktop
+%{_datadir}/metainfo/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.appdata.xml
+%{_datadir}/polkit-1/actions/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.pkexec.policy
+%{_datadir}/locale/*/LC_MESSAGES/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml.mo
+%{_datadir}/icons/hicolor/*/apps/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml*.png
+%{_datadir}/icons/hicolor/*/apps/org.gnome.gitlab.spo-ijaz.hostsmanager.appdata.xml*.svg
 
 %changelog
 %autochangelog
