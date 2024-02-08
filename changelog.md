@@ -1,3 +1,6 @@
+### 2024-02-08 - Release v4.2.1
+* Fix invalid ui ressource location file.
+
 ### 2024-02-08 - Release v4.2.0
 * Completely new user interface, using Gtk.Listbox, with less bugs.
 * It's now possible to manage group of hosts.

@@ -95,7 +95,7 @@ namespace HostsManager {
 			this.search_entry.search_changed.connect (signal_search_changed_stop_search_handler);
 
 			// Help overlay
-			Builder help_builder = new Builder.from_resource ("/com/github/spo-ijaz/hostsmanager/ui/app-shortcuts-window.ui");
+			Builder help_builder = new Builder.from_resource ("/org/gnome/gitlab/spo-ijaz/hostsmanager/ui/app-shortcuts-window.ui");
 			this.set_help_overlay (help_builder.get_object ("app-shortcuts-window") as ShortcutsWindow);
 
 			// Add,  Save & cancel buttons

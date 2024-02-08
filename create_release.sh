@@ -67,11 +67,11 @@ git push origin "${release_tag}" --force
 
 
 
-echo
-echo "Fetch code from gitlab ( tag: ${release_tag} )..."
-echo
+# echo
+# echo "Fetch code from gitlab ( tag: ${release_tag} )..."
+# echo
 
-git clone --depth 1 --branch ${release_tag} --single-branch https://gitlab.gnome.org/spo-ijaz/HostsManager.git ${release_dir}
+# git clone --depth 1 --branch ${release_tag} --single-branch https://gitlab.gnome.org/spo-ijaz/HostsManager.git ${release_dir}
 
 
 

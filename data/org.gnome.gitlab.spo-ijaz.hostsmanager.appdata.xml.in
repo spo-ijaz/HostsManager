@@ -57,6 +57,15 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.2.1" date="2024-02-08">
+			<description>
+				<p>
+					<ul>
+						<li>* Fix invalid ui ressource location file.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="4.2.0" date="2024-02-08">
 			<description>
 				<p>
