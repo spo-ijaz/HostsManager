@@ -75,39 +75,39 @@ git clone --depth 1 --branch ${release_tag} --single-branch https://gitlab.gnome
 
 
 
-echo
-echo "Create archive..."
-echo
+# echo
+# echo "Create archive..."
+# echo
 
-[[ -f ../${release_archive_name} ]] && rm -f ../${release_archive_name}
-tar -czvf ../${release_archive_name} \
-    -C "${release_dir}" \
-    --exclude="**/build" \
-    --exclude="**/settings-json" \
-    --exclude="**/.idea" \
-    --exclude="**/.vscode"  \
-    .
-
-
-echo
-echo "Create a new release..."
-echo
-
-# For pre-release
-#gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
-#gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -F "${release_note_file}" ${release_tag}
+# [[ -f ../${release_archive_name} ]] && rm -f ../${release_archive_name}
+# tar -czvf ../${release_archive_name} \
+#     -C "${release_dir}" \
+#     --exclude="**/build" \
+#     --exclude="**/settings-json" \
+#     --exclude="**/.idea" \
+#     --exclude="**/.vscode"  \
+#     .
 
 
-echo
-echo "Attach build asset..."
-echo
+# echo
+# echo "Create a new release..."
+# echo
 
-#gh release upload --repo ${github_repo} ${release_tag} ../${release_archive_name}
+# # For pre-release
+# #gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
+# #gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -F "${release_note_file}" ${release_tag}
 
 
-echo
-echo "Cleanup..."
-echo
+# echo
+# echo "Attach build asset..."
+# echo
 
-rm -f ../${release_archive_name}
-rm -f ../${release_dir}}
+# #gh release upload --repo ${github_repo} ${release_tag} ../${release_archive_name}
+
+
+# echo
+# echo "Cleanup..."
+# echo
+
+# rm -f ../${release_archive_name}
+# rm -f ../${release_dir}}
