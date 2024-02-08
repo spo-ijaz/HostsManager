@@ -6,8 +6,7 @@ Release:  %autorelease
 Summary:  Manage your `/etc/hosts` file
 License:  GPL-3.0-or-later
 URL:      https://gitlab.gnome.org/spo-ijaz/HostsManager
-Source0:  https://gitlab.gnome.org/spo-ijaz/HostsManager/archive/refs/tags/%{version}.tar.gz
-
+Source0:  https://gitlab.gnome.org/spo-ijaz/HostsManager/-/archive/HostsManager-%{version}.tar.gz
 
 BuildRequires:  libappstream-glib
 BuildRequires:  desktop-file-utils
