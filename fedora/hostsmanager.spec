@@ -1,12 +1,12 @@
-%global gtk4_version 4.10
+%global gtk4_version 4.12
 
 Name:     hosts-manager
-Version:  4.1.0
+Version:  4.2.0
 Release:  %autorelease
 Summary:  Manage your `/etc/hosts` file
 License:  GPL-3.0-or-later
-URL:      https://github.com/spo-ijaz/HostsManager
-Source0:  https://github.com/spo-ijaz/HostsManager/archive/refs/tags/%{version}.tar.gz
+URL:      https://gitlab.gnome.org/spo-ijaz/HostsManager
+Source0:  https://gitlab.gnome.org/spo-ijaz/HostsManager/archive/refs/tags/%{version}.tar.gz
 
 
 BuildRequires:  libappstream-glib

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.bbuhler.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 19:58+0200\n"
+"POT-Creation-Date: 2024-02-08 16:40+0100\n"
 "PO-Revision-Date: 2018-08-13 13:50+0200\n"
 "Last-Translator: Benjamin Buhler\n"
 "Language-Team: none\n"
@@ -17,39 +17,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: data/ui/main-window.ui:82 data/ui/app-shortcuts-window.ui:34
+#: data/ui/main-window.ui:80
+msgid "Add"
+msgstr ""
+
+#: data/ui/main-window.ui:93 data/ui/app-shortcuts-window.ui:34
 msgid "Search by hostname"
 msgstr ""
 
-#: data/ui/main-window.ui:91 data/ui/app-shortcuts-window.ui:20
-#, fuzzy
-msgid "Add a new entry"
-msgstr "Eintrag hinzufügen"
-
-#: data/ui/main-window.ui:138
-msgid "Enabled"
+#: data/ui/main-window.ui:102
+msgid "Cancel"
 msgstr ""
 
-#: data/ui/main-window.ui:151
-#, fuzzy
-msgid "IP address"
-msgstr "IP Adresse"
-
-#: data/ui/main-window.ui:164
-msgid "Hostname"
-msgstr ""
-
-#: data/ui/main-window.ui:182
-msgid "Undo"
-msgstr ""
-
-#: data/ui/main-window.ui:184
-msgid "Entries removed."
+#: data/ui/main-window.ui:113
+msgid "Save"
 msgstr ""
 
 #: data/ui/app-shortcuts-window.ui:14
 msgid "Overview"
 msgstr ""
+
+#: data/ui/app-shortcuts-window.ui:20
+#, fuzzy
+msgid "Add a new entry"
+msgstr "Eintrag hinzufügen"
 
 #: data/ui/app-shortcuts-window.ui:27
 #, fuzzy
@@ -57,60 +48,85 @@ msgid "Delete selected entries"
 msgstr "Möchtest du den ausgewählten Eintrag löschen?"
 
 #: data/ui/app-shortcuts-window.ui:41
-msgid "Undo deleted entries"
-msgstr ""
-
-#: data/ui/app-shortcuts-window.ui:48
 msgid "Quit this application"
 msgstr ""
 
-#: src/MainWindow.vala:77
+#: src/MainWindow.vala:68
 msgid "Restore from backup file"
 msgstr ""
 
-#: src/MainWindow.vala:78
+#: src/MainWindow.vala:69
 msgid "Shortcuts"
 msgstr ""
 
-#: src/MainWindow.vala:79
+#: src/MainWindow.vala:70
 msgid "About"
 msgstr ""
 
-#: src/MainWindow.vala:80
+#: src/MainWindow.vala:71
 msgid "Quit"
 msgstr ""
 
-#: src/MainWindow.vala:118
-msgid "Host file has changed. Reloaded."
+#: src/MainWindow.vala:78
+msgid "Add a host group row"
 msgstr ""
 
-#: src/MainWindow.vala:138
+#: src/MainWindow.vala:79
+#, fuzzy
+msgid "Add a comment row"
+msgstr "Eintrag hinzufügen"
+
+#: src/MainWindow.vala:149
 msgid "Sébastien PORQUET"
 msgstr ""
 
-#: src/MainWindow.vala:143
+#: src/MainWindow.vala:154
 msgid "© 2018 Benjamin BUHLER"
 msgstr ""
 
-#: src/MainWindow.vala:280
-msgid "No deleted entries to restore."
-msgstr ""
-
-#: src/Services/HostsFile.vala:45
+#: src/Services/HostsFileService.vala:39
 msgid "Host file backup here: "
 msgstr ""
 
-#: src/Services/HostsFile.vala:140
+#: src/Services/HostsFileService.vala:61
+msgid "Host file has changed. Reloaded."
+msgstr ""
+
+#: src/Services/HostsFileService.vala:179
 msgid "Host file restored."
 msgstr ""
 
-#: src/Services/HostsFile.vala:144
+#: src/Services/HostsFileService.vala:183
 msgid "Unable to restore from backup file: "
 msgstr ""
 
-#: src/Services/HostsFile.vala:167
+#: src/Services/HostsFileService.vala:244
 msgid "Host file updated."
 msgstr ""
+
+#: src/Widgets/RowEditMessageDialog.vala:30
+msgid "Update a comment row"
+msgstr ""
+
+#: src/Widgets/RowEditMessageDialog.vala:35
+msgid "Update a host row"
+msgstr ""
+
+#: src/Widgets/RowEditMessageDialog.vala:40
+msgid "Update a group name"
+msgstr ""
+
+#: src/Widgets/RowEditMessageDialog.vala:84
+msgid "cancel"
+msgstr ""
+
+#: src/Widgets/RowEditMessageDialog.vala:86
+msgid "replace"
+msgstr ""
+
+#, fuzzy
+#~ msgid "IP address"
+#~ msgstr "IP Adresse"
 
 #, fuzzy
 #~ msgid "Add a new host"

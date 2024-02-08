@@ -1,3 +1,7 @@
+### 2024-02-08 - Release v4.2.0
+* Completely new user interface, using Gtk.Listbox, with less bugs.
+* It's now possible to manage group of hosts.
+
 ### 2023-09-07 - Release v4.1.0
 * New entries deletion handler fixed. (we can remove, undo one or more entries)
 * Update / deleted issues when filter is activated are fixed.

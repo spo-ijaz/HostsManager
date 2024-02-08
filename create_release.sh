@@ -68,10 +68,10 @@ git push origin "${release_tag}" --force
 
 
 echo
-echo "Fetch code from github ( tag: ${release_tag} )..."
+echo "Fetch code from gitlab ( tag: ${release_tag} )..."
 echo
 
-git clone --depth 1 --branch ${release_tag} --single-branch https://github.com/spo-ijaz/HostsManager.git ${release_dir}
+git clone --depth 1 --branch ${release_tag} --single-branch https://gitlab.gnome.org/spo-ijaz/HostsManager.git ${release_dir}
 
 
 
@@ -95,14 +95,14 @@ echo
 
 # For pre-release
 #gh release create -p -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -n "${release_note}" ${release_tag}
-gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -F "${release_note_file}" ${release_tag}
+#gh release create -t "HostsManager - v${release_tag}" --latest --repo ${github_repo} -F "${release_note_file}" ${release_tag}
 
 
 echo
 echo "Attach build asset..."
 echo
 
-gh release upload --repo ${github_repo} ${release_tag} ../${release_archive_name}
+#gh release upload --repo ${github_repo} ${release_tag} ../${release_archive_name}
 
 
 echo

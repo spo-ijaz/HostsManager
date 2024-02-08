@@ -1,11 +1,6 @@
 using Adw;
 using GLib;
 
-public errordomain InvalidArgument {
-	IPADDRESS,
-	HOSTNAME,
-}
-
 namespace HostsManager.Services {
 
 	class HostsFileService : Object {
@@ -21,7 +16,7 @@ namespace HostsManager.Services {
 
 		construct {
 
-			string host_file_path = Config.hostfile_path ();
+			string host_file_path = ConfigService.hostfile_path ();
 			this.host_file = File.new_for_path (host_file_path);
 			this.host_file_bkp = File.new_for_path (host_file_path + ".bkp");
 
@@ -264,57 +259,5 @@ namespace HostsManager.Services {
 
 			return return_lines;
 		}
-
-		// public void set_enabled (RegexHostRowIpv4 modRegex, bool active, Models.HostRowModel host_row) {
-
-		// try {
-
-		// host_row.row = modRegex.replace (host_row.row, -1, 0, active ? """#\g<row>""" : """\g<row>""");
-		// host_row.enabled = active;
-		// this.save_file ();
-		// } catch (RegexError regex_error) {
-
-		// error ("Regex failed: %s", regex_error.message);
-		// }
-		// }
-
-		// public void set_ip_address (RegexHostRowIpv4 modRegex, string ip_address, Models.HostRowModel host_row) throws InvalidArgument {
-
-		// this.valide_ipv4_address (ip_address);
-
-		// try {
-
-		// host_row.row = modRegex.replace (host_row.row, -1, 0, """\g<enabled>""" + ip_address + """\g<divider>\g<hostname>""");
-		// host_row.ip_address = ip_address;
-		// this.save_file ();
-		// } catch (RegexError regex_error) {
-
-		// GLib.error ("set_ip_address - regex failed: %s", regex_error.message);
-		// }
-		// }
-
-		// private void validate_host_name (string hostname) throws InvalidArgument {
-
-		// if (!Regex.match_simple ("^" + Config.hostname_regex_str () + "$", hostname)) {
-
-		// throw new InvalidArgument.HOSTNAME ("Invalid hostname format");
-		// }
-		// }
-
-		// private void valide_ipv4_address (string ipaddress) throws InvalidArgument {
-
-		// if (!Regex.match_simple ("^" + Config.ipv4_address_regex_str () + "$", ipaddress)) {
-
-		// throw new InvalidArgument.IPADDRESS ("Invalid IPv4 address format.");
-		// }
-		// }
-
-		// private void valide_ipv6_address (string ipaddress) throws InvalidArgument {
-
-		// if (!Regex.match_simple ("^" + Config.ipv6_address_regex_str () + "$", ipaddress)) {
-
-		// throw new InvalidArgument.IPADDRESS ("Invalid IPv6 address format.");
-		// }
-		// }
 	}
 }

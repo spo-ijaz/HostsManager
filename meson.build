@@ -1,10 +1,10 @@
 # Project name and programming language
 project(
-	'com.github.spo-ijaz.hostsmanager',
+	'org.gnome.gitlab.spo-ijaz.hostsmanager',
 	['vala', 'c'],
 	version: '4.2.0',
 	license: 'MIT License',
-	meson_version: '>= 0.63',
+	meson_version: '>= 1.3.0',
 )
 
 gnome = import('gnome')
@@ -17,7 +17,7 @@ add_project_arguments(
 )
 
 # Application ID
-hostsmanager_app_id = 'com.github.spo-ijaz.hostsmanager'
+hostsmanager_app_id = 'org.gnome.gitlab.spo-ijaz.hostsmanager'
 
 
 # Common variables

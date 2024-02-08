@@ -6,8 +6,8 @@ namespace HostsManager.Services {
 
 		public RegexHostRowIpv4 (Value ipaddress_arg = "", Value hostname_arg = "") {
 
-			string ip_v4_address = (string) ipaddress_arg != "" ? Regex.escape_string ((string) ipaddress_arg) : Config.ipv4_address_regex_str ();
-			string hostname = (string) hostname_arg != "" ? Regex.escape_string ((string) hostname_arg) : Config.hostname_regex_str ();
+			string ip_v4_address = (string) ipaddress_arg != "" ? Regex.escape_string ((string) ipaddress_arg) : ConfigService.ipv4_address_regex_str ();
+			string hostname = (string) hostname_arg != "" ? Regex.escape_string ((string) hostname_arg) : ConfigService.hostname_regex_str ();
 
 			try {
 

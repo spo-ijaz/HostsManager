@@ -7,7 +7,7 @@ using Gtk;
 // todo: fix when add a comment/action row inside empty host group row
 namespace HostsManager {
 
-	[GtkTemplate (ui = "/com/github/spo-ijaz/hostsmanager/ui/main-window.ui")]
+	[GtkTemplate (ui = "/org/gnome/gitlab/spo-ijaz/hostsmanager/ui/main-window.ui")]
 	public class MainWindow : Adw.ApplicationWindow {
 
 		private const ActionEntry[] ACTION_ENTRIES = {
@@ -58,7 +58,7 @@ namespace HostsManager {
 			Adw.WindowTitle window_title = this.header_bar.title_widget as Adw.WindowTitle;
 			if (window_title != null) {
 
-				window_title.subtitle = Services.Config.hostfile_path ();
+				window_title.subtitle = Services.ConfigService.hostfile_path ();
 			}
 
 			// Action, menu, shortcuts...
@@ -148,10 +148,10 @@ namespace HostsManager {
 				application_icon = AppConfig.APP_ID,
 				developer_name = _("Sébastien PORQUET"),
 				version = AppConfig.PACKAGE_VERSION,
-				website = "https://github.com/spo-ijaz/HostsManager",
-				issue_url = "https://github.com/spo-ijaz/HostsManager/issues",
+				website = "https://gitlab.gnome.org/spo-ijaz/HostsManager",
+				issue_url = "https://gitlab.gnome.org/spo-ijaz/HostsManager/-/issues",
 				developers = developers,
-				copyright = _("© 2018 Benjamin BUHLER"),
+				copyright = _("© 2024 Sébastien PORQUET"),
 				license_type = Gtk.License.GPL_3_0
 			};
 

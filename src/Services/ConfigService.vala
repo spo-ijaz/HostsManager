@@ -1,6 +1,6 @@
 namespace HostsManager.Services {
 
-	class Config {
+	class ConfigService {
 
 		public static string hostfile_path() {
 
@@ -9,11 +9,9 @@ namespace HostsManager.Services {
 				return Environment.get_home_dir() + "/hosts";
 			}
 
-			return Environment.get_home_dir() + "/hosts";
-			//  return "/etc/hosts";
+			return "/etc/hosts";
 		}
 
-		// '/^(?>(?>([a-f0-9]{1,4})(?>:(?1)){7}|(?!(?:.*[a-f0-9](?>:|$)){8,})((?1)(?>:(?1)){0,6})?::(?2)?)|(?>(?>(?1)(?>:(?1)){5}:|(?!(?:.*[a-f0-9]:){6,})(?3)?::(?>((?1)(?>:(?1)){0,4}):)?)?(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(?>\.(?4)){3}))$/iD'
 		public static string ipv4_address_regex_str() {
 
 			return """[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}""";

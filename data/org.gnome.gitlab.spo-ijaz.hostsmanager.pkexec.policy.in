@@ -4,15 +4,15 @@
  "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
 <policyconfig>
   <vendor>spo-ijaz</vendor>
-  <action id="com.github.spo-ijaz.hostsmanager">
+  <action id="org.gnome.gitlab.spo-ijaz.hostsmanager">
     <message>Authentication is required to save changes in /etc/hosts.</message>
-    <icon_name>com.github.spo-ijaz.hostsmanager</icon_name>
+    <icon_name>org.gnome.gitlab.spo-ijaz.hostsmanager</icon_name>
     <defaults>
       <allow_any>auth_admin</allow_any>
       <allow_inactive>auth_admin</allow_inactive>
       <allow_active>auth_admin</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/com.github.spo-ijaz.hostsmanager.app</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/org.gnome.gitlab.spo-ijaz.hostsmanager.app</annotate>
     <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
   </action>
 </policyconfig>

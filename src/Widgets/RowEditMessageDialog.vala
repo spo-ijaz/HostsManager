@@ -27,17 +27,17 @@ namespace HostsManager.Widgets {
 			switch (this.host_row.row_type) {
 
 			case Models.HostRowModel.RowType.COMMENT:
-				this.heading = "Update a comment row";
+				this.heading = _("Update a comment row");
 				this.entry_text.set_text (this.host_row.comment);
 				break;
 
 			case Models.HostRowModel.RowType.HOST:
-				this.heading = "Update a host row";
+				this.heading = _("Update a host row");
 				this.entry_text.set_text (this.host_row.hostname);
 				break;
 
 			case Models.HostRowModel.RowType.HOST_GROUP:
-				this.heading = "Update a group name";
+				this.heading = _("Update a group name");
 				this.entry_text.set_text (this.host_row.host_group_name);
 				break;
 			}
@@ -82,9 +82,9 @@ namespace HostsManager.Widgets {
 
 			this.add_responses (
 			                    "cancel",
-			                    "_cancel",
+			                    _("cancel"),
 			                    "replace",
-			                    "_replace"
+			                    _("replace")
 			);
 
 			this.set_response_appearance ("replace", Adw.ResponseAppearance.DESTRUCTIVE);

@@ -8,12 +8,12 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4405"
+   height="48"
+   width="48"
    version="1.1"
-   id="svg4332"
-   height="64px"
-   width="64px"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="com.github.bbuhler.hostsmanager.svg"
+   sodipodi:docname="org.gnome.gitlab.bbuhler.hostsmanager.svg"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <sodipodi:namedview
@@ -27,542 +27,538 @@
      inkscape:pageshadow="2"
      inkscape:window-width="1600"
      inkscape:window-height="837"
-     id="namedview46"
+     id="namedview45"
      showgrid="false"
-     inkscape:zoom="8"
-     inkscape:cx="50.038399"
-     inkscape:cy="33.514475"
+     inkscape:zoom="9.8333333"
+     inkscape:cx="29.819774"
+     inkscape:cy="24.81689"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg4332">
-    <inkscape:grid
-       type="xygrid"
-       id="grid4203" />
-  </sodipodi:namedview>
+     inkscape:current-layer="svg4405" />
   <defs
-     id="defs4334">
+     id="defs4407">
     <linearGradient
-       x1="38.856056"
-       y1="26.320496"
-       x2="38.856056"
-       y2="32.521935"
-       id="linearGradient4225-5"
-       xlink:href="#linearGradient4213-9"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.99215968,0,0,-0.9932415,0.25417006,63.794031)" />
-    <linearGradient
-       id="linearGradient4213-9">
+       id="linearGradient4187">
       <stop
-         id="stop4215-4"
-         style="stop-color:#000000;stop-opacity:1"
-         offset="0" />
-      <stop
-         id="stop4217-1"
-         style="stop-color:#000000;stop-opacity:0"
-         offset="1" />
-    </linearGradient>
-    <linearGradient
-       y2="42.091705"
-       x2="23.99999"
-       y1="5.9093657"
-       x1="23.99999"
-       gradientTransform="matrix(1.4324324,0,0,1.4362832,-2.3783747,-2.4707827)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient3904"
-       xlink:href="#linearGradient4270" />
-    <linearGradient
-       id="linearGradient4270">
-      <stop
-         id="stop4272"
+         offset="0"
          style="stop-color:#ffffff;stop-opacity:1"
-         offset="0" />
+         id="stop4189" />
       <stop
-         id="stop4274"
+         offset="0.02099473"
          style="stop-color:#ffffff;stop-opacity:0.23529412"
-         offset="0.0348749" />
+         id="stop4191" />
       <stop
-         id="stop4276"
+         offset="0.97696"
          style="stop-color:#ffffff;stop-opacity:0.15686275"
-         offset="0.96216321" />
+         id="stop4193" />
       <stop
-         id="stop4278"
+         offset="1"
          style="stop-color:#ffffff;stop-opacity:0.39215687"
-         offset="1" />
+         id="stop4195" />
     </linearGradient>
-    <radialGradient
-       r="12.671875"
-       fy="9.9571075"
-       fx="6.2001843"
-       cy="9.9571075"
-       cx="6.7304144"
-       gradientTransform="matrix(0,13.393984,-16.443533,0,196.90205,-114.89368)"
-       gradientUnits="userSpaceOnUse"
-       id="radialGradient4147"
-       xlink:href="#linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-8-3-3-6-4-8-8-8-5" />
     <linearGradient
-       id="linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-8-3-3-6-4-8-8-8-5">
+       id="linearGradient4311">
       <stop
-         id="stop3750-1-0-7-6-6-1-3-9-3"
-         style="stop-color:#919caf;stop-opacity:1;"
-         offset="0" />
+         offset="0"
+         style="stop-color:#000000;stop-opacity:1"
+         id="stop4313" />
       <stop
-         id="stop3752-3-7-4-0-32-8-923-0-7"
-         style="stop-color:#68758e;stop-opacity:1;"
-         offset="0.26238" />
-      <stop
-         id="stop3754-1-8-5-2-7-6-7-1-9"
-         style="stop-color:#485a6c;stop-opacity:1;"
-         offset="0.704952" />
-      <stop
-         id="stop3756-1-6-2-6-6-1-96-6-0"
-         style="stop-color:#444c5c;stop-opacity:1;"
-         offset="1" />
+         offset="1"
+         style="stop-color:#000000;stop-opacity:0"
+         id="stop4315" />
     </linearGradient>
     <radialGradient
        gradientTransform="matrix(2.003784,0,0,1.4,27.98813,-17.4)"
        gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient3688-166-749-654"
-       id="radialGradient2873-966-168-714"
+       xlink:href="#linearGradient3688-166-749-2-324"
+       id="radialGradient3013-896"
        fy="43.5"
        fx="4.9929786"
        r="2.5"
        cy="43.5"
        cx="4.9929786" />
     <linearGradient
-       id="linearGradient3688-166-749-654">
+       id="linearGradient3688-166-749-2-324">
       <stop
          offset="0"
          style="stop-color:#181818;stop-opacity:1"
-         id="stop3088" />
+         id="stop3216" />
       <stop
          offset="1"
          style="stop-color:#181818;stop-opacity:0"
-         id="stop3090" />
+         id="stop3218" />
     </linearGradient>
     <radialGradient
        gradientTransform="matrix(2.003784,0,0,1.4,-20.01187,-104.4)"
        gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient3688-464-309-604"
-       id="radialGradient2875-742-326-419"
+       xlink:href="#linearGradient3688-464-309-8-331"
+       id="radialGradient3015-826"
        fy="43.5"
        fx="4.9929786"
        r="2.5"
        cy="43.5"
        cx="4.9929786" />
     <linearGradient
-       id="linearGradient3688-464-309-604">
+       id="linearGradient3688-464-309-8-331">
       <stop
          offset="0"
          style="stop-color:#181818;stop-opacity:1"
-         id="stop3094" />
+         id="stop3222" />
       <stop
          offset="1"
          style="stop-color:#181818;stop-opacity:0"
-         id="stop3096" />
+         id="stop3224" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3702-501-757-6-946">
+      <stop
+         offset="0"
+         style="stop-color:#181818;stop-opacity:0"
+         id="stop3228" />
+      <stop
+         offset="0.5"
+         style="stop-color:#181818;stop-opacity:1"
+         id="stop3230" />
+      <stop
+         offset="1"
+         style="stop-color:#181818;stop-opacity:0"
+         id="stop3232" />
     </linearGradient>
     <linearGradient
        gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient3702-501-757-795"
-       id="linearGradient2877-634-617-908"
+       xlink:href="#linearGradient3702-501-757-6-946"
+       id="linearGradient4395"
        y2="39.999443"
        x2="25.058096"
        y1="47.027729"
        x1="25.058096" />
     <linearGradient
-       id="linearGradient3702-501-757-795">
+       id="linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-8-3-3-6-4-8-8-8-5">
       <stop
          offset="0"
-         style="stop-color:#181818;stop-opacity:0"
-         id="stop3100" />
+         style="stop-color:#919caf;stop-opacity:1"
+         id="stop3750-1-0-7-6-6-1-3-9-3" />
       <stop
-         offset="0.5"
-         style="stop-color:#181818;stop-opacity:1"
-         id="stop3102" />
+         offset="0.26238"
+         style="stop-color:#68758e;stop-opacity:1"
+         id="stop3752-3-7-4-0-32-8-923-0-7" />
+      <stop
+         offset="0.704952"
+         style="stop-color:#485a6c;stop-opacity:1"
+         id="stop3754-1-8-5-2-7-6-7-1-9" />
       <stop
          offset="1"
-         style="stop-color:#181818;stop-opacity:0"
-         id="stop3104" />
+         style="stop-color:#444c5c;stop-opacity:1"
+         id="stop3756-1-6-2-6-6-1-96-6-0" />
     </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(1.0521608,0,0,-1.0532519,-1.2521612,51.339874)"
+       gradientUnits="userSpaceOnUse"
+       xlink:href="#linearGradient4311"
+       id="linearGradient3143"
+       y2="25.361452"
+       x2="30.212982"
+       y1="21.416878"
+       x1="30.212982" />
+    <linearGradient
+       gradientTransform="translate(1.17e-5,1.00001)"
+       gradientUnits="userSpaceOnUse"
+       xlink:href="#linearGradient4187"
+       id="linearGradient3153"
+       y2="41.890972"
+       x2="23.99999"
+       y1="6.1111298"
+       x1="23.99999" />
+    <radialGradient
+       gradientTransform="matrix(0,9.4975523,-11.65996,0,140.93055,-79.160972)"
+       gradientUnits="userSpaceOnUse"
+       xlink:href="#linearGradient2867-449-88-871-390-598-476-591-434-148-57-177-8-3-3-6-4-8-8-8-5"
+       id="radialGradient4144"
+       fy="9.9571075"
+       fx="6.2001843"
+       r="12.671875"
+       cy="9.9571075"
+       cx="6.7304144" />
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3374">
+       id="filter3373">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3376" />
+         id="feComposite3375" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3378" />
+         id="feColorMatrix3377" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3380" />
+         id="feFlood3379" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3382" />
+         id="feBlend3381" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3384" />
+         id="feBlend3383" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3386" />
+         id="feColorMatrix3385" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3388" />
+         id="feComposite3387" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3390">
+       id="filter3389">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3392" />
+         id="feComposite3391" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3394" />
+         id="feColorMatrix3393" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3396" />
+         id="feFlood3395" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3398" />
+         id="feBlend3397" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3400" />
+         id="feBlend3399" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3402" />
+         id="feColorMatrix3401" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3404" />
+         id="feComposite3403" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3406">
+       id="filter3405">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3408" />
+         id="feComposite3407" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3410" />
+         id="feColorMatrix3409" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3412" />
+         id="feFlood3411" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3414" />
+         id="feBlend3413" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3416" />
+         id="feBlend3415" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3418" />
+         id="feColorMatrix3417" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3420" />
+         id="feComposite3419" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3422">
+       id="filter3421">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3424" />
+         id="feComposite3423" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3426" />
+         id="feColorMatrix3425" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3428" />
+         id="feFlood3427" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3430" />
+         id="feBlend3429" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3432" />
+         id="feBlend3431" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3434" />
+         id="feColorMatrix3433" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3436" />
+         id="feComposite3435" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3438">
+       id="filter3437">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3440" />
+         id="feComposite3439" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3442" />
+         id="feColorMatrix3441" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3444" />
+         id="feFlood3443" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3446" />
+         id="feBlend3445" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3448" />
+         id="feBlend3447" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3450" />
+         id="feColorMatrix3449" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3452" />
+         id="feComposite3451" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3454">
+       id="filter3453">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3456" />
+         id="feComposite3455" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3458" />
+         id="feColorMatrix3457" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3460" />
+         id="feFlood3459" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3462" />
+         id="feBlend3461" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3464" />
+         id="feBlend3463" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3466" />
+         id="feColorMatrix3465" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3468" />
+         id="feComposite3467" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3470">
+       id="filter3469">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3472" />
+         id="feComposite3471" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3474" />
+         id="feColorMatrix3473" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3476" />
+         id="feFlood3475" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3478" />
+         id="feBlend3477" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3480" />
+         id="feBlend3479" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3482" />
+         id="feColorMatrix3481" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3484" />
+         id="feComposite3483" />
     </filter>
     <filter
        style="color-interpolation-filters:sRGB;"
        inkscape:label="Colorize"
-       id="filter3486">
+       id="filter3485">
       <feComposite
          in2="SourceGraphic"
          operator="arithmetic"
          k1="0"
          k2="1"
          result="composite1"
-         id="feComposite3488" />
+         id="feComposite3487" />
       <feColorMatrix
          in="composite1"
          values="1"
          type="saturate"
          result="colormatrix1"
-         id="feColorMatrix3490" />
+         id="feColorMatrix3489" />
       <feFlood
          flood-opacity="0.854902"
          flood-color="rgb(23,141,46)"
          result="flood1"
-         id="feFlood3492" />
+         id="feFlood3491" />
       <feBlend
          in="flood1"
          in2="colormatrix1"
          mode="multiply"
          result="blend1"
-         id="feBlend3494" />
+         id="feBlend3493" />
       <feBlend
          in2="blend1"
          mode="screen"
          result="blend2"
-         id="feBlend3496" />
+         id="feBlend3495" />
       <feColorMatrix
          in="blend2"
          values="1"
          type="saturate"
          result="colormatrix2"
-         id="feColorMatrix3498" />
+         id="feColorMatrix3497" />
       <feComposite
          in="colormatrix2"
          in2="SourceGraphic"
          operator="in"
          k2="1"
          result="composite2"
-         id="feComposite3500" />
+         id="feComposite3499" />
     </filter>
   </defs>
   <metadata
-     id="metadata4337">
+     id="metadata4410">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -574,65 +570,65 @@
     </rdf:RDF>
   </metadata>
   <g
-     style="display:inline;filter:url(#filter3374)"
-     id="g2036"
-     transform="matrix(1.5000021,0,0,0.5555561,-4.0000114,35.888881)">
-    <g
-       style="opacity:0.4"
-       id="g3712"
-       transform="matrix(1.052632,0,0,1.285713,-1.263158,-13.42854)">
-      <rect
-         style="fill:url(#radialGradient2873-966-168-714);fill-opacity:1;stroke:none"
-         id="rect2801"
-         y="40"
-         x="38"
-         height="7"
-         width="5" />
-      <rect
-         style="fill:url(#radialGradient2875-742-326-419);fill-opacity:1;stroke:none"
-         id="rect3696"
-         transform="scale(-1,-1)"
-         y="-47"
-         x="-10"
-         height="7"
-         width="5" />
-      <rect
-         style="fill:url(#linearGradient2877-634-617-908);fill-opacity:1;stroke:none"
-         id="rect3700"
-         y="40"
-         x="10"
-         height="7.0000005"
-         width="28" />
-    </g>
+     style="opacity:0.4;filter:url(#filter3373)"
+     id="g3712-0"
+     transform="matrix(1.1578952,0,0,0.57142859,-3.789476,19.142856)">
+    <rect
+       style="fill:url(#radialGradient3013-896);fill-opacity:1;stroke:none"
+       id="rect2801-4"
+       y="40"
+       x="38"
+       height="7"
+       width="5" />
+    <rect
+       style="fill:url(#radialGradient3015-826);fill-opacity:1;stroke:none"
+       id="rect3696-8"
+       transform="scale(-1,-1)"
+       y="-47"
+       x="-10"
+       height="7"
+       width="5" />
+    <rect
+       style="fill:url(#linearGradient4395);fill-opacity:1;stroke:none"
+       id="rect3700-7"
+       y="40"
+       x="10"
+       height="7.0000005"
+       width="28" />
   </g>
   <rect
-     width="55"
-     height="55"
-     rx="3"
-     ry="3"
-     x="4.5"
-     y="4.5"
-     id="rect5505-21-3-8-5-2-9"
-     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient4147);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.99999994;marker:none;enable-background:accumulate;filter:url(#filter3390)" />
-  <rect
-     style="opacity:0.3;fill:none;stroke:url(#linearGradient3904);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter3406)"
-     id="rect6741"
-     y="5.428761"
-     x="5.5"
+     style="color:#000000;fill:url(#radialGradient4144);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.99999994;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;filter:url(#filter3389)"
+     id="rect5505-21"
+     y="5.5"
+     x="4.5000067"
      ry="2"
      rx="2"
-     height="53.142479"
-     width="53" />
+     height="39"
+     width="39" />
   <rect
-     style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.5;fill:none;stroke:#1c2c38;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate;filter:url(#filter3422)"
-     id="rect5505-21-9"
-     y="4.5"
-     x="4.5"
-     ry="3"
-     rx="3"
-     height="55"
-     width="55" />
+     style="opacity:0.3;fill:none;stroke:url(#linearGradient3153);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;filter:url(#filter3405)"
+     id="rect6741-1"
+     y="6.5"
+     x="5.5000081"
+     ry="1"
+     rx="1"
+     height="37"
+     width="37" />
+  <rect
+     style="opacity:0.5;color:#000000;fill:none;stroke:#1c2c38;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;filter:url(#filter3421)"
+     id="rect5505-21-6"
+     y="5.5"
+     x="4.5000081"
+     ry="2"
+     rx="2"
+     height="39"
+     width="39" />
+  <path
+     style="display:inline;overflow:visible;visibility:visible;opacity:0.05;fill:none;stroke:url(#linearGradient3143);stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker:none;enable-background:accumulate;filter:url(#filter3469)"
+     id="path4309"
+     d="m 23.999698,29.74821 c 2.790904,0.0815 5.19011,-2.705855 4.679818,-5.458046 -0.3473,-2.764813 -3.442054,-4.724999 -6.082341,-3.80688 -2.591524,0.735481 -4.090797,3.902664 -2.958063,6.363986 0.714724,1.72129 2.492564,2.921281 4.360586,2.90094 z" />
   <g
+     transform="matrix(0.75374631,0,0,0.75374631,-0.29147558,4.5803248)"
      id="g3464">
     <path
        style="fill:#000000;fill-opacity:0.2745098"
@@ -646,31 +642,5 @@
        id="path3398"
        d="m 18.026646,33.230071 0,-1.507704 -3.76926,0 -3.769261,0 0,-3.043421 0,-3.043419 -0.491717,-0.325357 c -1.5371261,-1.017077 -1.2417916,-3.424607 0.490689,-4.000045 0.608635,-0.202156 1.225893,-0.155573 1.833024,0.138335 1.492023,0.722276 1.572186,2.998113 0.137029,3.890256 l -0.461321,0.286773 0,2.294587 0,2.294586 3.015409,0 3.015408,0 0,-1.507704 0,-1.507704 2.638483,0 2.638483,0 0,-3.420347 0,-3.420347 -0.491717,-0.325355 c -1.537127,-1.017077 -1.241792,-3.424607 0.490689,-4.000045 0.608635,-0.202155 1.225892,-0.155573 1.833024,0.138335 1.492023,0.722276 1.572186,2.998113 0.137028,3.890256 l -0.46132,0.286773 0,3.425366 0,3.425364 3.015409,0 3.015408,0 -0.0024,-4.970713 -0.0024,-4.970713 -0.376263,-0.17351 c -0.206944,-0.09543 -0.486445,-0.317966 -0.621112,-0.494524 -1.244482,-1.6316 -0.01136,-3.893338 2.008998,-3.684818 1.480073,0.152756 2.349885,1.574521 1.853864,3.030261 -0.172527,0.506341 -0.747643,1.143992 -1.114944,1.236179 l -0.237976,0.05973 0,4.984055 0,4.984055 3.015409,0 3.015408,0 0,-3.420347 0,-3.420347 L 37.889,20.033207 c -1.537126,-1.017077 -1.241791,-3.424607 0.49069,-4.000045 0.608635,-0.202155 1.225892,-0.155573 1.833023,0.138335 1.492024,0.722276 1.572186,2.998113 0.137029,3.890256 l -0.46132,0.286773 0,3.425366 0,3.425364 2.638482,0 2.638483,0 0,1.507704 0,1.507704 3.015408,0 3.015413,0 0,-2.345571 0,-2.345573 -0.23798,-0.05973 c -0.60619,-0.152143 -1.26973,-1.214973 -1.26973,-2.033796 0,-1.221466 1.040094,-2.261556 2.261556,-2.261556 1.221468,0 2.26156,1.04009 2.26156,2.261556 0,0.818823 -0.66354,1.881653 -1.269734,2.033796 l -0.237974,0.05973 0,3.099424 0,3.099425 -3.76926,0 -3.769259,0 0,1.507704 0,1.507704 -13.569339,0 -13.569339,0 z m 25.630974,-2.261556 0,-2.261557 -12.061635,0 -12.061634,0 0,2.261557 0,2.261556 12.061634,0 12.061635,0 z m -22.384268,0.522556 c -0.467408,-0.467406 -0.136205,-1.276409 0.522555,-1.276409 0.183598,0 0.376759,0.0855 0.522557,0.231297 0.145798,0.145797 0.231295,0.338958 0.231295,0.522556 0,0.183598 -0.0855,0.376758 -0.231295,0.522556 -0.145798,0.145799 -0.338959,0.231296 -0.522557,0.231296 -0.183597,0 -0.376758,-0.0855 -0.522555,-0.231296 z m 3.015408,0 c -0.467407,-0.467406 -0.136204,-1.276409 0.522556,-1.276409 0.183598,0 0.376758,0.0855 0.522557,0.231297 0.145798,0.145797 0.231295,0.338958 0.231295,0.522556 0,0.183598 -0.0855,0.376758 -0.231295,0.522556 -0.145799,0.145799 -0.338959,0.231296 -0.522557,0.231296 -0.183598,0 -0.376758,-0.0855 -0.522556,-0.231296 z m 3.015409,0 c -0.467407,-0.467406 -0.136205,-1.276409 0.522556,-1.276409 0.183597,0 0.376758,0.0855 0.522556,0.231297 0.145798,0.145797 0.231296,0.338958 0.231296,0.522556 0,0.183598 -0.0855,0.376758 -0.231296,0.522556 -0.145798,0.145799 -0.338959,0.231296 -0.522556,0.231296 -0.183598,0 -0.376758,-0.0855 -0.522556,-0.231296 z M 11.764534,23.952549 c 0.467406,-0.467406 0.136204,-1.276408 -0.522557,-1.276408 -0.387395,0 -0.753852,0.366457 -0.753852,0.753852 0,0.387396 0.366457,0.753852 0.753852,0.753852 0.183598,0 0.376758,-0.0855 0.522557,-0.231296 z m 40.708016,0 c 0.467407,-0.467406 0.136204,-1.276408 -0.522558,-1.276408 -0.387394,0 -0.753846,0.366457 -0.753846,0.753852 0,0.387396 0.366452,0.753852 0.753846,0.753852 0.183603,0 0.376761,-0.0855 0.522558,-0.231296 z M 24.58002,18.675585 c 0.467407,-0.467407 0.136204,-1.276409 -0.522556,-1.276409 -0.183598,0 -0.376758,0.0855 -0.522557,0.231295 -0.145798,0.145799 -0.231295,0.338959 -0.231295,0.522557 0,0.183598 0.0855,0.376759 0.231295,0.522557 0.145799,0.145798 0.338959,0.231295 0.522557,0.231295 0.183598,0 0.376758,-0.0855 0.522556,-0.231295 z m 15.077043,0 c 0.467407,-0.467407 0.136204,-1.276409 -0.522556,-1.276409 -0.387395,0 -0.753852,0.366457 -0.753852,0.753852 0,0.387396 0.366457,0.753852 0.753852,0.753852 0.183598,0 0.376758,-0.0855 0.522556,-0.231295 z m -7.538522,-3.015409 c 0.467408,-0.467407 0.136205,-1.276409 -0.522556,-1.276409 -0.183597,0 -0.376758,0.0855 -0.522555,0.231296 -0.467408,0.467406 -0.136205,1.276409 0.522555,1.276409 0.183598,0 0.376759,-0.0855 0.522556,-0.231296 z"
        style="fill:#ffffff" />
-  </g>
-  <g
-     id="g4228"
-     transform="matrix(0.58165146,0,0,0.58165146,-5.200561,-8.5407392)">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:15px;line-height:89.99999762%;font-family:Raleway;-inkscape-font-specification:'Raleway, Semi-Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:0.2745098;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="24.380144"
-       y="100.49621"
-       id="text4214"
-       sodipodi:linespacing="89.999998%"><tspan
-         y="100.49621"
-         x="24.380144"
-         id="tspan4222"
-         sodipodi:role="line">/etc/hosts</tspan></text>
-    <text
-       sodipodi:linespacing="89.999998%"
-       id="text4206"
-       y="99.345657"
-       x="23.229601"
-       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:15px;line-height:89.99999762%;font-family:Raleway;-inkscape-font-specification:'Raleway, Semi-Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"><tspan
-         y="99.345657"
-         x="23.229601"
-         id="tspan4220"
-         sodipodi:role="line">/etc/hosts</tspan></text>
   </g>
 </svg>

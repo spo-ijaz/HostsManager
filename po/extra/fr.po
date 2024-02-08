@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: extra\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-14 14:51+0200\n"
-"PO-Revision-Date: 2019-04-14 14:43+0200\n"
+"PO-Revision-Date: 2024-02-08 16:22+0100\n"
 "Last-Translator: NathanBnm\n"
 "Language-Team: Français\n"
 "Language: fr\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/com.github.bbuhler.hostsmanager.desktop.in:3
 #: data/com.github.bbuhler.hostsmanager.appdata.xml.in:7
@@ -61,5 +62,5 @@ msgstr "Validation de saisie et corrections de bugs"
 #: data/com.github.bbuhler.hostsmanager.pkexec.policy.in:8
 msgid "Authentication is required to save changes in /etc/hosts."
 msgstr ""
-"Une athentification est nécessaire pour enregistrer des modifications dans "
+"Une authentification est nécessaire pour enregistrer des modifications dans "
 "le fichier /etc/hosts."

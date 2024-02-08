@@ -1,9 +1,9 @@
 # HostsManager
 
-![Contributors](https://img.shields.io/github/contributors/spo-ijaz/HostsManager)
-![Stars](https://img.shields.io/github/stars/spo-ijaz/HostsManager)
-![License](https://img.shields.io/github/license/spo-ijaz/HostsManager)
-![Issues](https://img.shields.io/github/issues/spo-ijaz/HostsManager)
+<!-- ![Contributors](https://img.shields.io/gitlab/contributors/spo-ijaz/HostsManager) -->
+<!-- ![Stars](https://img.shields.io/gitlab/stars/spo-ijaz/HostsManager) -->
+<!-- ![License](https://img.shields.io/gitlab/license/spo-ijaz/HostsManager) -->
+<!-- ![Issues](https://img.shields.io/gitlab/issues/spo-ijaz/HostsManager) -->
 [![HostsManager](https://img.shields.io/badge/copr-HostsManager-51A2DA?label=COPR&logo=fedora&logoColor=white)](https://copr.fedorainfracloud.org/coprs/spo-ijaz/HostsManager/)
 
 
@@ -16,12 +16,10 @@
 
 # Features
 
-* Adding entry.
-* Delete multiple entries at once.
-* Restore deleted entries if you made mistake :
-  * If entries are removed one by one, shortcut `<Ctrl>+z` (or `undo` button) will undo the deletions until there are no more entries to restore.
-  * If more than one entries are removed at once, shortcut `<Ctrl>+z` (or `undo` button), will restore all deleted entries at once. ( and deleted history is emptied when multiple entries are deleted at once.)
-* Checks on IP address and hostname.
+* Adding host row, comment row.
+* Create group of hosts.
+* Drag & drop.
+* Checks on IP address (v4 or v6).
 * Search through hostnames.
 * Shortcuts.
 * Restore from an automatic backup of your `/etc/hosts` file, made each time the application is started.
@@ -47,20 +45,13 @@ sudo ninja install
 
 Done with [Builder](https://wiki.gnome.org/Apps/Builder), so you can compile and start the application directly with the development profile.
 
-## Todo
-
-- [ ] ~~Ask root password only when changes are made on the file.~~
-	- Not possible easily, or we should spawn a `pkexec` process each time we want to modify the file, and use shell commands instead of Glib ones.
- 	- Or maybe there's another mechanism...
-- [x] Be able to re-order on the fly the rows. (Done on branch 4.1.1)
-- [ ] Handle IPv6 ?
-
 ## Update translations
 
 ```bash
 meson build --prefix=/build -Dprofile=development
 cd build
-meson compile com.github.spo-ijaz.hostsmanager-pot
-meson compile com.github.spo-ijaz.hostsmanager-update-po
+meson compile org.gnome.gitlab.spo-ijaz.hostsmanager-pot
+meson compile org.gnome.gitlab.spo-ijaz.hostsmanager-update-po
 ```
 
+And use [poedit](https://poedit.net/) on `/po/xx.po` files to add translations.

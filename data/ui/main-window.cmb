@@ -2,7 +2,7 @@
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
 <cambalache-project version="0.17.0" target_tk="gtk-4.0">
   <ui>
-	(1,1,"main-window.ui","main-window.ui",None,None,None,None,"com.github.spo-ijaz.hostsmanager",None,None)
+	(1,1,"main-window.ui","main-window.ui",None,None,None,None,"org.gnome.gitlab.spo-ijaz.hostsmanager",None,None)
   </ui>
   <object>
 	(1,1,"AdwApplicationWindow","HostsManagerMainWindow",None,None,None,None,None,None),
@@ -35,7 +35,7 @@
 	(1,1,"GtkApplicationWindow","show-menubar","True",None,None,None,None,None,None,None,None,None),
 	(1,1,"GtkWindow","default-height","800",None,None,None,None,None,None,None,None,None),
 	(1,1,"GtkWindow","default-width","600",None,None,None,None,None,None,None,None,None),
-	(1,1,"GtkWindow","icon-name","com.github.spo-ijaz.hostsmanager",None,None,None,None,None,None,None,None,None),
+	(1,1,"GtkWindow","icon-name","org.gnome.gitlab.spo-ijaz.hostsmanager",None,None,None,None,None,None,None,None,None),
 	(1,74,"GtkShortcutController","scope","global",None,None,None,None,None,None,None,None,None),
 	(1,75,"GtkShortcut","action","action(win.focus-search-bar)",None,None,None,None,None,None,None,None,None),
 	(1,75,"GtkShortcut","trigger","&lt;Control&gt;f",None,None,None,None,None,None,None,None,None),
@@ -72,7 +72,7 @@
 	(1,116,"GtkAccessible","accessible-role","heading",None,None,None,None,None,None,None,None,None),
 	(1,117,"AdwToast","timeout","1",None,None,None,None,None,None,None,None,None),
 	(1,119,"AdwSplitButton","icon-name","list-add-symbolic",None,None,None,None,None,None,None,None,None),
-	(1,119,"AdwSplitButton","label","Add",None,None,None,None,None,None,None,None,None),
+	(1,119,"AdwSplitButton","label","Add",1,None,None,None,None,None,None,None,None),
 	(1,119,"AdwSplitButton","popover",None,None,None,None,None,120,None,None,None,None),
 	(1,119,"GtkActionable","action-name","win.host-row-add",None,None,None,None,None,None,None,None,None),
 	(1,119,"GtkWidget","tooltip-text","Add a host row",None,None,None,None,None,None,None,None,None),
@@ -80,12 +80,12 @@
 	(1,124,"GtkAccessible","accessible-role","button",None,None,None,None,None,None,None,None,None),
 	(1,124,"GtkActionable","action-name","win.restore-from-backup",None,None,None,None,None,None,None,None,None),
 	(1,124,"GtkButton","icon-name","edit-undo-symbolic",None,None,None,None,None,None,None,None,None),
-	(1,124,"GtkButton","label","Cancel",None,None,None,None,None,None,None,None,None),
+	(1,124,"GtkButton","label","Cancel",1,None,None,None,None,None,None,None,None),
 	(1,124,"GtkWidget","visible","False",None,None,None,None,None,None,None,None,None),
 	(1,125,"GtkAccessible","accessible-role","button",None,None,None,None,None,None,None,None,None),
 	(1,125,"GtkActionable","action-name","win.save-changes",None,None,None,None,None,None,None,None,None),
 	(1,125,"GtkButton","icon-name","document-save-symbolic",None,None,None,None,None,None,None,None,None),
-	(1,125,"GtkButton","label","Save",None,None,None,None,None,None,None,None,None),
+	(1,125,"GtkButton","label","Save",1,None,None,None,None,None,None,None,None),
 	(1,125,"GtkWidget","halign","center",None,None,None,None,None,None,None,None,None),
 	(1,125,"GtkWidget","height-request","-2",None,None,None,None,None,None,None,None,None),
 	(1,125,"GtkWidget","visible","False",None,None,None,None,None,None,None,None,None)

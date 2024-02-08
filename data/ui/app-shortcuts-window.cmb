@@ -2,7 +2,7 @@
 <!DOCTYPE cambalache-project SYSTEM "cambalache-project.dtd">
 <cambalache-project version="0.17.0" target_tk="gtk-4.0">
   <ui>
-	(1,None,"app-shortcuts-window.ui","app-shortcuts-window.ui",None,None,None,None,"com.github.spo-ijaz.hostsmanager",None,None)
+	(1,None,"app-shortcuts-window.ui","app-shortcuts-window.ui",None,None,None,None,"org.gnome.gitlab.spo-ijaz.hostsmanager",None,None)
   </ui>
   <object>
 	(1,1,"GtkShortcutsWindow","app-shortcuts-window",None,None,None,None,None,None),

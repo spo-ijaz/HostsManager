@@ -6,7 +6,7 @@ namespace HostsManager.Services {
 
 		public RegexCommentRow (Value comment_arg = "") {
 
-			string comment = (string) comment_arg != "" ? Regex.escape_string ((string) comment_arg) : Config.comment_regex_str ();
+			string comment = (string) comment_arg != "" ? Regex.escape_string ((string) comment_arg) : ConfigService.comment_regex_str ();
 
 			try {
 

@@ -18,7 +18,6 @@ namespace HostsManager.Widgets {
 
 		construct {
 
-
 			this.host_row_dialog = new Models.HostRowModel (
 				this.host_row.id,
 				this.host_row.parent_id,

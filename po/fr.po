@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.spo-ijaz.hostsmanager\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-01 19:58+0200\n"
-"PO-Revision-Date: 2019-01-16 21:45+0100\n"
+"POT-Creation-Date: 2024-02-08 16:40+0100\n"
+"PO-Revision-Date: 2024-02-08 16:40+0100\n"
 "Last-Translator: Sébastien PORQUET\n"
 "Language-Team: Français\n"
 "Language: fr\n"
@@ -16,98 +16,132 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
 
-#: data/ui/main-window.ui:82 data/ui/app-shortcuts-window.ui:34
+#: data/ui/main-window.ui:80
+msgid "Add"
+msgstr "Ajouter"
+
+#: data/ui/main-window.ui:93 data/ui/app-shortcuts-window.ui:34
 msgid "Search by hostname"
 msgstr "Chercher une entrée par un nom d'hôte"
 
-#: data/ui/main-window.ui:91 data/ui/app-shortcuts-window.ui:20
-msgid "Add a new entry"
-msgstr "Ajouter une nouvelle entrée"
-
-#: data/ui/main-window.ui:138
-msgid "Enabled"
-msgstr "Activé"
-
-#: data/ui/main-window.ui:151
-msgid "IP address"
-msgstr "Adresse IP"
-
-#: data/ui/main-window.ui:164
-msgid "Hostname"
-msgstr "Nom d'hôte"
-
-#: data/ui/main-window.ui:182
-msgid "Undo"
+#: data/ui/main-window.ui:102
+msgid "Cancel"
 msgstr "Annuler"
 
-#: data/ui/main-window.ui:184
-msgid "Entries removed."
-msgstr "Entrées supprimées."
+#: data/ui/main-window.ui:113
+msgid "Save"
+msgstr "Sauvegarder"
 
 #: data/ui/app-shortcuts-window.ui:14
 msgid "Overview"
 msgstr "Aperçu"
+
+#: data/ui/app-shortcuts-window.ui:20
+msgid "Add a new entry"
+msgstr "Ajouter une nouvelle entrée"
 
 #: data/ui/app-shortcuts-window.ui:27
 msgid "Delete selected entries"
 msgstr "Supprimer l'entrée sélectionnée"
 
 #: data/ui/app-shortcuts-window.ui:41
-msgid "Undo deleted entries"
-msgstr "Restaurer les entrées supprimées"
-
-#: data/ui/app-shortcuts-window.ui:48
 msgid "Quit this application"
 msgstr "Quitter cette application"
 
-#: src/MainWindow.vala:77
+#: src/MainWindow.vala:68
 msgid "Restore from backup file"
 msgstr "Restaurer depuis la sauvegarde"
 
-#: src/MainWindow.vala:78
+#: src/MainWindow.vala:69
 msgid "Shortcuts"
 msgstr "Raccourcis"
 
-#: src/MainWindow.vala:79
+#: src/MainWindow.vala:70
 msgid "About"
 msgstr "À propos"
 
-#: src/MainWindow.vala:80
+#: src/MainWindow.vala:71
 msgid "Quit"
 msgstr "Quitter"
 
-#: src/MainWindow.vala:118
-msgid "Host file has changed. Reloaded."
-msgstr "Le fichier hosts a changé. Rechargé."
+#: src/MainWindow.vala:78
+msgid "Add a host group row"
+msgstr "Ajouter un groupe d'hôtes"
 
-#: src/MainWindow.vala:138
+#: src/MainWindow.vala:79
+msgid "Add a comment row"
+msgstr "Ajouter un commentaire"
+
+#: src/MainWindow.vala:149
 msgid "Sébastien PORQUET"
 msgstr ""
 
-#: src/MainWindow.vala:143
+#: src/MainWindow.vala:154
 msgid "© 2018 Benjamin BUHLER"
 msgstr ""
 
-#: src/MainWindow.vala:280
-msgid "No deleted entries to restore."
-msgstr "Plus d'entrée à restaurer."
-
-#: src/Services/HostsFile.vala:45
+#: src/Services/HostsFileService.vala:39
 msgid "Host file backup here: "
-msgstr "Fichier de sauvegarde:"
+msgstr "Fichier de sauvegarde: "
 
-#: src/Services/HostsFile.vala:140
+#: src/Services/HostsFileService.vala:61
+msgid "Host file has changed. Reloaded."
+msgstr "Le fichier hosts a changé. Rechargé."
+
+#: src/Services/HostsFileService.vala:179
 msgid "Host file restored."
 msgstr "Fichier hosts restauré."
 
-#: src/Services/HostsFile.vala:144
+#: src/Services/HostsFileService.vala:183
 msgid "Unable to restore from backup file: "
-msgstr "Impossible de restaurer depuis la sauvegarde."
+msgstr "Impossible de restaurer depuis la sauvegarde. "
 
-#: src/Services/HostsFile.vala:167
+#: src/Services/HostsFileService.vala:244
 msgid "Host file updated."
 msgstr "Fichier hosts mis à jour."
+
+#: src/Widgets/RowEditMessageDialog.vala:30
+msgid "Update a comment row"
+msgstr "Mettre à jour un commentaire"
+
+#: src/Widgets/RowEditMessageDialog.vala:35
+msgid "Update a host row"
+msgstr "Mettre à jour un hôte"
+
+#: src/Widgets/RowEditMessageDialog.vala:40
+msgid "Update a group name"
+msgstr "Mettre à jour le nom du groupe d'hôtes"
+
+#: src/Widgets/RowEditMessageDialog.vala:84
+msgid "cancel"
+msgstr "annuler"
+
+#: src/Widgets/RowEditMessageDialog.vala:86
+msgid "replace"
+msgstr "remplacer"
+
+#~ msgid "Enabled"
+#~ msgstr "Activé"
+
+#~ msgid "IP address"
+#~ msgstr "Adresse IP"
+
+#~ msgid "Hostname"
+#~ msgstr "Nom d'hôte"
+
+#~ msgid "Undo"
+#~ msgstr "Annuler"
+
+#~ msgid "Entries removed."
+#~ msgstr "Entrées supprimées."
+
+#~ msgid "Undo deleted entries"
+#~ msgstr "Restaurer les entrées supprimées"
+
+#~ msgid "No deleted entries to restore."
+#~ msgstr "Plus d'entrée à restaurer."
 
 #~ msgid "Shortcut list"
 #~ msgstr "Liste des raccourcis clavier"

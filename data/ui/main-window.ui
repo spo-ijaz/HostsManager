@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Created with Cambalache 0.17.0 -->
-<interface domain="com.github.spo-ijaz.hostsmanager">
+<interface domain="org.gnome.gitlab.spo-ijaz.hostsmanager">
   <!-- interface-name main-window.ui -->
   <requires lib="gtk" version="4.12"/>
   <requires lib="libadwaita" version="1.4"/>
@@ -8,7 +8,7 @@
     <property name="accessible-role">window</property>
     <property name="default-height">800</property>
     <property name="default-width">600</property>
-    <property name="icon-name">com.github.spo-ijaz.hostsmanager</property>
+    <property name="icon-name">org.gnome.gitlab.spo-ijaz.hostsmanager</property>
     <property name="show-menubar">True</property>
     <child>
       <object class="GtkShortcutController" id="shortcut_controller">
@@ -77,7 +77,7 @@
                   <object class="AdwSplitButton" id="add_row_split_button">
                     <property name="action-name">win.host-row-add</property>
                     <property name="icon-name">list-add-symbolic</property>
-                    <property name="label">Add</property>
+                    <property name="label" translatable="yes">Add</property>
                     <property name="popover">
                       <object class="GtkPopoverMenu" id="popover_add_row_menu">
                         <property name="cascade-popdown">True</property>
@@ -99,7 +99,7 @@
                     <property name="accessible-role">button</property>
                     <property name="action-name">win.restore-from-backup</property>
                     <property name="icon-name">edit-undo-symbolic</property>
-                    <property name="label">Cancel</property>
+                    <property name="label" translatable="yes">Cancel</property>
                     <property name="visible">False</property>
                   </object>
                 </child>
@@ -110,7 +110,7 @@
                     <property name="halign">center</property>
                     <property name="height-request">-2</property>
                     <property name="icon-name">document-save-symbolic</property>
-                    <property name="label">Save</property>
+                    <property name="label" translatable="yes">Save</property>
                     <property name="visible">False</property>
                   </object>
                 </child>

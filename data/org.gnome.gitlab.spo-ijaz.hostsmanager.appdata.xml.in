@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2018 Benjamin BUHLER <hostsmanager.app@freiken-douhl.de> -->
 <component type="desktop">
-	<id>com.github.spo-ijaz.hostsmanager</id>
+	<id>org.gnome.gitlab.spo-ijaz.hostsmanager</id>
 	<metadata_license>MIT</metadata_license>
 	<project_license>MIT</project_license>
 	<name>HostsManager</name>
@@ -43,12 +43,12 @@
 	<categories>
 		<category>Development</category>
 	</categories>
-	<url type="homepage">https://github.com/spo-ijaz/HostsManager</url>
-	<url type="bugtracker">https://github.com/spo-ijaz/HostsManager/issues</url>
-	<url type="help">https://github.com/spo-ijaz/HostsManager/wiki</url>
+	<url type="homepage">https://gitlab.gnome.org/spo-ijaz/HostsManager</url>
+	<url type="bugtracker">https://gitlab.gnome.org/spo-ijaz/HostsManager/-/issues</url>
+	<url type="help">https://gitlab.gnome.org/spo-ijaz/HostsManager/-/wikis/Format-hosts-files</url>
 	<screenshots>
 		<screenshot type="default">
-			<image>https://raw.githubusercontent.com/spo-ijaz/HostsManager/master/data/screenshots/main.png</image>
+			<image>https://gitlab.gnome.org/spo-ijaz/HostsManager/-/raw/master/data/screenshots/main.png?ref_type=heads</image>
 		</screenshot>
 	</screenshots>
 	<custom>
@@ -57,6 +57,16 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.2.0" date="2024-02-08">
+			<description>
+				<p>
+					<ul>
+						<li>* Completely new user interface, using Gtk.Listbox, with less bugs.</li>
+						<li>* It's now possible to manage group of hosts.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="4.1.0" date="2023-09-07">
 			<description>
 				<p>

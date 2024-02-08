@@ -6,7 +6,7 @@ namespace HostsManager.Services {
 
 		public RegexHostGroupRow (Value host_group_name_arg = "") {
 
-			string host_group_name = (string) host_group_name_arg != "" ? Regex.escape_string ((string) host_group_name_arg) : Config.host_group_name_regex_str ();
+			string host_group_name = (string) host_group_name_arg != "" ? Regex.escape_string ((string) host_group_name_arg) : ConfigService.host_group_name_regex_str ();
 
 			try {
 
