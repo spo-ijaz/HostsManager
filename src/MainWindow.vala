@@ -52,6 +52,7 @@ namespace HostsManager {
 		private Services.HostsFileService hosts_file_service;
 		private Models.HostRowListModel host_row_list_model;
 		private Widgets.HostsListBox hosts_list_box;
+		private Models.HostRowModel current_new_host_row;
 
 		construct {
 
@@ -269,6 +270,7 @@ namespace HostsManager {
 
 		private void add_new_host_row (Models.HostRowModel new_host_row) {
 
+			this.current_new_host_row = new_host_row;
 			Models.HostRowModel selected_host_row = this.get_selected_host_row ();
 
 			if (selected_host_row == null) {
@@ -278,6 +280,22 @@ namespace HostsManager {
 
 				this.host_row_list_model.insert_after_host_row (new_host_row, selected_host_row, false, false);
 			}
+
+			Timeout.add_once (200, () => {
+
+				for (uint index = 0; index < this.host_row_list_model.get_n_items (); index++) {
+
+					Widgets.BaseActionRow base_action_row = this.hosts_list_box.list_box.get_row_at_index ((int) index) as Widgets.BaseActionRow;
+					if (base_action_row == null) {
+						continue;
+					}
+
+					if (base_action_row.host_row.id == this.current_new_host_row.id) {
+
+						this.hosts_list_box.list_box.get_row_at_index ((int) index).grab_focus ();
+					}
+				}
+			});
 		}
 	}
 }
