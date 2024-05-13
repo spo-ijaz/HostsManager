@@ -29,7 +29,7 @@
 
 | Distribution           | Status                                                                                                                                                                                                                        |
 |------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Fedora (38,39,rawhide) | [![Copr build status](https://copr.fedorainfracloud.org/coprs/spo-ijaz/HostsManager/package/hosts-manager/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/spo-ijaz/HostsManager/package/hosts-manager/) 
+| Fedora (38,39,40,rawhide) | [![Copr build status](https://copr.fedorainfracloud.org/coprs/spo-ijaz/HostsManager/package/hosts-manager/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/spo-ijaz/HostsManager/package/hosts-manager/) 
 |
 
 # Compilation & installation
