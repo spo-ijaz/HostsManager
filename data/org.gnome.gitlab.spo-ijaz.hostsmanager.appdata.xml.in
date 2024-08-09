@@ -57,6 +57,15 @@
 		<value key="x-appcenter-suggested-price">0</value>
 	</custom>
 	<releases>
+		<release version="4.2.2" date="2024-08-09">
+			<description>
+				<p>
+					<ul>
+						<li>* Auto-scroll to newly inserted row.</li>
+					</ul>
+				</p>
+			</description>
+		</release>
 		<release version="4.2.1" date="2024-02-08">
 			<description>
 				<p>

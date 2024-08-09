@@ -33,60 +33,60 @@ fi
 
 release_tag=$1
 release_note_file=$2
-release_archive_name="hosts-manager-${release}.src.tar.gz"
+release_archive_name="hosts-manager-${release_tag}.src.tar.gz"
 
-echo
-echo "Update Fedora spec file..."
-echo
+# echo
+# echo "Update Fedora spec file..."
+# echo
 
-sed -i "s/\(Version:.*\)[0-9]\.[0-9]\.[0-9]/\1${release_tag}/g" "${fedora_spec}"
+# sed -i "s/\(Version:.*\)[0-9]\.[0-9]\.[0-9]/\1${release_tag}/g" "${fedora_spec}"
 
-echo
-echo "Update meson.build..."
-echo
+# echo
+# echo "Update meson.build..."
+# echo
 
-sed -i "s/\(version:.*\)'[0-9]\.[0-9]\.[0-9]'/\1'${release_tag}'/g" "${meson_build}"
+# sed -i "s/\(version:.*\)'[0-9]\.[0-9]\.[0-9]'/\1'${release_tag}'/g" "${meson_build}"
 
-echo
-echo "Commit & push changes..."
-echo
+# echo
+# echo "Commit & push changes..."
+# echo
 
-git add "${fedora_spec}" "${meson_build}"
-git commit -m "Version bump to ${release_tag}"
-git push origin master
-
-
-echo
-echo "Create tag & push it..."
-echo
-
-declare commit_id
-commit_id=$(git log --format="%H" -n 1)
-git tag -f "${release_tag}" "$commit_id"
-git push origin "${release_tag}" --force
-
+# git add "${fedora_spec}" "${meson_build}"
+# git commit -m "Version bump to ${release_tag}"
+# git push origin master
 
 
 # echo
-# echo "Fetch code from gitlab ( tag: ${release_tag} )..."
+# echo "Create tag & push it..."
 # echo
 
-# git clone --depth 1 --branch ${release_tag} --single-branch https://gitlab.gnome.org/spo-ijaz/HostsManager.git ${release_dir}
+# declare commit_id
+# commit_id=$(git log --format="%H" -n 1)
+# git tag -f "${release_tag}" "$commit_id"
+# git push origin "${release_tag}" --force
 
 
 
-# echo
-# echo "Create archive..."
-# echo
+echo
+echo "Fetch code from gitlab ( tag: ${release_tag} )..."
+echo
 
-# [[ -f ../${release_archive_name} ]] && rm -f ../${release_archive_name}
-# tar -czvf ../${release_archive_name} \
-#     -C "${release_dir}" \
-#     --exclude="**/build" \
-#     --exclude="**/settings-json" \
-#     --exclude="**/.idea" \
-#     --exclude="**/.vscode"  \
-#     .
+git clone --depth 1 --branch ${release_tag} --single-branch https://gitlab.gnome.org/spo-ijaz/HostsManager.git ${release_dir}
+
+
+
+echo
+echo "Create archive..."
+echo
+
+[[ -f ../${release_archive_name} ]] && rm -f ../${release_archive_name}
+tar -czvf ../${release_archive_name} \
+    -C "${release_dir}" \
+    --exclude="**/build" \
+    --exclude="**/settings-json" \
+    --exclude="**/.idea" \
+    --exclude="**/.vscode"  \
+    .
 
 
 # echo

@@ -1,3 +1,6 @@
+### 2024-08-09 - Release v4.2.2
+* Auto-scroll to newly inserted row.
+
 ### 2024-02-08 - Release v4.2.1
 * Fix invalid ui ressource location file.
 
