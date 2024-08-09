@@ -2,7 +2,7 @@
 project(
 	'org.gnome.gitlab.spo-ijaz.hostsmanager',
 	['vala', 'c'],
-	version: '4.2.1',
+	version: '4.2.2',
 	license: 'MIT License',
 	meson_version: '>= 1.3.0',
 )
