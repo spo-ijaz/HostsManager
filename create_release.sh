@@ -35,35 +35,35 @@ release_tag=$1
 release_note_file=$2
 release_archive_name="hosts-manager-${release_tag}.src.tar.gz"
 
-# echo
-# echo "Update Fedora spec file..."
-# echo
+echo
+echo "Update Fedora spec file..."
+echo
 
-# sed -i "s/\(Version:.*\)[0-9]\.[0-9]\.[0-9]/\1${release_tag}/g" "${fedora_spec}"
+sed -i "s/\(Version:.*\)[0-9]\.[0-9]\.[0-9]/\1${release_tag}/g" "${fedora_spec}"
 
-# echo
-# echo "Update meson.build..."
-# echo
+echo
+echo "Update meson.build..."
+echo
 
-# sed -i "s/\(version:.*\)'[0-9]\.[0-9]\.[0-9]'/\1'${release_tag}'/g" "${meson_build}"
+sed -i "s/\(version:.*\)'[0-9]\.[0-9]\.[0-9]'/\1'${release_tag}'/g" "${meson_build}"
 
-# echo
-# echo "Commit & push changes..."
-# echo
+echo
+echo "Commit & push changes..."
+echo
 
-# git add "${fedora_spec}" "${meson_build}"
-# git commit -m "Version bump to ${release_tag}"
-# git push origin master
+git add "${fedora_spec}" "${meson_build}"
+git commit -m "Version bump to ${release_tag}"
+git push origin master
 
 
-# echo
-# echo "Create tag & push it..."
-# echo
+echo
+echo "Create tag & push it..."
+echo
 
-# declare commit_id
-# commit_id=$(git log --format="%H" -n 1)
-# git tag -f "${release_tag}" "$commit_id"
-# git push origin "${release_tag}" --force
+declare commit_id
+commit_id=$(git log --format="%H" -n 1)
+git tag -f "${release_tag}" "$commit_id"
+git push origin "${release_tag}" --force
 
 
 
